@@ -133,6 +133,38 @@ def load_file_safely(path: str) -> str:
     return ""
 
 
+def call_github_models(token: str, system_prompt: str, user_prompt: str) -> str:
+    # GitHub Models (Free AI inference using default GITHUB_TOKEN)
+    url = "https://models.inference.ai.azure.com/chat/completions"
+    payload = {
+        "model": "gpt-4o-mini",
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.2,
+        "max_tokens": 4096
+    }
+    data = json.dumps(payload).encode("utf-8")
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {token}"
+    }
+    req = urllib.request.Request(url, data=data, headers=headers, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=90) as resp:
+            body = resp.read().decode("utf-8")
+            parsed = json.loads(body)
+            choices = parsed.get("choices", [])
+            if choices:
+                return choices[0].get("message", {}).get("content", "")
+    except urllib.error.HTTPError as e:
+        print(f"[-] GitHub Models HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
+    except Exception as e:
+        print(f"[-] GitHub Models Error: {e}")
+    return ""
+
+
 def post_github_comment(pr_number: str, comment_body: str) -> bool:
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     if not token or not pr_number:
@@ -290,15 +322,16 @@ Git Diff:
 ```
 """
 
+    gh_token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     gemini_key = os.environ.get("GEMINI_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
 
     review_result = ""
 
-    # Priority 1: Local Antigravity Subscription via AgentAPI (Zero API Key needed)
-    if find_antigravity_agentapi():
-        print("[*] Local Antigravity AgentAPI detected. Using Antigravity subscription model...")
-        review_result = call_antigravity_agentapi(system_prompt, user_prompt)
+    # Priority 1: GitHub Models using default GITHUB_TOKEN (Zero external API Key needed)
+    if gh_token:
+        print("[*] Calling GitHub Models (gpt-4o-mini) via GITHUB_TOKEN...")
+        review_result = call_github_models(gh_token, system_prompt, user_prompt)
 
     # Priority 2: Gemini API Key (if provided in GitHub Secrets)
     if not review_result and gemini_key:
@@ -309,6 +342,11 @@ Git Diff:
     if not review_result and openai_key:
         print("[*] Calling OpenAI API for Squad Review...")
         review_result = call_openai_api(openai_key, system_prompt, user_prompt)
+
+    # Priority 4: Local Antigravity Subscription via AgentAPI
+    if not review_result and find_antigravity_agentapi():
+        print("[*] Local Antigravity AgentAPI detected. Using Antigravity subscription model...")
+        review_result = call_antigravity_agentapi(system_prompt, user_prompt)
 
     # Priority 4: Pre-flight fallback notice
     if not review_result:

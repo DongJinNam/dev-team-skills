@@ -108,8 +108,8 @@ flowchart TD
 - **작동 방식**:
   1. `git diff`와 PR 본문을 추출합니다.
   2. `skills/code-review`, 8개 직무 체크리스트, 헌법(`GEMINI.md`)을 프롬프트로 주입합니다.
-  3. `GEMINI_API_KEY` (권장: Gemini 1.5 Flash) 또는 `OPENAI_API_KEY`를 통해 고속 분석 후 PR 코멘트로 자동 게시합니다.
-  4. API 키가 설정되지 않은 환경에서도 에러 없이 안전하게 정적 프리플라이트 리포트를 제공합니다.
+  3. **GitHub Models (기본 탑재)**: GitHub Actions 기본 토큰(`${{ secrets.GITHUB_TOKEN }}`)을 사용하여 별도 외부 API 키 등록 없이 `gpt-4o-mini` 무료 AI 모델로 즉시 리뷰를 생성합니다.
+  4. 외부 API 키(`GEMINI_API_KEY` / `OPENAI_API_KEY`)가 설정되어 있는 경우 해당 상위 모델로도 자동 fallback 연동됩니다.
 
 ---
 
