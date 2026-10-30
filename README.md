@@ -1,7 +1,22 @@
 # dev-team-skills
 
 > Andrej Karpathy의 엔지니어링 철학과 실용주의 시니어 개발 원칙을 기반으로 구축된 크로스 플랫폼(Windows/macOS) AI 코딩 에이전트 스킬 & 룰 모음 저장소입니다.  
-> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 6개 전문 직무(Frontend, Backend, Data, QA, DevOps, SRE)로 에이전트 조직을 꾸리고 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
+> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 8개 전문 직무(Product Planner, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE)로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3rd-Party Agent Marketplace**를 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
+
+---
+
+## 🌟 왜 다른 스킬들보다 압도적으로 우수한가? (Why This Is Superior)
+
+일반적인 프롬프트 모음이나 단편적인 에이전트 스킬들과 비교했을 때, `dev-team-skills`는 다음과 같은 명확한 비교 우위를 가집니다:
+
+| 비교 항목 | 일반 에이전트 프롬프트 / 룰 모음 | **dev-team-skills** |
+| :--- | :--- | :--- |
+| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **기획부터 AI 하네스, 개발, QA, 배포, 관측성까지 8인 스쿼드 전 주기 커버** |
+| **품질 보증 방식** | LLM의 "완료했습니다"라는 환각에 의존 | **결정론적 평가 하네스(`verify-harness`) 및 자가 치유(Self-healing) 루프** |
+| **확장성 & 생태계** | 로컬 텍스트 복사 및 수동 설정 | **`plugin.json` 기반 Antigravity 3rd-Party Marketplace 규격 100% 호환** |
+| **실용주의 철학** | 불필요한 보일러플레이트 및 라이브러리 남용 | **Andrej Karpathy 원칙 & Ponytail (Standard Library First, YAGNI, 최소 코드)** |
+| **협업 & 인지 부하** | 장황하고 피로한 AI 번역투 설명 | **카카오페이 스타일 PR 템플릿, 결론 우선(ADHD 최적화), 자연스러운 한국어(Humanizer)** |
+| **크로스 플랫폼** | 특정 OS 명령어(Linux 전용 curl/bash)로 실패 빈번 | **Windows(PowerShell) & macOS/Linux(Bash) 동등 지원 및 CI 자동 검증** |
 
 ---
 
@@ -28,28 +43,34 @@
 
 | 스킬 이름 | 설명 | 주요 특징 |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 6인 에이전트 조직화 & 배포 오케스트레이션 | Frontend, Backend, Data, QA, DevOps, SRE 협업 및 5단계 배포 파이프라인 |
-| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), SOLID 및 GoF 패턴 기반 대안 제시 |
+| **`engineering-squad`** | 8인 에이전트 조직화 & 6단계 배포 오케스트레이션 | 기획, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
+| **`brainstorming`** | 제품 기획, 문제 정의 및 체계적 아이디어 도출 | SCAMPER, HMW, RICE 점수표, 린 PRD 템플릿, `research` 서브에이전트 연계 |
+| **`harness-engineering`** | AI 에이전트 평가 하네스 및 마켓플레이스 패키징 | 결정론적 오라클, 3rd-party Marketplace 규격(`plugin.json`), 자가 치유 루프 |
+| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 8개 직무 맞춤형 체크리스트 |
 | **`ponytail`** | 극단적 미니멀리즘 시니어 개발자 사고방식 | Standard Library First, 무분별한 래퍼/의존성 제거 |
 | **`humanizer-kr`** | 자연스러운 한국어 테크니컬 라이팅 | AI 번역투, 이중 피동 제거, 의도 보존 윤문 |
 | **`i-have-adhd`** | 인지 과부하 방지 및 초집중 워크플로우 | 결론 우선, 단일 액션 종결, 불필요 곁가지 차단 |
 
 ---
 
-## 👥 Engineering Squad: 6개 전문 역할 및 검증 기준
+## 👥 Engineering Squad: 8개 전문 역할 및 검증 기준
 
 ```mermaid
 flowchart TD
-    Lead["Squad Lead (Main Agent)"] --> FE["Frontend Engineer\n(UI/Client)"]
+    PO["Product Planner\n(Brainstorming/Research/PRD)"] --> Lead["Squad Lead\n(Interface & Spec)"]
+    AI["AI Agent Engineer\n(Harness & Marketplace)"] --> Lead
+    Lead --> FE["Frontend Engineer\n(UI/Client)"]
     Lead --> BE["Backend Engineer\n(API/Domain)"]
     Lead --> DE["Data Engineer\n(Schema/ETL)"]
     FE & BE & DE --> QA["QA Engineer\n(E2E/Edge Cases)"]
-    QA --> DevOps["DevOps Engineer\n(Docker/Deploy)"]
+    QA & AI --> DevOps["DevOps Engineer\n(Docker/Deploy)"]
     DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
 ```
 
 | 역할 | 담당 영역 | 필수 검증 기준 (DoD) |
 | :--- | :--- | :--- |
+| **Product Planner** | 문제 정의, 브레인스토밍, 시장/기술 리서치, 린 PRD 명세 | 린 PRD(가설, MVP 스코프, 인수 조건) 작성 완료 |
+| **AI Agent Engineer** | 에이전트 평가 하네스(Eval) 구축, 도구 스키마, 마켓플레이스 패키징 | 하네스 검증 스크립트 실행 및 통과 리포트 |
 | **Squad Lead** | 요구사항 분해, 인터페이스/계약 정의, 에이전트 간 조율 | E2E 통합 시나리오 통과 |
 | **Frontend** | UI 컴포넌트, 클라이언트 상태, API 연동, 브라우저 인터랙션 | 프로덕션 번들 빌드 (`npm run build`) 통과 |
 | **Backend** | REST/GraphQL API, 도메인 로직, 인증, 에러 핸들링 | 단위/통합 테스트 통과 & API 응답 확인 |
@@ -57,6 +78,38 @@ flowchart TD
 | **QA Engineer** | E2E 시나리오 테스트, 엣지 케이스/부정 테스트 | 테스트 스위트 100% 통과 |
 | **DevOps** | Dockerfile/Compose, 환경 설정(`.env.example`), 배포 스크립트 | 컨테이너 빌드 & `/health` 200 확인 |
 | **SRE** | SLO/SLI 지표, Observability(`/metrics`), 부하 테스트, 장애 복구 | 경량 부하 테스트 통과 & 메트릭 수집 검증 |
+
+---
+
+## 🛍️ 3rd-Party Marketplace 패키징 및 활용
+
+본 저장소는 **Antigravity Agent Marketplace**의 3rd-party 플러그인 사양을 내장하고 있어, 단일 번들 단위로 설치 및 배포가 가능합니다:
+
+1. **매니페스트 (`plugin.json`)**: 플러그인 메타데이터, 표시명, 버전 및 추천 프롬프트 등록 완료.
+2. **원클릭 설치 및 활성화**:
+   - `~/.gemini/config/plugins/dev-team-skills` 경로에 클론하거나 Marketplace 카탈로그를 통해 바로 장착할 수 있습니다.
+3. **하네스 무결성 검증**:
+   ```bash
+   # Windows (PowerShell)
+   .\scripts\verify-harness.ps1
+
+   # macOS / Linux (Bash)
+   ./scripts/verify-harness.sh
+   ```
+
+---
+
+## 🤖 AI Squad 자동 PR 리뷰 봇 (GitHub Actions)
+
+`main` 브랜치를 타겟으로 PR이 생성되거나 업데이트되면, **8인 엔지니어링 스쿼드의 지침과 3단계 심각도 체계(🔴 필수 / 🟡 확인 요청 / 🟢 권장)**가 적용된 AI 봇이 자동으로 PR에 심층 코드 리뷰를 남깁니다:
+
+- **워크플로우**: [`.github/workflows/ai-code-review.yml`](./.github/workflows/ai-code-review.yml)
+- **리뷰어 스크립트**: [`.github/scripts/ai-pr-reviewer.py`](./.github/scripts/ai-pr-reviewer.py) (0-dependency, Python 표준 라이브러리)
+- **작동 방식**:
+  1. `git diff`와 PR 본문을 추출합니다.
+  2. `skills/code-review`, 8개 직무 체크리스트, 헌법(`GEMINI.md`)을 프롬프트로 주입합니다.
+  3. **GitHub Models (기본 탑재)**: GitHub Actions 기본 토큰(`${{ secrets.GITHUB_TOKEN }}`)을 사용하여 별도 외부 API 키 등록 없이 `gpt-4o-mini` 무료 AI 모델로 즉시 리뷰를 생성합니다.
+  4. 외부 API 키(`GEMINI_API_KEY` / `OPENAI_API_KEY`)가 설정되어 있는 경우 해당 상위 모델로도 자동 fallback 연동됩니다.
 
 ---
 
@@ -79,13 +132,11 @@ flowchart TD
 
 ### 1. Google Antigravity
 ```powershell
-# [Windows] 전역 적용
-Copy-Item GEMINI.md ~/.gemini/config/GEMINI.md
-Copy-Item -Recurse skills/* ~/.gemini/config/skills/
+# [Windows] 전역 플러그인으로 설치
+Copy-Item -Recurse . ~/.gemini/config/plugins/dev-team-skills
 
-# [macOS] 전역 적용
-cp GEMINI.md ~/.gemini/config/GEMINI.md
-cp -R skills/* ~/.gemini/config/skills/
+# [macOS] 전역 플러그인으로 설치
+cp -R . ~/.gemini/config/plugins/dev-team-skills
 ```
 
 ### 2. Claude Code

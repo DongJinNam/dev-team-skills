@@ -1,10 +1,26 @@
 # Role-Tailored Review Checklists
 
-각 직무별 전문성을 반영하여 코드 리뷰 시 집중 점검해야 하는 체크리스트입니다.
+각 직무별 전문성을 반영하여 코드 리뷰 및 변경 사항 검토 시 집중 점검해야 하는 체크리스트입니다.
 
 ---
 
-## 1. Frontend Review Checklist
+## 1. Product Planner (기획자) Review Checklist
+- [ ] **문제-해결 일치성**: PR에 포함된 구현이 기획서(PRD)에서 정의한 사용자의 실제 문제와 가설에 정확히 부합하는가?
+- [ ] **인수 조건(AC) 충족**: 정의된 유저 스토리의 Given-When-Then 인수 조건이 빠짐없이 충족되었는가?
+- [ ] **가설 검증 지표(KPI)**: 기능 출시에 따른 효과를 측정할 이벤트 로깅 및 분석 메트릭이 누락되지 않았는가?
+- [ ] **스코프 크립(Scope Creep) 방지**: MVP 정의 범위를 벗어난 불필요한 기능(YAGNI 위반)이 임의로 포함되지 않았는가?
+
+---
+
+## 2. AI Agent Engineer Review Checklist
+- [ ] **하네스 커버리지**: 새로운 기능, 도구, 룰 변경 시 에이전트 자가 검증이 가능한 Eval 테스트/스크립트가 마련되어 있는가?
+- [ ] **결정론적 가드레일**: LLM의 주관적 판단에만 기대지 않고 린터, 스키마 검증기, 테스트 러너 등 결정론적 도구가 결합되어 있는가?
+- [ ] **Marketplace & 스키마 무결성**: 3rd-party 플러그인 규격(`plugin.json`, `SKILL.md` frontmatter)과 MCP 입출력 JSON 스키마를 엄격히 준수하는가?
+- [ ] **토큰 효율성 & 인젝션 방어**: 프롬프트 및 도구 설명에 불필요한 토큰 낭비가 없고, 사용자 입력으로 인한 프롬프트 탈취 위험을 방어했는가?
+
+---
+
+## 3. Frontend Review Checklist
 - [ ] **렌더링 성능**: 불필요한 리렌더링(Re-render)이 발생하는가? (메모이제이션, 무거운 연산 위치 점검)
 - [ ] **상태 관리**: 컴포넌트 로컬 상태로 해결 가능한 것을 전역 상태에 무분별하게 올리지 않았는가?
 - [ ] **사용자 경험 (UX)**: 비동기 데이터 로딩 중 스켈레톤/스피너 처리가 되어 있는가? 네트워크 오류 시 사용자 피드백이 표시되는가?
@@ -12,7 +28,7 @@
 
 ---
 
-## 2. Backend Review Checklist
+## 4. Backend Review Checklist
 - [ ] **트랜잭션 격리**: 다중 쓰기 작업 시 `@Transactional` 또는 원자적 처리가 보장되는가?
 - [ ] **N+1 쿼리 방지**: ORM 조회 시 지연 로딩으로 인한 N+1 쿼리가 발생하지 않는가? (Fetch Join / Batch Size 점검)
 - [ ] **인증 & 인가**: 엔드포인트에 적절한 권한 검증(Role/Permission)이 적용되었는가? 타인의 자원에 접근(IDOR)할 수 없는가?
@@ -20,7 +36,7 @@
 
 ---
 
-## 3. Data Engineer Review Checklist
+## 5. Data Engineer Review Checklist
 - [ ] **마이그레이션 양방향성**: `Down` (롤백) 스크립트가 온전히 작성되어 있는가?
 - [ ] **락(Lock) 영향도**: 대용량 테이블에 DDL을 수행할 때 테이블 전체 락(Table Lock)으로 서비스 중단 위험이 없는가?
 - [ ] **인덱스 설계**: WHERE, JOIN, ORDER BY에 사용된 컬럼에 적절한 복합 인덱스가 걸려 있는가?
@@ -28,14 +44,14 @@
 
 ---
 
-## 4. QA Engineer Review Checklist
+## 6. QA Engineer Review Checklist
 - [ ] **경계값 검증 (Boundary Conditions)**: 0, 음수, null, 빈 문자열, 최대 허용치 등 경계 조건이 검증되었는가?
 - [ ] **실패 시나리오 (Negative Path)**: 성공 케이스뿐만 아니라 고의적 실패 상황에 대한 테스트 코드가 작성되었는가?
 - [ ] **테스트 독립성**: 테스트 간에 DB 상태가 공유되어 실행 순서에 따라 실패하는 플레이키(Flaky) 테스트가 없는가?
 
 ---
 
-## 5. DevOps & SRE Review Checklist
+## 7. DevOps & SRE Review Checklist
 - [ ] **시크릿 누출**: API Key, DB 비밀번호, JWT Secret이 하드코딩되지 않고 환경 변수로 분리되었는가?
 - [ ] **리소스 제한 (Resource Limits)**: 컨테이너의 CPU/메모리 Limit & Request가 설정되어 있는가?
 - [ ] **그레이스풀 셧다운 (Graceful Shutdown)**: 프로세스 종료 시그널(SIGTERM) 수신 시 처리 중인 요청을 안전하게 마무리하는가?
