@@ -134,10 +134,10 @@ def load_file_safely(path: str) -> str:
 
 
 def call_github_models(token: str, system_prompt: str, user_prompt: str) -> str:
-    # GitHub Models (Free AI inference using default GITHUB_TOKEN)
-    url = "https://models.inference.ai.azure.com/chat/completions"
+    # GitHub Models (Free AI inference using GITHUB_TOKEN)
+    url = "https://models.github.ai/inference/chat/completions"
     payload = {
-        "model": "gpt-4o-mini",
+        "model": "openai/gpt-4o-mini",
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt}
@@ -153,11 +153,17 @@ def call_github_models(token: str, system_prompt: str, user_prompt: str) -> str:
     req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     try:
         with urllib.request.urlopen(req, timeout=90) as resp:
-            body = resp.read().decode("utf-8")
+            raw_body = resp.read()
+            if not raw_body:
+                print("[-] GitHub Models returned empty response body.")
+                return ""
+            body = raw_body.decode("utf-8")
             parsed = json.loads(body)
             choices = parsed.get("choices", [])
             if choices:
                 return choices[0].get("message", {}).get("content", "")
+    except json.JSONDecodeError as e:
+        print(f"[-] GitHub Models JSON Decode Error: {e}")
     except urllib.error.HTTPError as e:
         print(f"[-] GitHub Models HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
     except Exception as e:
@@ -216,13 +222,19 @@ def call_gemini_api(api_key: str, system_prompt: str, user_prompt: str) -> str:
     req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     try:
         with urllib.request.urlopen(req, timeout=90) as resp:
-            body = resp.read().decode("utf-8")
+            raw_body = resp.read()
+            if not raw_body:
+                print("[-] Gemini API returned empty response body.")
+                return ""
+            body = raw_body.decode("utf-8")
             parsed = json.loads(body)
             candidates = parsed.get("candidates", [])
             if candidates:
                 parts = candidates[0].get("content", {}).get("parts", [])
                 if parts:
                     return parts[0].get("text", "")
+    except json.JSONDecodeError as e:
+        print(f"[-] Gemini API JSON Decode Error: {e}")
     except urllib.error.HTTPError as e:
         print(f"[-] Gemini API HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
     except Exception as e:
@@ -253,11 +265,17 @@ def call_openai_api(api_key: str, system_prompt: str, user_prompt: str) -> str:
     )
     try:
         with urllib.request.urlopen(req, timeout=90) as resp:
-            body = resp.read().decode("utf-8")
+            raw_body = resp.read()
+            if not raw_body:
+                print("[-] OpenAI API returned empty response body.")
+                return ""
+            body = raw_body.decode("utf-8")
             parsed = json.loads(body)
             choices = parsed.get("choices", [])
             if choices:
                 return choices[0].get("message", {}).get("content", "")
+    except json.JSONDecodeError as e:
+        print(f"[-] OpenAI API JSON Decode Error: {e}")
     except urllib.error.HTTPError as e:
         print(f"[-] OpenAI API HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
     except Exception as e:
