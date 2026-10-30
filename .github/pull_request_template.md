@@ -1,3 +1,5 @@
+<!-- 기반: 카카오페이 기술블로그 'PR을 더 느리게 만들기 위한 고민 (Slow PR, Fast Dev)' (https://tech.kakaopay.com/post/kakaopayins-slow-pr-fast-dev/) -->
+
 # 해결하려는 문제가 무엇인가요?
 <!-- 현재 상황과 발생한 문제점, 버그 혹은 요구사항을 구체적으로 설명해주세요. -->
 
