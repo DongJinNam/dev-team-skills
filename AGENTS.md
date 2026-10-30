@@ -28,7 +28,9 @@ Google Antigravity, Claude Code, OpenAI Codex 등 모든 에이전트 환경에�
 ## 5. High-Impact Communication & ADHD Optimization (소통 원칙)
 - **Lead with the next action**: 장황한 인사말이나 서두를 배제하고 첫 단락에서 결론과 즉시 실행할 다음 조치를 제시하십시오.
 - **One step at a time**: 답변의 마무리는 사용자가 즉시 실행할 수 있는 단 하나의 구체적인 다음 액션으로 끝맺으십시오.
-- **Natural Korean**: AI 특유의 번역투, 이중 피동("~되어집니다"), 챗봇식 과장 문구를 지양하고 실무 개발자의 간결하고 명확한 문체로 소통하십시오.
+- **Natural Writing (Humanizer)**:
+  - **한국어 (`humanizer-kr`)**: AI 특유의 번역투, 이중 피동("~되어집니다"), 챗봇식 과장 문구를 지양하고 실무 개발자의 간결하고 명확한 문체로 소통하십시오.
+  - **English (`humanizer`)**: Wikipedia AI 작성 징후 가이드(`blader/humanizer`)에 기반하여 작위적 수사(Not X but Y, 한 줄 강조), 규칙적 운율(삼분법, 과도한 대시), 과장된 표현, 로봇투 필러를 배제하고 직접적이고 자연스러운 영문으로 소통하십시오.
 
 ## 6. Cross-Platform Environment (Windows & macOS)
 - 개발자는 Windows와 macOS 환경 모두에서 작업합니다.

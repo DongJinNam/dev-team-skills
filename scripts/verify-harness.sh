@@ -87,6 +87,21 @@ else
     echo "  ✅ All 5 rule files are strictly synchronized!"
 fi
 
+if [ -f "GEMINI_en.md" ]; then
+    GEMINI_EN_HASH=$(get_hash GEMINI_en.md)
+    CLAUDE_EN_HASH=$(get_hash CLAUDE_en.md)
+    CODEX_EN_HASH=$(get_hash CODEX_en.md)
+    AGENTS_EN_HASH=$(get_hash AGENTS_en.md)
+    RULES_AGENTS_EN_HASH=$(get_hash rules/AGENTS_en.md)
+
+    if [ "${GEMINI_EN_HASH}" != "${CLAUDE_EN_HASH}" ] || [ "${GEMINI_EN_HASH}" != "${CODEX_EN_HASH}" ] || [ "${GEMINI_EN_HASH}" != "${AGENTS_EN_HASH}" ] || [ "${GEMINI_EN_HASH}" != "${RULES_AGENTS_EN_HASH}" ]; then
+        echo "❌ Error: English rule files are out of sync! GEMINI_en, CLAUDE_en, CODEX_en, AGENTS_en, and rules/AGENTS_en.md must remain identical."
+        FAILED=1
+    else
+        echo "  ✅ All 5 English rule files are strictly synchronized!"
+    fi
+fi
+
 echo ""
 echo "========================================"
 if [ ${FAILED} -ne 0 ]; then
