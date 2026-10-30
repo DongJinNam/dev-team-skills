@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
   Cross-platform verification harness script for Windows (PowerShell).
-  Verifies plugin manifest, SKILL.md frontmatter, and rule files synchronization.
+  Verifies plugin manifests, SKILL.md frontmatter, and rule files synchronization.
 #>
 
 $ErrorActionPreference = "Stop"
@@ -15,29 +15,42 @@ Push-Location $RepoRoot
 
 $Failed = $false
 
-# 1. Verify plugin.json
-Write-Host "`n[1/3] Checking plugin.json manifest..." -ForegroundColor Yellow
-$PluginPath = Join-Path $RepoRoot "plugin.json"
-if (-not (Test-Path $PluginPath)) {
-    Write-Host "❌ Error: plugin.json not found at repo root!" -ForegroundColor Red
-    $Failed = $true
-} else {
-    try {
-        $PluginContent = Get-Content -Raw -Path $PluginPath | ConvertFrom-Json
-        if (-not $PluginContent.name -or -not $PluginContent.description) {
-            Write-Host "❌ Error: plugin.json missing required 'name' or 'description'!" -ForegroundColor Red
-            $Failed = $true
-        } else {
-            Write-Host "  ✅ plugin.json is valid (Name: $($PluginContent.name), Version: $($PluginContent.version))" -ForegroundColor Green
-        }
-    } catch {
-        Write-Host "❌ Error: Failed to parse plugin.json as valid JSON: $_" -ForegroundColor Red
+# 1. Verify plugin & marketplace manifests (Antigravity, Claude Code, Codex)
+Write-Host "`n[1/4] Checking plugin & marketplace manifests..." -ForegroundColor Yellow
+$Manifests = @(
+    @{ Path = "plugin.json"; Required = @("name", "description") },
+    @{ Path = ".claude-plugin/plugin.json"; Required = @("name", "description") },
+    @{ Path = ".claude-plugin/marketplace.json"; Required = @("name", "plugins") },
+    @{ Path = ".codex-plugin/plugin.json"; Required = @("name", "description") }
+)
+
+foreach ($m in $Manifests) {
+    $fullPath = Join-Path $RepoRoot $m.Path
+    if (-not (Test-Path $fullPath)) {
+        Write-Host "❌ Error: $($m.Path) not found!" -ForegroundColor Red
         $Failed = $true
+    } else {
+        try {
+            $content = Get-Content -Raw -Path $fullPath | ConvertFrom-Json
+            $missing = @()
+            foreach ($req in $m.Required) {
+                if (-not $content.$req) { $missing += $req }
+            }
+            if ($missing.Count -gt 0) {
+                Write-Host "❌ Error: $($m.Path) missing required fields: $($missing -join ', ')" -ForegroundColor Red
+                $Failed = $true
+            } else {
+                Write-Host "  ✅ $($m.Path) is valid" -ForegroundColor Green
+            }
+        } catch {
+            Write-Host "❌ Error: Failed to parse $($m.Path) as JSON: $_" -ForegroundColor Red
+            $Failed = $true
+        }
     }
 }
 
 # 2. Verify all SKILL.md frontmatter
-Write-Host "`n[2/3] Checking SKILL.md frontmatters in skills/..." -ForegroundColor Yellow
+Write-Host "`n[2/4] Checking SKILL.md frontmatters in skills/..." -ForegroundColor Yellow
 $SkillFiles = Get-ChildItem -Path (Join-Path $RepoRoot "skills") -Filter "SKILL.md" -Recurse
 if ($SkillFiles.Count -eq 0) {
     Write-Host "❌ Error: No SKILL.md files found in skills/!" -ForegroundColor Red
@@ -57,9 +70,9 @@ if ($SkillFiles.Count -eq 0) {
     }
 }
 
-# 3. Verify rule files synchronization (GEMINI, CLAUDE, CODEX, AGENTS)
-Write-Host "`n[3/3] Checking Constitution rule files sync..." -ForegroundColor Yellow
-$RuleFiles = @("GEMINI.md", "CLAUDE.md", "CODEX.md", "AGENTS.md")
+# 3. Verify rule files synchronization (GEMINI, CLAUDE, CODEX, AGENTS, rules/AGENTS.md)
+Write-Host "`n[3/4] Checking Constitution rule files sync..." -ForegroundColor Yellow
+$RuleFiles = @("GEMINI.md", "CLAUDE.md", "CODEX.md", "AGENTS.md", "rules/AGENTS.md")
 $Hashes = @{}
 foreach ($rf in $RuleFiles) {
     $rfPath = Join-Path $RepoRoot $rf
@@ -81,7 +94,7 @@ foreach ($rf in $RuleFiles) {
 }
 
 if (-not $Failed) {
-    Write-Host "  ✅ All 4 rule files are strictly synchronized!" -ForegroundColor Green
+    Write-Host "  ✅ All 5 rule files (including plugin rules/AGENTS.md) are strictly synchronized!" -ForegroundColor Green
 }
 
 Pop-Location

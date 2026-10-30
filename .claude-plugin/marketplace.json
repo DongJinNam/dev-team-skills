@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "dev-team-skills-marketplace",
+  "description": "Pragmatic AI engineering squad, code review, and harness engineering skills catalog for Claude Code",
+  "version": "1.1.0",
+  "owner": {
+    "name": "DongJinNam",
+    "url": "https://github.com/DongJinNam"
+  },
+  "plugins": [
+    {
+      "name": "dev-team-skills",
+      "description": "Cross-platform pragmatic engineering squad (8 roles), brainstorming, code review, AI agent harness engineering & ponytail minimalism.",
+      "version": "1.1.0",
+      "source": "./",
+      "author": {
+        "name": "DongJinNam"
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Cross-platform verification harness script for macOS & Linux (Bash).
-# Verifies plugin manifest, SKILL.md frontmatter, and rule files synchronization.
+# Verifies plugin manifests, SKILL.md frontmatter, and rule files synchronization.
 #
 
 set -euo pipefail
@@ -16,25 +16,28 @@ echo "========================================"
 
 FAILED=0
 
-# 1. Verify plugin.json
+# 1. Verify plugin & marketplace manifests
 echo ""
-echo "[1/3] Checking plugin.json manifest..."
-if [ ! -f "plugin.json" ]; then
-    echo "❌ Error: plugin.json not found at repo root!"
-    FAILED=1
-else
-    # Check for name and description using grep
-    if grep -q '"name":' plugin.json && grep -q '"description":' plugin.json; then
-        echo "  ✅ plugin.json is present and has required fields"
-    else
-        echo "❌ Error: plugin.json missing required 'name' or 'description'!"
+echo "[1/4] Checking plugin & marketplace manifests..."
+MANIFESTS=("plugin.json" ".claude-plugin/plugin.json" ".claude-plugin/marketplace.json" ".codex-plugin/plugin.json")
+
+for m in "${MANIFESTS[@]}"; do
+    if [ ! -f "$m" ]; then
+        echo "❌ Error: $m not found!"
         FAILED=1
+    else
+        if grep -q '"name":' "$m"; then
+            echo "  ✅ $m is present and valid"
+        else
+            echo "❌ Error: $m missing 'name' field!"
+            FAILED=1
+        fi
     fi
-fi
+done
 
 # 2. Verify all SKILL.md frontmatter
 echo ""
-echo "[2/3] Checking SKILL.md frontmatters in skills/..."
+echo "[2/4] Checking SKILL.md frontmatters in skills/..."
 SKILL_FILES=$(find skills -name "SKILL.md")
 if [ -z "${SKILL_FILES}" ]; then
     echo "❌ Error: No SKILL.md files found in skills/!"
@@ -50,9 +53,9 @@ else
     done
 fi
 
-# 3. Verify rule files synchronization (GEMINI, CLAUDE, CODEX, AGENTS)
+# 3. Verify rule files synchronization (GEMINI, CLAUDE, CODEX, AGENTS, rules/AGENTS.md)
 echo ""
-echo "[3/3] Checking Constitution rule files sync..."
+echo "[3/4] Checking Constitution rule files sync..."
 
 get_hash() {
     if command -v sha256sum >/dev/null 2>&1; then
@@ -69,17 +72,19 @@ GEMINI_HASH=$(get_hash GEMINI.md)
 CLAUDE_HASH=$(get_hash CLAUDE.md)
 CODEX_HASH=$(get_hash CODEX.md)
 AGENTS_HASH=$(get_hash AGENTS.md)
+RULES_AGENTS_HASH=$(get_hash rules/AGENTS.md)
 
-echo "  GEMINI.md : ${GEMINI_HASH}"
-echo "  CLAUDE.md : ${CLAUDE_HASH}"
-echo "  CODEX.md  : ${CODEX_HASH}"
-echo "  AGENTS.md : ${AGENTS_HASH}"
+echo "  GEMINI.md       : ${GEMINI_HASH}"
+echo "  CLAUDE.md       : ${CLAUDE_HASH}"
+echo "  CODEX.md        : ${CODEX_HASH}"
+echo "  AGENTS.md       : ${AGENTS_HASH}"
+echo "  rules/AGENTS.md : ${RULES_AGENTS_HASH}"
 
-if [ "${GEMINI_HASH}" != "${CLAUDE_HASH}" ] || [ "${GEMINI_HASH}" != "${CODEX_HASH}" ] || [ "${GEMINI_HASH}" != "${AGENTS_HASH}" ]; then
-    echo "❌ Error: Rule files are out of sync! GEMINI, CLAUDE, CODEX, and AGENTS must remain identical."
+if [ "${GEMINI_HASH}" != "${CLAUDE_HASH}" ] || [ "${GEMINI_HASH}" != "${CODEX_HASH}" ] || [ "${GEMINI_HASH}" != "${AGENTS_HASH}" ] || [ "${GEMINI_HASH}" != "${RULES_AGENTS_HASH}" ]; then
+    echo "❌ Error: Rule files are out of sync! GEMINI, CLAUDE, CODEX, AGENTS, and rules/AGENTS.md must remain identical."
     FAILED=1
 else
-    echo "  ✅ All 4 rule files are strictly synchronized!"
+    echo "  ✅ All 5 rule files are strictly synchronized!"
 fi
 
 echo ""
