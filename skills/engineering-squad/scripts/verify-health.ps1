@@ -10,13 +10,22 @@
 
 .PARAMETER DelaySeconds
     재시도 간격(초) (기본값: 3)
+
+.PARAMETER SkipCertificateCheck
+    사설 인증서(Self-signed SSL) 사용 시 인증서 유효성 검증을 건너뜁니다.
 #>
 
 param(
     [string]$Url = "http://localhost:8080/health",
     [int]$MaxRetries = 10,
-    [int]$DelaySeconds = 3
+    [int]$DelaySeconds = 3,
+    [switch]$SkipCertificateCheck
 )
+
+if ($SkipCertificateCheck) {
+    Write-Host "[INFO] SSL certificate validation is bypassed (-SkipCertificateCheck)." -ForegroundColor Yellow
+    [System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
+}
 
 Write-Host "==> Checking health endpoint: $Url" -ForegroundColor Cyan
 
