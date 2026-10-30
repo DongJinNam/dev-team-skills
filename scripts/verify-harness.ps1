@@ -97,6 +97,32 @@ if (-not $Failed) {
     Write-Host "  ✅ All 5 rule files (including plugin rules/AGENTS.md) are strictly synchronized!" -ForegroundColor Green
 }
 
+# 3b. Verify English Constitution rule files if present
+$EnglishRuleFiles = @("GEMINI_en.md", "CLAUDE_en.md", "CODEX_en.md", "AGENTS_en.md", "rules/AGENTS_en.md")
+if (Test-Path (Join-Path $RepoRoot "GEMINI_en.md")) {
+    $EnHashes = @{}
+    foreach ($erf in $EnglishRuleFiles) {
+        $erfPath = Join-Path $RepoRoot $erf
+        if (Test-Path $erfPath) {
+            $EnHashes[$erf] = (Get-FileHash -Algorithm SHA256 -Path $erfPath).Hash
+            Write-Host "  $erf : $($EnHashes[$erf])" -ForegroundColor DarkGray
+        } else {
+            Write-Host "❌ Error: Missing English rule file $erf" -ForegroundColor Red
+            $Failed = $true
+        }
+    }
+    $BaseEnHash = $EnHashes["GEMINI_en.md"]
+    foreach ($erf in $EnglishRuleFiles) {
+        if ($EnHashes[$erf] -ne $BaseEnHash) {
+            Write-Host "❌ Error: $erf is out of sync with GEMINI_en.md!" -ForegroundColor Red
+            $Failed = $true
+        }
+    }
+    if (-not $Failed) {
+        Write-Host "  ✅ All 5 English rule files are strictly synchronized!" -ForegroundColor Green
+    }
+}
+
 Pop-Location
 
 Write-Host "`n========================================" -ForegroundColor Cyan

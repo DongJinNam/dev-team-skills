@@ -1,59 +1,62 @@
 # dev-team-skills
 
-> Andrej Karpathy의 엔지니어링 철학과 실용주의 시니어 개발 원칙을 기반으로 구축된 크로스 플랫폼(Windows/macOS) AI 코딩 에이전트 스킬 & 룰 모음 저장소입니다.  
-> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 8개 전문 직무(Product Planner, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE)로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
+[English](README.md) | [한국어](README_ko.md)
+
+> A cross-platform (Windows & macOS) collection of AI coding agent skills and rules, inspired by Andrej Karpathy's engineering philosophy and practical senior engineering principles.  
+> It helps you run an 8-role engineering squad (Product Planner, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE) across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
 
 ---
 
-## 🌟 왜 다른 스킬들보다 압도적으로 우수한가? (Why This Is Superior)
+## 🌟 Why is dev-team-skills better?
 
-일반적인 프롬프트 모음이나 단편적인 에이전트 스킬들과 비교했을 때, `dev-team-skills`는 다음과 같은 명확한 비교 우위를 가집니다:
+Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives you clear advantages:
 
-| 비교 항목 | 일반 에이전트 프롬프트 / 룰 모음 | **dev-team-skills** |
+| Feature | Typical Prompt / Rule Lists | **dev-team-skills** |
 | :--- | :--- | :--- |
-| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **기획부터 AI 하네스, 개발, QA, 배포, 관측성까지 8인 스쿼드 전 주기 커버** |
-| **품질 보증 방식** | LLM의 "완료했습니다"라는 환각에 의존 | **결정론적 평가 하네스(`verify-harness`) 및 자가 치유(Self-healing) 루프** |
-| **확장성 & 생태계** | 로컬 텍스트 복사 및 수동 설정 | **Antigravity, Claude Code, OpenAI Codex 3대 마켓플레이스 규격 100% 호환** |
-| **실용주의 철학** | 불필요한 보일러플레이트 및 라이브러리 남용 | **Andrej Karpathy 원칙 & Ponytail (Standard Library First, YAGNI, 최소 코드)** |
-| **협업 & 인지 부하** | 장황하고 피로한 AI 번역투 설명 | **카카오페이 스타일 PR 템플릿, 결론 우선(ADHD 최적화), 자연스러운 한국어(Humanizer)** |
-| **크로스 플랫폼** | 특정 OS 명령어(Linux 전용 curl/bash)로 실패 빈번 | **Windows(PowerShell) & macOS/Linux(Bash) 동등 지원 및 CI 자동 검증** |
+| **Team Coverage** | Only single-coder or simple pair programming | **Full lifecycle squad of 8 roles: planning, AI harness, dev, QA, deployment, and SRE** |
+| **Quality Check** | Relies on LLM hallucination ("I finished it") | **Deterministic evaluation harness (`verify-harness`) and self-healing loop** |
+| **Packaging & Ecosystem**| Manual copy-pasting of text files | **100% compliant with Antigravity, Claude Code, and OpenAI Codex marketplaces** |
+| **Engineering Mindset** | Unnecessary boilerplate and too many libraries | **Karpathy principles & Ponytail (Standard Library First, YAGNI, minimum code)** |
+| **Communication** | Long, robotic, and tiring AI explanations | **Kakao Pay style PR template, next-action-first (ADHD-friendly), natural tone** |
+| **Cross-Platform** | Fails often on Windows due to Linux-only commands | **Equal support for Windows (PowerShell) and macOS/Linux (Bash) with CI tests** |
 
 ---
 
-## 🏛️ Constitution & Principles (기본 행동 헌법)
+## 🏛️ Constitution & Principles
 
 [`GEMINI.md`](./GEMINI.md) | [`CLAUDE.md`](./CLAUDE.md) | [`CODEX.md`](./CODEX.md) | [`AGENTS.md`](./AGENTS.md)
 
-1. **Don't assume. Don't hide confusion. (추측 및 침묵 금지)**
-   - 모호한 요구사항은 독단적으로 판단하지 않고 명확한 트레이드오프와 함께 사용자에게 확인받습니다.
+1. **Don't assume. Don't hide confusion.**
+   - Never write code based on assumptions if requirements are unclear. Show trade-offs and confirm with the user.
 2. **Minimum code & Standard library first. (Ponytail & YAGNI)**
-   - "최고의 코드는 작성하지 않은 코드입니다." 외부 라이브러리 추가 전 언어 내장 표준 라이브러리와 네이티브 플랫폼 기능으로 해결합니다.
-3. **Touch only what you must. Clean up your mess. (영역 한정 및 정리)**
-   - 작업과 무관한 파일의 임의 수정(오지랖 리팩토링)을 금지하고 임시 파일은 작업 완료 전 깨끗이 정리합니다.
-4. **Define success criteria. Loop until verified. (검증 완료 전 종료 금지)**
-   - 완료 전 명확한 성공 검증 기준(DoD)을 수립하고 실제 빌드, 테스트, 헬스체크 명령어를 실행하여 증명합니다.
-5. **High-Impact Communication & ADHD Optimization (소통 최적화)**
-   - 서두의 미사여구를 배제하고 결론과 다음 행동(Lead with next action)을 가장 먼저 제시하며, 1단계 집중을 유도합니다.
+   - "The best code is the code you never wrote." Always try the standard library and native OS tools before adding external packages.
+3. **Touch only what you must. Clean up your mess.**
+   - Do not edit files or reformat code outside your task scope. Clean up temporary scripts and test data before finishing.
+4. **Define success criteria. Loop until verified.**
+   - Define a clear Definition of Done before finishing. Run real build, test, and health check commands to prove your solution works.
+5. **High-Impact Communication & ADHD Optimization**
+   - Skip long greetings. Lead with the conclusion and immediate next action. Focus on one step at a time.
 6. **Cross-Platform Compatibility (Windows & macOS)**
-   - Windows(PowerShell)와 macOS/Linux(Bash) 환경 모두를 지원하는 크로스 플랫폼 스크립트와 명령어를 제공합니다.
+   - Provide tested commands and scripts for both Windows (PowerShell) and macOS/Linux (Bash).
 
 ---
 
-## 📦 스킬 모음 (Skills Collection)
+## 📦 Skills Collection
 
-| 스킬 이름 | 설명 | 주요 특징 |
+| Skill Name | Description | Key Features |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 8인 에이전트 조직화 & 6단계 배포 오케스트레이션 | 기획, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
-| **`brainstorming`** | 제품 기획, 문제 정의 및 체계적 아이디어 도출 | SCAMPER, HMW, RICE 점수표, 린 PRD 템플릿, `research` 서브에이전트 연계 |
-| **`harness-engineering`** | AI 에이전트 평가 하네스 및 마켓플레이스 패키징 | 결정론적 오라클, 3대 Marketplace 규격(`plugin.json`, `.claude-plugin`, `.codex-plugin`), 자가 치유 루프 |
-| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 8개 직무 맞춤형 체크리스트 |
-| **`ponytail`** | 극단적 미니멀리즘 시니어 개발자 사고방식 | Standard Library First, 무분별한 래퍼/의존성 제거 |
-| **`humanizer-kr`** | 자연스러운 한국어 테크니컬 라이팅 | AI 번역투, 이중 피동 제거, 의도 보존 윤문 |
-| **`i-have-adhd`** | 인지 과부하 방지 및 초집중 워크플로우 | 결론 우선, 단일 액션 종결, 불필요 곁가지 차단 |
+| **`engineering-squad`** | 8-role agent squad & 6-step deployment pipeline | Clear collaboration across planning, harness, dev, QA, deployment, and SRE |
+| **`brainstorming`** | Product planning, problem definition & idea generation | SCAMPER, HMW, RICE scoring, Lean PRD template, linked with `research` subagent |
+| **`harness-engineering`** | AI agent evaluation harness & marketplace packaging | Deterministic oracles, 3-platform packaging (`plugin.json`, `.claude-plugin`, `.codex-plugin`), self-healing loop |
+| **`code-review`** | High-ROI design pattern reviews by role | 3 severity tiers (🔴Must Fix / 🟡Review Needed / 🟢Suggestion), tailored checklists |
+| **`ponytail`** | Pragmatic senior minimalist mindset | Standard library first, zero bloat, remove unnecessary dependencies |
+| **`humanizer`** | AI prose pattern remover (English) | Strips AI staging, forced triads, empty filler, and robotic formality based on Wikipedia's guide |
+| **`humanizer-kr`** | Natural Korean technical writing | Removes stiff AI translations, fixes awkward passive voice, keeps technical meaning |
+| **`i-have-adhd`** | Focus workflow to prevent cognitive overload | Leads with next action, finishes with one single task, cuts distraction |
 
 ---
 
-## 👥 Engineering Squad: 8개 전문 역할 및 검증 기준
+## 👥 Engineering Squad: 8 Specialized Roles & DoD
 
 ```mermaid
 flowchart TD
@@ -67,33 +70,33 @@ flowchart TD
     DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
 ```
 
-| 역할 | 담당 영역 | 필수 검증 기준 (DoD) |
+| Role | Scope | Required Definition of Done (DoD) |
 | :--- | :--- | :--- |
-| **Product Planner** | 문제 정의, 브레인스토밍, 시장/기술 리서치, 린 PRD 명세 | 린 PRD(가설, MVP 스코프, 인수 조건) 작성 완료 |
-| **AI Agent Engineer** | 에이전트 평가 하네스(Eval) 구축, 도구 스키마, 마켓플레이스 패키징 | 하네스 검증 스크립트 실행 및 통과 리포트 |
-| **Squad Lead** | 요구사항 분해, 인터페이스/계약 정의, 에이전트 간 조율 | E2E 통합 시나리오 통과 |
-| **Frontend** | UI 컴포넌트, 클라이언트 상태, API 연동, 브라우저 인터랙션 | 프로덕션 번들 빌드 (`npm run build`) 통과 |
-| **Backend** | REST/GraphQL API, 도메인 로직, 인증, 에러 핸들링 | 단위/통합 테스트 통과 & API 응답 확인 |
-| **Data Engineer** | DB 스키마(DDL), 마이그레이션(Up/Down), 쿼리 튜닝 | 마이그레이션 실행 & 롤백 테스트 검증 |
-| **QA Engineer** | E2E 시나리오 테스트, 엣지 케이스/부정 테스트 | 테스트 스위트 100% 통과 |
-| **DevOps** | Dockerfile/Compose, 환경 설정(`.env.example`), 배포 스크립트 | 컨테이너 빌드 & `/health` 200 확인 |
-| **SRE** | SLO/SLI 지표, Observability(`/metrics`), 부하 테스트, 장애 복구 | 경량 부하 테스트 통과 & 메트릭 수집 검증 |
+| **Product Planner** | Problem definition, brainstorming, market research, Lean PRD | Lean PRD complete with hypothesis, MVP scope, acceptance criteria |
+| **AI Agent Engineer** | Agent eval harness, tool schemas, marketplace packaging | Verification harness script passes with full green report |
+| **Squad Lead** | Task breakdown, interface contracts, agent coordination | E2E integration scenario passes |
+| **Frontend** | UI components, client state, API calls, browser UI | Production build passes (`npm run build`) with zero type errors |
+| **Backend** | REST/GraphQL APIs, domain logic, auth, error handling | Unit & integration tests pass, API endpoints respond correctly |
+| **Data Engineer** | DB schemas (DDL), migrations (Up/Down), query tuning | Migration and rollback scripts execute and succeed |
+| **QA Engineer** | E2E testing, negative test cases, corner cases | 100% pass on test suite |
+| **DevOps** | Dockerfile/Compose, environment configs (`.env.example`), scripts | Container builds cleanly, `/health` returns HTTP 200 |
+| **SRE** | SLO/SLI metrics, observability (`/metrics`), load testing, recovery | Light load test passes, metrics collection verified |
 
 ---
 
-## 🛍️ 3대 플랫폼 마켓플레이스 패키징 규격 및 하네스 검증
+## 🛍️ Marketplace Packaging & Deterministic Harness
 
-본 저장소는 **Google Antigravity**, **Claude Code**, **OpenAI Codex** 3대 AI 코딩 에이전트 마켓플레이스 규격을 모두 충족하여, 단일 번들 형태로 손쉽게 검색·설치·배포할 수 있습니다:
+This repository supports the packaging standards of **Google Antigravity**, **Claude Code**, and **OpenAI Codex** as a single bundle:
 
-| 플랫폼 | 마켓플레이스 매니페스트 / 카탈로그 규격 | 활성화 헌법 룰 & 스킬 경로 |
+| Platform | Manifest / Catalog File | Active Rule & Skill Paths |
 | :--- | :--- | :--- |
-| **Google Antigravity** | `plugin.json` (메타데이터 및 추천 프롬프트) | `rules/AGENTS.md` & `skills/*/SKILL.md` |
+| **Google Antigravity** | `plugin.json` (metadata & prompts) | `rules/AGENTS.md` & `skills/*/SKILL.md` |
 | **Claude Code** | `.claude-plugin/marketplace.json` & `.claude-plugin/plugin.json` | `CLAUDE.md` & `skills/*/SKILL.md` |
-| **OpenAI Codex** | `.codex-plugin/plugin.json` 및 `plugin.json` | `CODEX.md` / `AGENTS.md` & `skills/*/SKILL.md` |
+| **OpenAI Codex** | `.codex-plugin/plugin.json` & `plugin.json` | `CODEX.md` / `AGENTS.md` & `skills/*/SKILL.md` |
 
-### 🔍 결정론적 하네스 무결성 검증 (Cross-Platform)
+### 🔍 Deterministic Harness Verification (Cross-Platform)
 
-4대 매니페스트 유효성, 전체 스킬 Frontmatter, 그리고 5대 헌법 룰(`GEMINI.md`, `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, `rules/AGENTS.md`)의 SHA-256 동기화 상태를 로컬 및 CI 환경에서 엄격하게 검증합니다:
+We verify all 4 manifests, every SKILL.md frontmatter, and strict SHA-256 hash synchronization across the 5 constitution rule files (`GEMINI.md`, `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, `rules/AGENTS.md`):
 
 ```bash
 # Windows (PowerShell)
@@ -105,92 +108,89 @@ flowchart TD
 
 ---
 
-## 💻 플랫폼별 마켓플레이스 설치 및 사용 가이드
+## 💻 Installation & Usage Guide
 
 ### 1. Google Antigravity
 
-#### 방법 A: Marketplace 카탈로그 또는 UI로 추가 (권장)
-- Antigravity IDE 상단 메뉴의 **Customizations** > **Marketplace** 진입
-- 검색창에 `dev-team-skills`를 검색한 뒤 **[Install]** 클릭
-- 또는 채팅창 내 플러그인 카드를 통해 원클릭 설치:
+#### Option A: Marketplace Catalog or UI (Recommended)
+- Go to **Customizations** > **Marketplace** in Antigravity IDE.
+- Search for `dev-team-skills` and click **[Install]**.
+- Or use the one-click card in chat:
   ```markdown
   <plugin-card catalog-id="dev-team-skills"></plugin-card>
   ```
 
-#### 방법 B: 로컬 전역 플러그인 디렉터리에 설치
+#### Option B: Global Plugins Directory
 ```bash
-# Windows (PowerShell)
-git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plugins/dev-team-skills
-
-# macOS / Linux (Bash)
+# Windows (PowerShell) & macOS/Linux (Bash)
 git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plugins/dev-team-skills
 ```
 
-#### 방법 C: 프로젝트 워크스페이스 전용 플러그인
-- 작업 프로젝트 루트에 `.agents/plugins/dev-team-skills` 경로로 클론하거나 `.agents/plugins.json`에 선언하여 팀원들과 Git으로 공유할 수 있습니다.
+#### Option C: Workspace Plugin
+- Clone into `.agents/plugins/dev-team-skills` in your project root, or declare it in `.agents/plugins.json` to share with your team via Git.
 
 ---
 
 ### 2. Claude Code
 
-#### 방법 A: Claude Code 마켓플레이스 명령어로 등록 및 설치 (공식 권장)
-Claude Code CLI 또는 대화형 프롬프트에서 원격 마켓플레이스로 등록하고 즉시 설치합니다:
+#### Option A: Add Marketplace Catalog (Recommended)
+Add this repo as a remote marketplace catalog and install with one command:
 
 ```bash
-# 1. GitHub 저장소를 Claude Code 마켓플레이스로 추가
+# 1. Add repository as a Claude Code marketplace
 /plugin marketplace add DongJinNam/dev-team-skills
 
-# 2. dev-team-skills 플러그인 원클릭 설치
+# 2. Install dev-team-skills plugin
 /plugin install dev-team-skills
 ```
 
-> **CLI 직접 실행 시**:
+> **Via CLI directly**:
 > ```bash
 > claude plugin marketplace add DongJinNam/dev-team-skills
 > claude plugin install dev-team-skills
 > ```
 
-#### 방법 B: 플러그인 유효성 로컬 검증
+#### Option B: Validate Plugin Locally
 ```bash
 claude plugin validate
 ```
 
-#### 방법 C: 로컬 프로젝트 메모리 연동
-- 대상 프로젝트 루트에 `CLAUDE.md`를 심어 헌법 규칙을 주입하고, `skills/` 디렉터리의 직무 가이드를 호출합니다.
+#### Option C: Project Memory Integration
+- Place `CLAUDE.md` in your project root to load the constitution, and call skills from `skills/`.
 
 ---
 
 ### 3. OpenAI Codex
 
-#### 방법 A: Codex CLI 마켓플레이스 추가 (권장)
+#### Option A: Add to Codex CLI (Recommended)
 ```bash
-# 1. 마켓플레이스 카탈로그 등록
+# 1. Register marketplace catalog
 codex plugin marketplace add DongJinNam/dev-team-skills --ref main
 
-# 2. 플러그인 설치
+# 2. Install plugin
 codex plugin install dev-team-skills
 ```
 
-#### 방법 B: Codex CLI 대화형 관리자
-- Codex CLI 프롬프트에서 `/plugins`를 입력하여 인터랙티브 플러그인 매니저를 열고 `dev-team-skills`를 검색하여 활성화합니다.
+#### Option B: Interactive Plugin Manager
+- In Codex CLI, type `/plugins` to open the interactive manager, search for `dev-team-skills`, and enable it.
 
-#### 방법 C: 프로젝트 코딩 에이전트 지침 연동
-- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 헌법과 8개 직무 가이드라인이 자동으로 컨텍스트에 주입됩니다.
+#### Option C: Project Agent Instructions
+- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and 8-role guidelines when starting a session.
 
 ---
 
-## 📝 Pull Request 템플릿 (카카오페이 스타일)
+## 📝 Pull Request Template (Kakao Pay Style)
 
-카카오페이 기술블로그 [「PR을 더 느리게 만들기 위한 고민 (Slow PR, Fast Dev)」](https://tech.kakaopay.com/post/kakaopayins-slow-pr-fast-dev/)의 실천 철학을 기반으로 한 [`.github/pull_request_template.md`](./.github/pull_request_template.md)가 포함되어 있습니다:
+Included at [`.github/pull_request_template.md`](./.github/pull_request_template.md) (and [`.github/pull_request_template_en.md`](./.github/pull_request_template_en.md)), inspired by the Kakao Pay tech blog post ["Slow PR, Fast Dev"](https://tech.kakaopay.com/post/kakaopayins-slow-pr-fast-dev/):
 
-- `# 해결하려는 문제가 무엇인가요?`
-- `# 왜 해야 하나요?`
-- `# 어떻게 해결했나요?`
-- `# 이 PR의 한계 & 트레이드오프`
-- `# 기존 기능에 미치는 영향`
-- `# Edge Case & 실패 시나리오`
-- `# 검토한 대안과 선택 이유`
-- `# 리뷰 포인트 (파일/영역별 Risk 🔴🟡🟢)`
+- `# What problem does this PR solve?`
+- `# Why do we need this?`
+- `# How was it solved?`
+- `# Limitations & Trade-offs`
+- `# Impact on Existing Features`
+- `# Edge Cases & Failure Scenarios`
+- `# Alternatives Considered & Reason for Choice`
+- `# Review Points (Risk Level by File/Area 🔴🟡🟢)`
 
 ---
 
