@@ -99,6 +99,20 @@ flowchart TD
 
 ---
 
+## 🤖 AI Squad 자동 PR 리뷰 봇 (GitHub Actions)
+
+`main` 브랜치를 타겟으로 PR이 생성되거나 업데이트되면, **8인 엔지니어링 스쿼드의 지침과 3단계 심각도 체계(🔴 필수 / 🟡 확인 요청 / 🟢 권장)**가 적용된 AI 봇이 자동으로 PR에 심층 코드 리뷰를 남깁니다:
+
+- **워크플로우**: [`.github/workflows/ai-code-review.yml`](./.github/workflows/ai-code-review.yml)
+- **리뷰어 스크립트**: [`.github/scripts/ai-pr-reviewer.py`](./.github/scripts/ai-pr-reviewer.py) (0-dependency, Python 표준 라이브러리)
+- **작동 방식**:
+  1. `git diff`와 PR 본문을 추출합니다.
+  2. `skills/code-review`, 8개 직무 체크리스트, 헌법(`GEMINI.md`)을 프롬프트로 주입합니다.
+  3. `GEMINI_API_KEY` (권장: Gemini 1.5 Flash) 또는 `OPENAI_API_KEY`를 통해 고속 분석 후 PR 코멘트로 자동 게시합니다.
+  4. API 키가 설정되지 않은 환경에서도 에러 없이 안전하게 정적 프리플라이트 리포트를 제공합니다.
+
+---
+
 ## 📝 Pull Request 템플릿 (카카오페이 스타일)
 
 카카오페이 기술블로그의 *Slow PR, Fast Dev* 양식을 기반으로 한 [`.github/pull_request_template.md`](./.github/pull_request_template.md)가 포함되어 있습니다:
