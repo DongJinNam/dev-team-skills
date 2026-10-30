@@ -1,0 +1,34 @@
+name: Verify Rules Synchronization
+
+on:
+  push:
+    branches: [ main, feature/** ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-sync:
+    name: Check GEMINI, CLAUDE, CODEX, AGENTS rule consistency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compare Rule Files Hash
+        run: |
+          echo "Checking rule files synchronization..."
+          GEMINI_HASH=$(sha256sum GEMINI.md | awk '{print $1}')
+          CLAUDE_HASH=$(sha256sum CLAUDE.md | awk '{print $1}')
+          CODEX_HASH=$(sha256sum CODEX.md | awk '{print $1}')
+          AGENTS_HASH=$(sha256sum AGENTS.md | awk '{print $1}')
+
+          echo "GEMINI.md : $GEMINI_HASH"
+          echo "CLAUDE.md : $CLAUDE_HASH"
+          echo "CODEX.md  : $CODEX_HASH"
+          echo "AGENTS.md : $AGENTS_HASH"
+
+          if [ "$GEMINI_HASH" != "$CLAUDE_HASH" ] || [ "$GEMINI_HASH" != "$CODEX_HASH" ] || [ "$GEMINI_HASH" != "$AGENTS_HASH" ]; then
+            echo "::error::Rule files are out of sync! Please ensure GEMINI.md, CLAUDE.md, CODEX.md, and AGENTS.md remain identical."
+            exit 1
+          fi
+          echo "All rule files are perfectly synchronized!"
