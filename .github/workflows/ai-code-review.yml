@@ -12,20 +12,15 @@ permissions:
 
 jobs:
   ai-squad-review:
-    name: AI Squad Code Review
-    runs-on: ubuntu-latest
+    name: AI Squad Code Review (Antigravity Self-Hosted)
+    runs-on: [ self-hosted, Windows ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Run AI Code Reviewer
+      - name: Run AI Squad Reviewer via Antigravity Subscription
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -35,4 +30,4 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          python3 .github/scripts/ai-pr-reviewer.py
+          python .github/scripts/ai-pr-reviewer.py

@@ -12,6 +12,8 @@ Applies dev-team-skills:
 import os
 import sys
 import json
+import time
+import shutil
 import subprocess
 import urllib.request
 import urllib.error
@@ -21,6 +23,92 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
+
+
+def find_antigravity_agentapi() -> list:
+    exe = os.environ.get("ANTIGRAVITY_AGENTAPI_EXE")
+    if exe and os.path.exists(exe):
+        return [exe, "agentapi"]
+
+    default_exe = r"C:\Users\ehdwl\AppData\Local\Programs\antigravity\resources\bin\language_server.exe"
+    if os.path.exists(default_exe):
+        return [default_exe, "agentapi"]
+
+    home = os.path.expanduser("~")
+    bat = os.path.join(home, ".gemini", "antigravity", "bin", "agentapi.bat")
+    if os.path.exists(bat):
+        return ["cmd.exe", "/c", bat]
+
+    which = shutil.which("agentapi") or shutil.which("agentapi.bat")
+    if which:
+        return [which]
+
+    return []
+
+
+def call_antigravity_agentapi(system_prompt: str, user_prompt: str) -> str:
+    agentapi_cmd = find_antigravity_agentapi()
+    if not agentapi_cmd:
+        return ""
+
+    # Windows CreateProcess CLI length limit is 32KB.
+    # Keep prompt safely under 12,000 characters to prevent WinError 206.
+    full_prompt = f"{system_prompt}\n\n[코드 변경사항 및 리뷰 요청]\n{user_prompt}"
+    if len(full_prompt) > 12000:
+        full_prompt = full_prompt[:12000] + "\n\n...[Diff truncated to fit Windows CLI limits]..."
+
+    print(f"[*] Calling local Antigravity AgentAPI: {' '.join(agentapi_cmd)}")
+
+    cmd = agentapi_cmd + ["new-conversation", "--model=flash", full_prompt]
+    res = subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace"
+    )
+
+    if res.returncode != 0:
+        print(f"[-] agentapi command failed: {res.stderr}")
+        return ""
+
+    try:
+        data = json.loads(res.stdout)
+        conv_id = data.get("response", {}).get("newConversation", {}).get("conversationId")
+        if not conv_id:
+            return ""
+
+        print(f"[+] Spawned Antigravity review conversation: {conv_id}. Waiting for review generation...")
+        home = os.path.expanduser("~")
+        transcript_path = os.path.join(
+            home, ".gemini", "antigravity", "brain", conv_id, ".system_generated", "logs", "transcript.jsonl"
+        )
+
+        # Poll transcript for up to 90 seconds for agent to complete all tool calls and respond
+        last_content = ""
+        for i in range(90):
+            if os.path.exists(transcript_path):
+                with open(transcript_path, "r", encoding="utf-8") as f:
+                    lines = f.readlines()
+                for line in lines:
+                    try:
+                        step = json.loads(line)
+                        if step.get("source") == "MODEL" and step.get("type") == "PLANNER_RESPONSE":
+                            content = step.get("content", "")
+                            # If model provides text content without pending tool calls, it's the review response
+                            if content and not step.get("tool_calls"):
+                                last_content = content
+                    except json.JSONDecodeError:
+                        continue
+                if last_content:
+                    print(f"[+] Successfully retrieved review from Antigravity ({len(last_content)} chars)")
+                    return last_content
+            time.sleep(1)
+    except Exception as e:
+        print(f"[-] Error waiting for Antigravity review response: {e}")
+
+    return ""
 
 
 def run_cmd(cmd: list) -> str:
@@ -52,9 +140,11 @@ def post_github_comment(pr_number: str, comment_body: str) -> bool:
         print(comment_body)
         return False
 
-    cmd = ["gh", "pr", "comment", str(pr_number), "--body", comment_body]
+    # Use '--body-file -' with standard input to avoid Windows 32KB command-line buffer limits
+    cmd = ["gh", "pr", "comment", str(pr_number), "--body-file", "-"]
     res = subprocess.run(
         cmd,
+        input=comment_body,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
@@ -70,8 +160,8 @@ def post_github_comment(pr_number: str, comment_body: str) -> bool:
 
 
 def call_gemini_api(api_key: str, system_prompt: str, user_prompt: str) -> str:
-    # Use Gemini 1.5 Flash for high speed and generous context window
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    # Use x-goog-api-key header instead of query parameters to avoid logging secrets
+    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
     payload = {
         "contents": [
             {
@@ -87,7 +177,11 @@ def call_gemini_api(api_key: str, system_prompt: str, user_prompt: str) -> str:
         }
     }
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
+    headers = {
+        "Content-Type": "application/json",
+        "x-goog-api-key": api_key
+    }
+    req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     try:
         with urllib.request.urlopen(req, timeout=90) as resp:
             body = resp.read().decode("utf-8")
@@ -201,17 +295,27 @@ Git Diff:
 
     review_result = ""
 
-    if gemini_key:
+    # Priority 1: Local Antigravity Subscription via AgentAPI (Zero API Key needed)
+    if find_antigravity_agentapi():
+        print("[*] Local Antigravity AgentAPI detected. Using Antigravity subscription model...")
+        review_result = call_antigravity_agentapi(system_prompt, user_prompt)
+
+    # Priority 2: Gemini API Key (if provided in GitHub Secrets)
+    if not review_result and gemini_key:
         print("[*] Calling Gemini API for Squad Review...")
         review_result = call_gemini_api(gemini_key, system_prompt, user_prompt)
-    elif openai_key:
+
+    # Priority 3: OpenAI API Key (if provided in GitHub Secrets)
+    if not review_result and openai_key:
         print("[*] Calling OpenAI API for Squad Review...")
         review_result = call_openai_api(openai_key, system_prompt, user_prompt)
-    else:
-        print("[!] Neither GEMINI_API_KEY nor OPENAI_API_KEY was provided.")
+
+    # Priority 4: Pre-flight fallback notice
+    if not review_result:
+        print("[!] No active AI provider (Antigravity AgentAPI, GEMINI_API_KEY, or OPENAI_API_KEY).")
         review_result = f"""### 🤖 AI Engineering Squad Automated Reviewer
 
-> **안내**: 저장소 GitHub Secrets에 `GEMINI_API_KEY` 또는 `OPENAI_API_KEY`가 등록되지 않아 정적 프리플라이트 점검 모드로 동작했습니다.
+> **안내**: Antigravity AgentAPI 또는 외부 API 키가 감지되지 않아 정적 프리플라이트 점검 모드로 동작했습니다.
 
 #### 📋 Pre-flight Automated Check Summary
 - **Target Branch**: `{base_ref}`
@@ -222,11 +326,10 @@ Git Diff:
 ---
 
 #### 💡 Full AI Squad Review 활성화 방법
-저장소의 **Settings > Secrets and variables > Actions**에 아래 Secret 중 하나를 등록하시면 다음 PR 커밋부터 8인 스쿼드의 심층 디자인 패턴 리뷰 및 🔴/🟡/🟢 심각도 분석이 자동으로 게시됩니다:
-- `GEMINI_API_KEY` (권장: Google AI Studio 무료/유료 키)
-- `OPENAI_API_KEY` (OpenAI API 키)
+1. **Antigravity 구독 연동 (추천)**: 로컬 PC를 레포지토리의 Self-hosted Runner로 등록하면 추가 API Key 없이 내 Antigravity 구독으로 자동 리뷰가 생성됩니다.
+2. **클라우드 API Key 등록**: 저장소 **Settings > Secrets and variables > Actions**에 `GEMINI_API_KEY` 또는 `OPENAI_API_KEY` 등록.
 
-**Next Action**: 레포지토리 Secrets에 API 키를 등록하거나, 머지 전 PR 템플릿의 셀프 체크리스트를 최종 확인해 주세요.
+**Next Action**: Self-hosted 러너를 가동하거나 Secrets에 API 키를 등록해 주세요.
 """
 
     if review_result:
