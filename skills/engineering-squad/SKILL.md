@@ -1,20 +1,24 @@
 ---
 name: engineering-squad
 description: >-
-  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, DevOps, SRE), and orchestrating end-to-end service deployments.
+  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, DevOps, SRE), and orchestrating end-to-end service deployments.
 ---
 
 # Engineering Squad & Service Deployment Workflow
 
-이 스킬은 **기획자(Product Planner)**, **AI 에이전트 엔지니어(AI Agent Engineer)**, **프론트엔드**, **백엔드**, **데이터 엔지니어**, **QA 엔지니어**, **DevOps 엔지니어**, **SRE(Site Reliability Engineer)**라는 8개 전문 역할을 서브에이전트 조직으로 구성하여 소프트웨어를 기획·개발하고, 무결성을 검증하며, 고가용성으로 안정 배포할 때 사용하는 표준 실행 지침입니다.
+이 스킬은 **기획자(Product Planner)**, **Product Marketing**, **Finance / FinOps**, **AI 에이전트 엔지니어(AI Agent Engineer)**, **프론트엔드**, **백엔드**, **데이터 엔지니어**, **QA 엔지니어**, **DevOps 엔지니어**, **SRE(Site Reliability Engineer)**라는 10개 전문 역할을 서브에이전트 조직으로 구성하여 소프트웨어를 기획·개발하고, 무결성을 검증하며, 고가용성으로 안정 배포할 때 사용하는 표준 실행 지침입니다.
 
 ---
 
 ## 1. Squad Roles & Responsibilities
 
+10개 전문 역할과 별도로 Squad Lead가 조율합니다. 작업에 필요한 역할만 활성화합니다.
+
 | 역할 | 담당 영역 | 검증 기준 (DoD) |
 | :--- | :--- | :--- |
 | **Product Planner** | 문제 정의, 브레인스토밍, 시장/기술 리서치, 린 PRD & 유저 스토리 명세 | PRD(가설, MVP 스코프, 인수 조건) 작성 완료 |
+| **Product Marketing** | 가치 전달, 정보 위계, 데모·출시 메시지 | 대상·가치·CTA와 주장별 근거, 이해도 검토 완료 |
+| **Finance / FinOps** | 토큰·협업·개발·운영 비용 및 예산 편차 | 실측/추정/미확인 비용표와 절감 대안·품질 영향 보고 |
 | **AI Agent Engineer** | 에이전트 평가 하네스(Eval) 구축, 도구 스키마 검증, 3rd-party Marketplace 패키징 | 하네스 검증 스크립트 실행 및 통과 리포트 |
 | **Squad Lead (Main Agent)** | 요구사항 분해, 인터페이스/계약 정의, 서브에이전트 조율, Karpathy 4원칙 준수 감독 | 엔드투엔드 통합 시나리오 통과 |
 | **Frontend Engineer** | UI 컴포넌트, 클라이언트 상태 관리, API 연동, 브라우저 인터랙션 | 프로덕션 번들 빌드 (`npm run build`) 통과 |
@@ -27,6 +31,14 @@ description: >-
 *세부 프롬프트 및 직무별 지침은 [roles.md](./references/roles.md)를 참조하십시오.*
 
 ---
+
+### 역할 활성화 및 인계
+- 10개 역할은 역량 목록이며 항상 10명을 호출하라는 뜻이 아닙니다. 작은 수정은 Lead가 관점을 겸하고, 독립 산출물이나 비용 위험이 있을 때만 위임합니다.
+- Stage 0: Planner는 출처·날짜·성숙도·적용 가치를 담은 트렌드 근거를 PRD에 기록합니다. Marketing은 대상·가치·CTA를, Finance는 예산·최소 역할 구성·비용 기준선을 정의합니다.
+- Stage 1–2: Lead는 역할별 범위·입력·산출물·검증 기준을 명시합니다. Finance는 추가 위임과 범위 변경의 증분 비용을 점검합니다. 전체 대화 대신 결정·근거·미해결 사항과 파일 경로만 인계합니다.
+- Stage 3: Marketing은 검증된 결과로 이해도와 주장 근거를 검토하고, Finance는 비용 편차와 중복 토론을 점검합니다. 기본 토론은 제안 1회와 반론 1회 후 Lead가 결정합니다. 추가 라운드는 새 근거와 기대 가치를 기록합니다.
+- Stage 4–5: Marketing은 실제 배포 상태를 반영한 출시 초안을, Finance는 최종 비용표와 운영비 전망을 전달합니다. 외부 게시 권한은 별도로 확인합니다.
+- 상세 산출물·계측 부재·예산 초과 처리 기준은 [roles.md](./references/roles.md)의 9–10절을 적용합니다.
 
 ## 2. 6-Stage Execution Pipeline
 

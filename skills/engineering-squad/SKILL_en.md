@@ -1,20 +1,24 @@
 ---
 name: engineering-squad
 description: >-
-  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, DevOps, SRE), and orchestrating end-to-end service deployments.
+  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, DevOps, SRE), and orchestrating end-to-end service deployments.
 ---
 
 # Engineering Squad & Service Deployment Workflow
 
-This skill is the standard execution guide for building, testing, and deploying software. It organizes an AI agent team into 8 specialized roles: **Product Planner**, **AI Agent Engineer**, **Frontend**, **Backend**, **Data Engineer**, **QA Engineer**, **DevOps Engineer**, and **SRE (Site Reliability Engineer)**.
+This skill is the standard execution guide for building, testing, and deploying software. It organizes an AI agent team into 10 specialized roles: **Product Planner**, **Product Marketing**, **Finance / FinOps**, **AI Agent Engineer**, **Frontend**, **Backend**, **Data Engineer**, **QA Engineer**, **DevOps Engineer**, and **SRE (Site Reliability Engineer)**.
 
 ---
 
 ## 1. Squad Roles & Responsibilities
 
+The ten specialist roles are coordinated by the separate Squad Lead. Activate only roles needed for the task.
+
 | Role | Scope | Required Definition of Done (DoD) |
 | :--- | :--- | :--- |
 | **Product Planner** | Problem definition, brainstorming, market research, Lean PRD & user stories | Lean PRD complete with hypothesis, MVP scope, and acceptance criteria |
+| **Product Marketing** | Value communication, information hierarchy, demos and launch messaging | Audience/value/CTA, evidence per claim, comprehension review |
+| **Finance / FinOps** | Token, coordination, development and operating costs; budget variance | Measured/estimated/unknown cost table, savings options and quality impact |
 | **AI Agent Engineer** | Agent eval harness, tool schema checks, 3rd-party marketplace packaging | Verification harness script passes with full green report |
 | **Squad Lead (Main Agent)** | Task breakdown, interface contracts, agent coordination, enforces Karpathy principles | E2E integration scenario passes |
 | **Frontend Engineer** | UI components, client state, API calls, browser UI | Production build passes (`npm run build`) with zero type errors |
@@ -27,6 +31,14 @@ This skill is the standard execution guide for building, testing, and deploying 
 *For detailed prompts and role instructions, see [roles_en.md](./references/roles_en.md).*
 
 ---
+
+### Role activation and handoffs
+- Ten roles are capabilities, not a requirement to spawn ten agents. For small edits the Lead covers these perspectives; delegate only for an independent deliverable or cost risk.
+- Stage 0: Planner records trend sources, dates, maturity, and applicability in the PRD. Marketing defines audience/value/CTA; Finance defines budget, minimum staffing, and cost baseline.
+- Stages 1–2: Lead defines each role's scope, inputs, output, and verification. Finance checks incremental cost before extra delegation or scope changes. Hand off decisions, evidence, open issues, and file paths instead of full conversations.
+- Stage 3: Marketing checks comprehension and claims against verified results; Finance checks variance and duplicate debate. Default to one proposal and one response before the Lead decides. Extra rounds require new evidence and expected value.
+- Stages 4–5: Marketing delivers a launch draft reflecting actual deployment status; Finance delivers final costs and an operating-cost forecast. Check authorization separately before external publication.
+- Apply sections 9–10 of [roles_en.md](./references/roles_en.md) for deliverables, missing telemetry, and budget overruns.
 
 ## 2. 6-Stage Execution Pipeline
 

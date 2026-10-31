@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > A cross-platform (Windows & macOS) collection of AI coding agent skills and rules, inspired by Andrej Karpathy's engineering philosophy and practical senior engineering principles.  
-> It helps you run an 8-role engineering squad (Product Planner, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE) across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
+> It helps you run a 10-role engineering squad (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE) across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
 
 ---
 
@@ -13,7 +13,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 | Feature | Typical Prompt / Rule Lists | **dev-team-skills** |
 | :--- | :--- | :--- |
-| **Team Coverage** | Only single-coder or simple pair programming | **Full lifecycle squad of 8 roles: planning, AI harness, dev, QA, deployment, and SRE** |
+| **Team Coverage** | Only single-coder or simple pair programming | **Full lifecycle squad of 10 roles: planning, marketing, FinOps, AI harness, dev, QA, deployment, and SRE** |
 | **Quality Check** | Relies on LLM hallucination ("I finished it") | **Deterministic evaluation harness (`verify-harness`) and self-healing loop** |
 | **Packaging & Ecosystem**| Manual copy-pasting of text files | **100% compliant with Antigravity, Claude Code, and OpenAI Codex marketplaces** |
 | **Engineering Mindset** | Unnecessary boilerplate and too many libraries | **Karpathy principles & Ponytail (Standard Library First, YAGNI, minimum code)** |
@@ -45,7 +45,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 | Skill Name | Description | Key Features |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 8-role agent squad & 6-step deployment pipeline | Clear collaboration across planning, harness, dev, QA, deployment, and SRE |
+| **`engineering-squad`** | 10-role agent squad & 6-step deployment pipeline | Clear collaboration across planning, harness, dev, QA, deployment, and SRE |
 | **`brainstorming`** | Product planning, problem definition & idea generation | SCAMPER, HMW, RICE scoring, Lean PRD template, linked with `research` subagent |
 | **`harness-engineering`** | AI agent evaluation harness & marketplace packaging | Deterministic oracles, 3-platform packaging (`plugin.json`, `.claude-plugin`, `.codex-plugin`), self-healing loop |
 | **`code-review`** | High-ROI design pattern reviews by role | 3 severity tiers (🔴Must Fix / 🟡Review Needed / 🟢Suggestion), tailored checklists |
@@ -56,7 +56,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 ---
 
-## 👥 Engineering Squad: 8 Specialized Roles & DoD
+## 👥 Engineering Squad: 10 Specialized Roles & DoD
 
 ```mermaid
 flowchart TD
@@ -70,9 +70,13 @@ flowchart TD
     DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
 ```
 
+The ten specialist roles are coordinated by the separate Squad Lead. Activate only roles needed for the task.
+
 | Role | Scope | Required Definition of Done (DoD) |
 | :--- | :--- | :--- |
 | **Product Planner** | Problem definition, brainstorming, market research, Lean PRD | Lean PRD complete with hypothesis, MVP scope, acceptance criteria |
+| **Product Marketing** | Value proposition, readable demos and launch drafts | Audience, CTA, evidence and comprehension review |
+| **Finance / FinOps** | Token, coordination, development and operating costs | Cost status, variance and actionable savings |
 | **AI Agent Engineer** | Agent eval harness, tool schemas, marketplace packaging | Verification harness script passes with full green report |
 | **Squad Lead** | Task breakdown, interface contracts, agent coordination | E2E integration scenario passes |
 | **Frontend** | UI components, client state, API calls, browser UI | Production build passes (`npm run build`) with zero type errors |
@@ -175,7 +179,7 @@ codex plugin install dev-team-skills
 - In Codex CLI, type `/plugins` to open the interactive manager, search for `dev-team-skills`, and enable it.
 
 #### Option C: Project Agent Instructions
-- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and 8-role guidelines when starting a session.
+- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and 10-role guidelines when starting a session.
 
 ---
 

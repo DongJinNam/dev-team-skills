@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > Andrej Karpathy의 엔지니어링 철학과 실용주의 시니어 개발 원칙을 기반으로 구축된 크로스 플랫폼(Windows/macOS) AI 코딩 에이전트 스킬 & 룰 모음 저장소입니다.  
-> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 8개 전문 직무(Product Planner, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE)로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
+> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 10개 전문 직무(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE)로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
 
 ---
 
@@ -13,7 +13,7 @@
 
 | 비교 항목 | 일반 에이전트 프롬프트 / 룰 모음 | **dev-team-skills** |
 | :--- | :--- | :--- |
-| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **기획부터 AI 하네스, 개발, QA, 배포, 관측성까지 8인 스쿼드 전 주기 커버** |
+| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **기획, 마케팅, 재무부터 AI 하네스, 개발, QA, 배포, 관측성까지 10개 역할 스쿼드 전 주기 커버** |
 | **품질 보증 방식** | LLM의 "완료했습니다"라는 환각에 의존 | **결정론적 평가 하네스(`verify-harness`) 및 자가 치유(Self-healing) 루프** |
 | **확장성 & 생태계** | 로컬 텍스트 복사 및 수동 설정 | **Antigravity, Claude Code, OpenAI Codex 3대 마켓플레이스 규격 100% 호환** |
 | **실용주의 철학** | 불필요한 보일러플레이트 및 라이브러리 남용 | **Andrej Karpathy 원칙 & Ponytail (Standard Library First, YAGNI, 최소 코드)** |
@@ -45,10 +45,10 @@
 
 | 스킬 이름 | 설명 | 주요 특징 |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 8인 에이전트 조직화 & 6단계 배포 오케스트레이션 | 기획, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
+| **`engineering-squad`** | 10개 역할 기반 에이전트 조직화 & 6단계 배포 오케스트레이션 | 기획, 마케팅, 재무, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
 | **`brainstorming`** | 제품 기획, 문제 정의 및 체계적 아이디어 도출 | SCAMPER, HMW, RICE 점수표, 린 PRD 템플릿, `research` 서브에이전트 연계 |
 | **`harness-engineering`** | AI 에이전트 평가 하네스 및 마켓플레이스 패키징 | 결정론적 오라클, 3대 Marketplace 규격(`plugin.json`, `.claude-plugin`, `.codex-plugin`), 자가 치유 루프 |
-| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 8개 직무 맞춤형 체크리스트 |
+| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 10개 직무 맞춤형 체크리스트 |
 | **`ponytail`** | 극단적 미니멀리즘 시니어 개발자 사고방식 | Standard Library First, 무분별한 래퍼/의존성 제거 |
 | **`humanizer`** | 영문 AI 문체 패턴 제거 (English) | Wikipedia AI 작성 징후 가이드 기반 작위적 수사, 삼분법, 과장, 로봇투 제거 |
 | **`humanizer-kr`** | 자연스러운 한국어 테크니컬 라이팅 | AI 번역투, 이중 피동 제거, 의도 보존 윤문 |
@@ -56,7 +56,7 @@
 
 ---
 
-## 👥 Engineering Squad: 8개 전문 역할 및 검증 기준
+## 👥 Engineering Squad: 10개 전문 역할 및 검증 기준
 
 ```mermaid
 flowchart TD
@@ -70,9 +70,13 @@ flowchart TD
     DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
 ```
 
+10개 전문 역할과 별도로 Squad Lead가 조율합니다. 작업에 필요한 역할만 활성화합니다.
+
 | 역할 | 담당 영역 | 필수 검증 기준 (DoD) |
 | :--- | :--- | :--- |
 | **Product Planner** | 문제 정의, 브레인스토밍, 시장/기술 리서치, 린 PRD 명세 | 린 PRD(가설, MVP 스코프, 인수 조건) 작성 완료 |
+| **Product Marketing** | 한눈에 이해되는 가치·데모·출시 초안 | 대상·CTA·주장 근거·이해도 검토 |
+| **Finance / FinOps** | 토큰·커뮤니케이션·개발·운영 비용 | 비용 상태·예산 편차·절감 대안 |
 | **AI Agent Engineer** | 에이전트 평가 하네스(Eval) 구축, 도구 스키마, 마켓플레이스 패키징 | 하네스 검증 스크립트 실행 및 통과 리포트 |
 | **Squad Lead** | 요구사항 분해, 인터페이스/계약 정의, 에이전트 간 조율 | E2E 통합 시나리오 통과 |
 | **Frontend** | UI 컴포넌트, 클라이언트 상태, API 연동, 브라우저 인터랙션 | 프로덕션 번들 빌드 (`npm run build`) 통과 |
@@ -178,7 +182,7 @@ codex plugin install dev-team-skills
 - Codex CLI 프롬프트에서 `/plugins`를 입력하여 인터랙티브 플러그인 매니저를 열고 `dev-team-skills`를 검색하여 활성화합니다.
 
 #### 방법 C: 프로젝트 코딩 에이전트 지침 연동
-- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 헌법과 8개 직무 가이드라인이 자동으로 컨텍스트에 주입됩니다.
+- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 헌법과 10개 직무 가이드라인이 자동으로 컨텍스트에 주입됩니다.
 
 ---
 
