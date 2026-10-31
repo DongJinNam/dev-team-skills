@@ -53,3 +53,10 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 <!-- Update to PASS or BLOCKED only after independent review. -->
 - [ ] Independent security PASS matches the latest head and merge inputs.
 - [ ] Required evidence is complete and no unresolved merge blockers remain.
+
+
+## Compliance Review
+- Reviewer / applicable Korean or U.S. IT requirements / official sources:
+- Findings and actions, or N/A rationale:
+- Disposition: PENDING
+<!-- Use PASS / BLOCKED / N/A with evidence after reviewing applicability. -->

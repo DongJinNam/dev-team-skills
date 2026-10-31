@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > Andrej Karpathy의 엔지니어링 철학과 실용주의 시니어 개발 원칙을 기반으로 구축된 크로스 플랫폼(Windows/macOS) AI 코딩 에이전트 스킬 & 룰 모음 저장소입니다.  
-> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 11개 전문 직무(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, DevOps, SRE)로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
+> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 12개 전문 직무(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE)로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
 
 ---
 
@@ -13,7 +13,7 @@
 
 | 비교 항목 | 일반 에이전트 프롬프트 / 룰 모음 | **dev-team-skills** |
 | :--- | :--- | :--- |
-| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **기획, 마케팅, 재무부터 AI 하네스, 개발, QA, 배포, 관측성까지 11개 역할 스쿼드 전 주기 커버** |
+| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **기획, 마케팅, 재무부터 AI 하네스, 개발, QA, 배포, 관측성까지 12개 역할 스쿼드 전 주기 커버** |
 | **품질 보증 방식** | LLM의 "완료했습니다"라는 환각에 의존 | **결정론적 평가 하네스(`verify-harness`) 및 자가 치유(Self-healing) 루프** |
 | **확장성 & 생태계** | 로컬 텍스트 복사 및 수동 설정 | **Antigravity, Claude Code, OpenAI Codex 3대 마켓플레이스 규격 100% 호환** |
 | **실용주의 철학** | 불필요한 보일러플레이트 및 라이브러리 남용 | **Andrej Karpathy 원칙 & Ponytail (Standard Library First, YAGNI, 최소 코드)** |
@@ -45,10 +45,10 @@
 
 | 스킬 이름 | 설명 | 주요 특징 |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 11개 역할 기반 에이전트 조직화 & 6단계 배포 오케스트레이션 | 기획, 마케팅, 재무, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
+| **`engineering-squad`** | 12개 역할 기반 에이전트 조직화 & 6단계 배포 오케스트레이션 | 기획, 마케팅, 재무, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
 | **`brainstorming`** | 제품 기획, 문제 정의 및 체계적 아이디어 도출 | SCAMPER, HMW, RICE 점수표, 린 PRD 템플릿, `research` 서브에이전트 연계 |
 | **`harness-engineering`** | AI 에이전트 평가 하네스 및 마켓플레이스 패키징 | 결정론적 오라클, 3대 Marketplace 규격(`plugin.json`, `.claude-plugin`, `.codex-plugin`), 자가 치유 루프 |
-| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 11개 직무 맞춤형 체크리스트 |
+| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 12개 직무 맞춤형 체크리스트 |
 | **`ponytail`** | 극단적 미니멀리즘 시니어 개발자 사고방식 | Standard Library First, 무분별한 래퍼/의존성 제거 |
 | **`humanizer`** | 영문 AI 문체 패턴 제거 (English) | Wikipedia AI 작성 징후 가이드 기반 작위적 수사, 삼분법, 과장, 로봇투 제거 |
 | **`humanizer-kr`** | 자연스러운 한국어 테크니컬 라이팅 | AI 번역투, 이중 피동 제거, 의도 보존 윤문 |
@@ -56,7 +56,7 @@
 
 ---
 
-## 👥 Engineering Squad: 11개 전문 역할 및 검증 기준
+## 👥 Engineering Squad: 12개 전문 역할 및 검증 기준
 
 ```mermaid
 flowchart TD
@@ -71,7 +71,7 @@ flowchart TD
     DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
 ```
 
-11개 전문 역할과 별도로 Squad Lead가 조율합니다. 필요한 역할을 활성화하되 QA Stage 3의 독립 보안 검수 엔지니어는 필수입니다.
+12개 전문 역할과 별도로 Squad Lead가 조율합니다. 필요한 역할을 활성화하되 QA Stage 3의 독립 보안 검수 엔지니어는 필수입니다.
 
 | 역할 | 담당 영역 | 필수 검증 기준 (DoD) |
 | :--- | :--- | :--- |
@@ -85,6 +85,7 @@ flowchart TD
 | **Data Engineer** | DB 스키마(DDL), 마이그레이션(Up/Down), 쿼리 튜닝 | 마이그레이션 실행 & 롤백 테스트 검증 |
 | **QA Engineer** | E2E 시나리오 테스트, 엣지 케이스/부정 테스트 | 테스트 스위트 100% 통과 |
 | **Security Review Engineer** | QA Stage 3 독립 보안·개인정보 검수 | 리비전별 PASS/BLOCKED, 배포 전 필수 |
+| **Compliance Reviewer** | 국내·미국 IT 법령 및 보안 준수 검토 | 출처·적용 여부·발견사항·조치 기록 |
 | **DevOps** | Dockerfile/Compose, 환경 설정(`.env.example`), 배포 스크립트 | 컨테이너 빌드 & `/health` 200 확인 |
 | **SRE** | SLO/SLI 지표, Observability(`/metrics`), 부하 테스트, 장애 복구 | 경량 부하 테스트 통과 & 메트릭 수집 검증 |
 
@@ -186,7 +187,7 @@ codex plugin install dev-team-skills
 - Codex CLI 프롬프트에서 `/plugins`를 입력하여 인터랙티브 플러그인 매니저를 열고 `dev-team-skills`를 검색하여 활성화합니다.
 
 #### 방법 C: 프로젝트 코딩 에이전트 지침 연동
-- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 헌법과 11개 직무 가이드라인이 자동으로 컨텍스트에 주입됩니다.
+- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 헌법과 12개 직무 가이드라인이 자동으로 컨텍스트에 주입됩니다.
 
 ---
 

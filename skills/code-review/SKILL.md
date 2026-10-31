@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: >-
-  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
+  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
 ---
 
 # High-ROI Code Review Workflow
@@ -31,7 +31,7 @@ description: >-
 2. **Design Pattern & SOLID Grounded (설계 원칙 근거)**:
    - "그냥 이렇게 바꾸는 게 좋아 보입니다" 식의 주관적 의견을 배제하고, **단일 책임 원칙(SRP), 개방-폐쇄 원칙(OCP), 결합도 완화, 전략/팩토리/어댑터 패턴** 등 명확한 아키텍처 원칙에 기반하여 대안을 제시합니다.
 3. **Role-Tailored Perspective (직무 맞춤형)**:
-   - 변경된 코드 영역에 따라 해당 전문 역할(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, DevOps, SRE)의 관점에서 특화된 질문을 던집니다. ([role-checklists.md](./references/role-checklists.md) 참조)
+   - 변경된 코드 영역에 따라 해당 전문 역할(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE)의 관점에서 특화된 질문을 던집니다. ([role-checklists.md](./references/role-checklists.md) 참조)
 
 ---
 
@@ -64,3 +64,5 @@ QA Stage 3에서 독립 Security Review Engineer를 활성화하고 [security-re
 ## PR 머지 필수 기준
 
 문서·설정 변경을 포함한 모든 PR의 머지 전에 최신 PR head에 대한 독립 Security Review Engineer PASS와 보고서를 필수로 확인합니다. [PR 머지 필수 게이트](../engineering-squad/references/security-review.md#pr-머지-필수-게이트)를 적용합니다. 미검수·BLOCKED·이전 리비전에 대한 검수로는 머지하지 않습니다. 새 commit 또는 머지 입력 변경 시 재검수하며 QA·일반 승인·CI 통과로 대체하지 않습니다.
+
+Compliance Reviewer는 관련 변경의 국내·미국 IT 법령 및 보안 준수 여부를 [역할 12](../engineering-squad/references/roles.md)에 따라 검토합니다. 출처·적용 여부·조치를 기록하고 적용되는 위반 사항이 미해결이면 머지를 차단합니다.

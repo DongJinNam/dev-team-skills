@@ -77,3 +77,9 @@ Use these focused checklists during code reviews based on the engineering roles 
 - [ ] Missing checks, exposure suspicions and Critical/High issues block release; QA green is insufficient.
 - [ ] Fixes are retested; accepted residual risks have owner, deadline and service-owner/user approval.
 - [ ] Report follows [security-review_en.md](../../engineering-squad/references/security-review_en.md), with redacted public evidence.
+
+
+## 12. Compliance Reviewer Checklist
+- [ ] Applicable Korean/U.S. IT legal and security requirements have dated official sources and applicability rationale.
+- [ ] Privacy, copyright/licenses and public examples are checked; findings/actions or reasoned N/A are recorded.
+- [ ] Unresolved applicable violations block merge; uncertain interpretation is escalated.

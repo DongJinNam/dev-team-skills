@@ -14,11 +14,6 @@ Catalog installs are cumulative display metrics, not unique users, effectiveness
 
 Use [OWASP ASVS 5.0.0](https://asvs.owasp.org/) (published 2025-05-30) as a coverage reference. Combine review perspectives in our own [security-review_en.md](./security-review_en.md) contract. Do not copy or automatically install external files/scripts; no runtime dependency is added. Before future copying, verify revision, per-file license and notice requirements. Observed repository licenses: [Sentry Apache-2.0](https://github.com/getsentry/skills/blob/main/LICENSE), [Trail of Bits CC-BY-SA-4.0](https://github.com/trailofbits/skills/blob/main/LICENSE).
 
-## Recent personal-data incidents and review implications
+## General review rationale
 
-| Official publication / incident timing | Confirmed facts | Design inference |
-| :--- | :--- | :--- |
-| [PIPC GS Retail release](https://m.korea.kr/briefing/pressReleaseView.do?newsId=156776142), 2026-08-31 / GS SHOP 2024-06-21–2025-02-13; GS25 2024-12-26–2025-01-04 | Credential stuffing led to account access and personal-data exposure. Detection/blocking and privacy organization deficiencies were identified. | Successful login and functional QA do not establish protection. Review login abuse/detection response and independent accountability. |
-| [PIPC Boram release](https://pipc.go.kr/np/cop/bbs/selectBoardArticle.do?bbsId=BS074&mCode=&nttId=12066), 2026-05-14 / breach notification received 2024-05-28 | SQL injection exposed customer data; access control, processor oversight and deletion of expired data were deficient. | Review DB privileges, processor flows and retention/deletion as well as input handling. |
-
-Do not confuse publication dates with incident dates. These cases do not establish that any particular skill would have prevented the incident. Our design conclusion is: **functional tests alone cannot establish personal-data protection, so security review is a release prerequisite**. PASS is scoped review evidence, not proof of zero vulnerabilities or legal certification.
+Functional tests alone cannot establish personal-data protection. Review login abuse controls, authorization, input handling, retention/deletion and processor data flows. This is a general design rationale; company-specific incident accounts and identifying incident links are excluded. Security PASS is scoped evidence, not proof of zero vulnerabilities or legal certification.
