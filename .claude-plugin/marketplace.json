@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "dev-team-skills",
-      "description": "Cross-platform pragmatic engineering squad (12 roles, including compliance and mandatory security review, product marketing and FinOps), brainstorming, code review, AI agent harness engineering & ponytail minimalism.",
+      "description": "Cross-platform pragmatic engineering squad (13 roles, including Creative Rookie, all-role majority voting, compliance and mandatory security review, product marketing and FinOps), brainstorming, code review, AI agent harness engineering & ponytail minimalism.",
       "version": "1.1.0",
       "source": "./",
       "author": {

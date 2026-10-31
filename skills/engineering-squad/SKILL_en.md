@@ -1,22 +1,23 @@
 ---
 name: engineering-squad
 description: >-
-  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE), and orchestrating end-to-end service deployments.
+  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE), and orchestrating end-to-end service deployments.
 ---
 
 # Engineering Squad & Service Deployment Workflow
 
-This skill is the standard execution guide for building, testing, and deploying software. It organizes an AI agent team into 12 specialized roles: **Product Planner**, **Product Marketing**, **Finance / FinOps**, **AI Agent Engineer**, **Frontend**, **Backend**, **Data Engineer**, **QA Engineer**, **Security Review Engineer**, **Compliance Reviewer**, **DevOps Engineer**, and **SRE (Site Reliability Engineer)**.
+This skill is the standard execution guide for building, testing, and deploying software. It organizes an AI agent team into 13 specialized roles: **Product Planner**, **Creative Rookie**, **Product Marketing**, **Finance / FinOps**, **AI Agent Engineer**, **Frontend**, **Backend**, **Data Engineer**, **QA Engineer**, **Security Review Engineer**, **Compliance Reviewer**, **DevOps Engineer**, and **SRE (Site Reliability Engineer)**.
 
 ---
 
 ## 1. Squad Roles & Responsibilities
 
-The twelve specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; Security Review Engineer is mandatory at Stage 3 and must be a reviewer separate from the implementer.
+The thirteen specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; Security Review Engineer is mandatory at Stage 3 and must be a reviewer separate from the implementer.
 
 | Role | Scope | Required Definition of Done (DoD) |
 | :--- | :--- | :--- |
 | **Product Planner** | Problem definition, brainstorming, market research, Lean PRD & user stories | Lean PRD complete with hypothesis, MVP scope, and acceptance criteria |
+| **Creative Rookie** | Challenge consensus, check SNS trends, propose ideas regularly | Dated evidence, idea cards, smallest experiment and ballot rationale |
 | **Product Marketing** | Value communication, information hierarchy, demos and launch messaging | Audience/value/CTA, evidence per claim, comprehension review |
 | **Finance / FinOps** | Token, coordination, development and operating costs; budget variance | Measured/estimated/unknown cost table, savings options and quality impact |
 | **AI Agent Engineer** | Agent eval harness, tool schema checks, 3rd-party marketplace packaging | Verification harness script passes with full green report |
@@ -35,16 +36,19 @@ The twelve specialist roles are coordinated by the separate Squad Lead. Activate
 ---
 
 ### Role activation and handoffs
-- Twelve roles are capabilities, not a requirement to spawn twelve agents. For small edits the Lead covers these perspectives; delegate only for an independent deliverable or cost risk.
+- Thirteen roles are capabilities, not a requirement to spawn thirteen agents. For small edits the Lead covers these perspectives; delegate only for an independent deliverable or cost risk.
 - Stage 3 always activates an independent Security Review Engineer. If a separate reviewer is unavailable, mark BLOCKED; the Lead/implementer cannot self-approve. Small scope and budget pressure do not waive review.
 - Stage 0: Planner records trend sources, dates, maturity, and applicability in the PRD. Marketing defines audience/value/CTA; Finance defines budget, minimum staffing, and cost baseline.
 - Stages 1–2: Lead defines each role's scope, inputs, output, and verification. Finance checks incremental cost before extra delegation or scope changes. Hand off decisions, evidence, open issues, and file paths instead of full conversations.
-- Stage 3: Marketing checks comprehension and claims against verified results; Finance checks variance and duplicate debate. Default to one proposal and one response before the Lead decides. Extra rounds require new evidence and expected value.
+- Stage 3: Marketing checks comprehension and claims against verified results; Finance checks variance and duplicate debate. Default to one proposal and one response before all roles decide by yes/no majority vote. Extra rounds require new evidence and expected value.
 - Stages 4–5: Marketing delivers a launch draft reflecting actual deployment status; Finance delivers final costs and an operating-cost forecast. Check authorization separately before external publication.
 - Apply sections 9–10 of [roles_en.md](./references/roles_en.md) for deliverables, missing telemetry, and budget overruns.
 
 
 Every PR requires independent security PASS for the latest head before merge; changed commits or merge inputs invalidate previous approval. Apply the [PR merge gate](./references/security-review_en.md#required-pr-merge-gate). Security is also a release prerequisite. Planner and Marketing must maintain dated adoption evidence and general security rationale in [security-research_en.md](./references/security-research_en.md); popularity is not proof of safety.
+
+### Recurring ideas and decisions
+- Creative Rookie supplies SNS evidence and ideas at kickoff, weekly active-project retrospectives and before launch messaging. Decision discussions include all 13 specialists plus Lead, even inactive roles: 14 equal ballots, at least 8 YES to adopt. Missing votes or ties defer; security/compliance gates remain mandatory. Apply section 13 and the decision discussion rules in [roles_en.md](./references/roles_en.md).
 
 ## 2. 6-Stage Execution Pipeline
 
@@ -60,7 +64,9 @@ flowchart TD
 ### Stage 0: Planning & Research (Product Planner)
 1. **Define the problem & brainstorm**: Find the user's core problem. Use the `brainstorming` skill with SCAMPER and HMW exercises.
 2. **Research**: Benchmarks similar products and tech stacks using the `research` subagent or web search.
-3. **Write a Lean PRD**: Use RICE scoring and MoSCoW prioritization to set key hypotheses, MVP scope, user stories, and Given-When-Then acceptance criteria (AC).
+3. **Creative Rookie**: Supply current SNS evidence, a challenge and a small experiment; hold the all-role yes/no vote before finalizing the PRD.
+
+4. **Write a Lean PRD**: Use RICE scoring and MoSCoW prioritization to set key hypotheses, MVP scope, user stories, and Given-When-Then acceptance criteria (AC).
 
 ### Stage 1: AI Harness & Interface Contracts (Lead & AI Agent Engineer)
 1. **Define API & schema contracts**: Document endpoint URLs, request/response JSON payloads, and DB models before writing code.
