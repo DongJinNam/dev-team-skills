@@ -53,6 +53,10 @@ Every PR requires independent security PASS for the latest head before merge; ch
 ### Recurring ideas and decisions
 - Creative Rookie supplies SNS evidence and ideas at kickoff, weekly active-project retrospectives and before launch messaging. Decision discussions include all 14 specialists plus Lead, even inactive roles: 15 equal voting rights; 8 YES adopts immediately without waiting for every ballot. If neither side has 8 votes, remain PENDING. If the user is dissatisfied and requests a revote with their grounds, start a new round with fresh ballots under the same rule. Security/compliance gates remain mandatory. Apply section 13 and the decision discussion rules in [roles_en.md](./engineering-squad/references/roles_en.md).
 
+### External skill references
+
+For role deliverables, review-based UX improvements, launch/cost hypotheses or citation checks, consult only the relevant row in [external skill references](./engineering-squad/references/external-skill-references_en.md). It records original Threads discovery posts, canonical sources, use conditions and limitations. References do not imply installation or change existing voting/security gates.
+
 ## 2. 6-Stage Execution Pipeline
 
 ```mermaid
