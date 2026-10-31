@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: >-
-  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
+  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
 ---
 
 # High-ROI Code Review Workflow
@@ -16,7 +16,7 @@ Every review comment should use a clear severity tag so the author knows what bl
 
 | Tag | Level | Description | Merge Requirement |
 | :---: | :--- | :--- | :--- |
-| 🔴 | **[Must Fix]** | Bugs, data loss risks, security flaws, memory leaks, serious slowdowns, or irreversible schema changes | **Must be fixed before merging** |
+| 🔴 | **[Must Fix]** | Bugs, data loss risks, release-blocking security flaws, memory leaks, serious slowdowns, or irreversible schema changes | **Must be fixed before merging** |
 | 🟡 | **[Inquire & Verify]** | Unclear design choices, potential side effects, missing edge cases, or trade-offs | **Author must clarify or answer** |
 | 🟢 | **[Suggestion]** | Readability improvements, minor cleanup, optional patterns, or small optimizations | **Author's choice (does not block merging)** |
 
@@ -31,7 +31,7 @@ Every review comment should use a clear severity tag so the author knows what bl
 2. **Grounded in SOLID & Design Patterns**:
    - Avoid subjective feedback like "I just prefer this way." Back up your advice with solid principles: **Single Responsibility (SRP), Open-Closed (OCP), loose coupling, or Strategy/Factory patterns**.
 3. **Tailored by Role**:
-   - Review code through the lens of specific roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE). (See [role-checklists_en.md](./references/role-checklists_en.md))
+   - Review code through the lens of specific roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, DevOps, SRE). (See [role-checklists_en.md](./references/role-checklists_en.md))
 
 ---
 
@@ -54,3 +54,8 @@ flowchart TD
    - QA: Corner case and negative scenario tests.
    - DevOps/SRE: Exposed secrets, container resource limits, health checks, and metrics.
 4. **Offer Concrete Solutions**: When pointing out an issue, always explain **why it is a problem** and share a **minimal code snippet showing the fix**.
+
+
+## Mandatory security disposition
+
+At QA Stage 3, activate an independent Security Review Engineer and apply [security-review_en.md](../engineering-squad/references/security-review_en.md). QA green and ROI/cost priorities cannot waive the security gate. Map release blockers to Must Fix; Medium/Low residual-risk acceptance follows that contract and any stricter organizational policy.

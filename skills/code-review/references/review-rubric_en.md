@@ -6,9 +6,11 @@ This guide defines the severity rubric and design pattern principles used during
 
 ## 1. 3-Tier Severity Criteria
 
+Security classification follows [security-review_en.md](../../engineering-squad/references/security-review_en.md): Critical/High, unresolved personal-data/secret exposure or suspicion, and missing applicable verification/evidence are mandatory Must Fix blockers. Other Medium/Low findings remain blocking until fixed or explicitly accepted with the required rationale, mitigation, owner and deadline by the user/service owner. Apply stricter organizational policy. Accepted risks stay documented and do not silently become suggestions.
+
 ### 🔴 [Must Fix] - Blocks Merging
 Critical flaws that must be fixed before merging into the main codebase.
-- **Security Flaws**: SQL injection, XSS, CSRF, broken auth/permissions, hardcoded secrets.
+- **Release-blocking Security Flaws**: SQL injection, XSS, CSRF, broken auth/permissions, hardcoded secrets.
 - **Data Integrity Issues**: Missing transactions causing partial updates, missing indexes causing full table scans, irreversible migrations.
 - **System Crashes**: Infinite loops, deadlocks, unhandled Promise rejections, memory leaks (OOM).
 - **Core Business Logic Bugs**: Wrong math in payments/pricing, invalid state machine transitions.
