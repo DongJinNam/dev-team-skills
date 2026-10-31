@@ -88,8 +88,10 @@ Use these focused checklists during code reviews based on the engineering roles 
 ## 13. Creative Rookie & Decision Review
 - [ ] Are dated SNS evidence, ideas, small experiments and metrics recorded at kickoff, weekly retrospectives and launch review?
 - [ ] Are reasoned dissent and minority views preserved, with facts, hypotheses and unknowns distinguished?
-- [ ] Does each decision have all 15 role ballots/reasons (14 specialists plus Lead), the 8-vote threshold, and missing-vote handling?
+- [ ] Does each decision preserve 15 voting rights (14 specialists plus Lead), adopt immediately at 8 YES, record unsubmitted roles as PENDING, and avoid waiting for all ballots?
 - [ ] Does majority voting preserve user authorization and mandatory security/compliance gates?
+
+- [ ] Does user dissatisfaction with supplied grounds trigger a fresh round without team permission, preserving history and clearing prior votes?
 
 ## 14. Test Engineer Review Checklist
 - [ ] Are functional criteria observable and numeric targets defined with units, thresholds and measurement conditions, with unresolved targets explicit?

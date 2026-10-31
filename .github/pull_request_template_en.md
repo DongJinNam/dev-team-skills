@@ -63,11 +63,14 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 
 
 ## Decision ballots
-- Proposal/version / decision-log link (all 15 roles, owners, YES/NO and reasons):
+- Proposal/version / decision-log link (15 roles/owners, received YES/NO/reasons or PENDING):
 - YES / NO / missing / outcome / minority views and reconsideration triggers:
 - SNS ideas, evidence and small experiment, or N/A rationale:
-- [ ] Each decision discussion includes 14 specialists + Lead, including inactive roles: one vote each, all 15 collected, at least 8 YES to adopt. Changes without a decision discussion have a reasoned N/A.
-- [ ] Nonresponse defers; voting did not waive security/compliance blockers.
+- [ ] Each decision discussion includes 14 specialists + Lead, including inactive roles: one vote each; 8 YES adopts immediately without waiting for all ballots. Changes without a decision discussion have a reasoned N/A.
+- [ ] Unsubmitted roles stay PENDING; if neither side has 8 votes, remain PENDING. Voting did not waive security/compliance blockers.
+
+- User grounds for revote / new proposal version / fresh tally / prior-result history (or N/A):
+- [ ] A user-requested revote with grounds starts without team permission; old ballots are not carried forward and the same 8-of-15 rule applies.
 
 ## Test Engineer Review
 - Reviewer / clear and measurable AC / feature-test-evidence matrix:

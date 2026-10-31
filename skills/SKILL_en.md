@@ -51,7 +51,7 @@ Every PR requires independent security PASS for the latest head before merge; ch
 - Test Engineer reviews clear, quantified and verifiable completion criteria at Stages 0–1, then feature-level AC-test-evidence links and missing-test recommendations at Stage 3/PR review. QA/developers return dispositions; apply section 14 of [roles_en.md](./engineering-squad/references/roles_en.md).
 
 ### Recurring ideas and decisions
-- Creative Rookie supplies SNS evidence and ideas at kickoff, weekly active-project retrospectives and before launch messaging. Decision discussions include all 14 specialists plus Lead, even inactive roles: 15 equal ballots, at least 8 YES to adopt. Missing votes defer; security/compliance gates remain mandatory. Apply section 13 and the decision discussion rules in [roles_en.md](./engineering-squad/references/roles_en.md).
+- Creative Rookie supplies SNS evidence and ideas at kickoff, weekly active-project retrospectives and before launch messaging. Decision discussions include all 14 specialists plus Lead, even inactive roles: 15 equal voting rights; 8 YES adopts immediately without waiting for every ballot. If neither side has 8 votes, remain PENDING. If the user is dissatisfied and requests a revote with their grounds, start a new round with fresh ballots under the same rule. Security/compliance gates remain mandatory. Apply section 13 and the decision discussion rules in [roles_en.md](./engineering-squad/references/roles_en.md).
 
 ## 2. 6-Stage Execution Pipeline
 
