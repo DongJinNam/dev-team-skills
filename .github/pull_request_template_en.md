@@ -63,8 +63,13 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 
 
 ## Decision ballots
-- Proposal/version / decision-log link (all 14 roles, owners, YES/NO and reasons):
+- Proposal/version / decision-log link (all 15 roles, owners, YES/NO and reasons):
 - YES / NO / missing / outcome / minority views and reconsideration triggers:
 - SNS ideas, evidence and small experiment, or N/A rationale:
-- [ ] Each decision discussion includes 13 specialists + Lead, including inactive roles: one vote each, all 14 collected, at least 8 YES to adopt. Changes without a decision discussion have a reasoned N/A.
-- [ ] Ties/nonresponse defer; voting did not waive security/compliance blockers.
+- [ ] Each decision discussion includes 14 specialists + Lead, including inactive roles: one vote each, all 15 collected, at least 8 YES to adopt. Changes without a decision discussion have a reasoned N/A.
+- [ ] Nonresponse defers; voting did not waive security/compliance blockers.
+
+## Test Engineer Review
+- Reviewer / clear and measurable AC / feature-test-evidence matrix:
+- Missing-test recommendations (scenario, expected result, layer/technique, priority, owner, acceptance evidence):
+- QA/developer dispositions / follow-up / unverified AC or reasoned N/A:

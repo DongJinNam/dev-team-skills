@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > A cross-platform (Windows & macOS) collection of AI coding agent skills and rules, inspired by Andrej Karpathy's engineering philosophy and practical senior engineering principles.  
-> It helps you run a 13-role engineering squad (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE) across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
+> It helps you run a 14-role engineering squad (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE) across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
 
 ---
 
@@ -13,7 +13,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 | Feature | Typical Prompt / Rule Lists | **dev-team-skills** |
 | :--- | :--- | :--- |
-| **Team Coverage** | Only single-coder or simple pair programming | **Full lifecycle squad of 13 roles: planning, marketing, FinOps, AI harness, dev, QA, security, deployment, and SRE** |
+| **Team Coverage** | Only single-coder or simple pair programming | **Full lifecycle squad of 14 roles: planning, marketing, FinOps, AI harness, dev, QA, test design, security, deployment, and SRE** |
 | **Quality Check** | Relies on LLM hallucination ("I finished it") | **Deterministic evaluation harness (`verify-harness`) and self-healing loop** |
 | **Packaging & Ecosystem**| Manual copy-pasting of text files | **100% compliant with Antigravity, Claude Code, and OpenAI Codex marketplaces** |
 | **Engineering Mindset** | Unnecessary boilerplate and too many libraries | **Karpathy principles & Ponytail (Standard Library First, YAGNI, minimum code)** |
@@ -45,7 +45,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 | Skill Name | Description | Key Features |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 13-role agent squad & 6-step deployment pipeline | Clear collaboration across planning, harness, dev, QA, security, deployment, and SRE |
+| **`engineering-squad`** | 14-role agent squad & 6-step deployment pipeline | Clear collaboration across planning, harness, dev, QA, test design, security, deployment, and SRE |
 | **`brainstorming`** | Product planning, problem definition & idea generation | SCAMPER, HMW, RICE scoring, Lean PRD template, linked with `research` subagent |
 | **`harness-engineering`** | AI agent evaluation harness & marketplace packaging | Deterministic oracles, 3-platform packaging (`plugin.json`, `.claude-plugin`, `.codex-plugin`), self-healing loop |
 | **`code-review`** | High-ROI design pattern reviews by role | 3 severity tiers (🔴Must Fix / 🟡Review Needed / 🟢Suggestion), tailored checklists |
@@ -56,7 +56,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 ---
 
-## 👥 Engineering Squad: 13 Specialized Roles & DoD
+## 👥 Engineering Squad: 14 Specialized Roles & DoD
 
 ```mermaid
 flowchart TD
@@ -71,7 +71,7 @@ flowchart TD
     DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
 ```
 
-The thirteen specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; an independent Security Review Engineer is mandatory at QA Stage 3.
+The fourteen specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; an independent Security Review Engineer is mandatory at QA Stage 3.
 
 | Role | Scope | Required Definition of Done (DoD) |
 | :--- | :--- | :--- |
@@ -85,6 +85,7 @@ The thirteen specialist roles are coordinated by the separate Squad Lead. Activa
 | **Backend** | REST/GraphQL APIs, domain logic, auth, error handling | Unit & integration tests pass, API endpoints respond correctly |
 | **Data Engineer** | DB schemas (DDL), migrations (Up/Down), query tuning | Migration and rollback scripts execute and succeed |
 | **QA Engineer** | E2E testing, negative test cases, corner cases | 100% pass on test suite |
+| **Test Engineer** | Clear/measurable completion criteria and feature-level test gaps | AC-test-evidence matrix, test recommendations and dispositions |
 | **Security Review Engineer** | Independent security/privacy review at QA Stage 3 | Revision-bound PASS/BLOCKED; required before deployment |
 | **Compliance Reviewer** | Korean/U.S. IT legal and security-related compliance | Sources, applicability, findings and actions |
 | **DevOps** | Dockerfile/Compose, environment configs (`.env.example`), scripts | Container builds cleanly, `/health` returns HTTP 200 |
@@ -185,7 +186,7 @@ codex plugin install dev-team-skills
 - In Codex CLI, type `/plugins` to open the interactive manager, search for `dev-team-skills`, and enable it.
 
 #### Option C: Project Agent Instructions
-- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and 13-role guidelines when starting a session.
+- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and 14-role guidelines when starting a session.
 
 ---
 
@@ -206,7 +207,7 @@ Included at [`.github/pull_request_template.md`](./.github/pull_request_template
 
 ### Creative Rookie & all-role majority vote
 
-At kickoff, weekly active-project retrospectives and before launch messaging, the Rookie checks SNS evidence and proposes fresh ideas, reasoned dissent and small experiments. All 13 specialists plus Lead vote, including inactive roles: 14 equal votes, at least 8 YES to adopt. Missing ballots or 7:7 ties defer; mandatory security/compliance gates cannot be waived by voting. See [role and voting rules](skills/engineering-squad/references/roles_en.md).
+At kickoff, weekly active-project retrospectives and before launch messaging, the Rookie checks SNS evidence and proposes fresh ideas, reasoned dissent and small experiments. All 14 specialists plus Lead vote, including inactive roles: 15 equal votes, at least 8 YES to adopt. Missing ballots defer; mandatory security/compliance gates cannot be waived by voting. See [role and voting rules](skills/engineering-squad/references/roles_en.md).
 
 ## 📜 License
 MIT License

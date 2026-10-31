@@ -1,18 +1,18 @@
 ---
 name: engineering-squad
 description: >-
-  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE), and orchestrating end-to-end service deployments.
+  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE), and orchestrating end-to-end service deployments.
 ---
 
 # Engineering Squad & Service Deployment Workflow
 
-This skill is the standard execution guide for building, testing, and deploying software. It organizes an AI agent team into 13 specialized roles: **Product Planner**, **Creative Rookie**, **Product Marketing**, **Finance / FinOps**, **AI Agent Engineer**, **Frontend**, **Backend**, **Data Engineer**, **QA Engineer**, **Security Review Engineer**, **Compliance Reviewer**, **DevOps Engineer**, and **SRE (Site Reliability Engineer)**.
+This skill is the standard execution guide for building, testing, and deploying software. It organizes an AI agent team into 14 specialized roles: **Product Planner**, **Creative Rookie**, **Product Marketing**, **Finance / FinOps**, **AI Agent Engineer**, **Frontend**, **Backend**, **Data Engineer**, **QA Engineer**, **Test Engineer**, **Security Review Engineer**, **Compliance Reviewer**, **DevOps Engineer**, and **SRE (Site Reliability Engineer)**.
 
 ---
 
 ## 1. Squad Roles & Responsibilities
 
-The thirteen specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; Security Review Engineer is mandatory at Stage 3 and must be a reviewer separate from the implementer.
+The fourteen specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; Security Review Engineer is mandatory at Stage 3 and must be a reviewer separate from the implementer.
 
 | Role | Scope | Required Definition of Done (DoD) |
 | :--- | :--- | :--- |
@@ -26,6 +26,7 @@ The thirteen specialist roles are coordinated by the separate Squad Lead. Activa
 | **Backend Engineer** | REST/GraphQL APIs, domain business logic, auth, error handling | Unit & integration tests pass, API endpoints respond correctly |
 | **Data Engineer** | DB schemas (DDL), migrations (Up/Down), query tuning, seed data | Migration and rollback scripts execute and succeed |
 | **QA Engineer** | E2E testing, negative test cases, corner cases, regression tests | 100% pass on automated test suite |
+| **Test Engineer** | Clear/measurable completion criteria and feature-level test gaps | AC-test-evidence matrix, test recommendations and dispositions |
 | **Security Review Engineer** | Threat modeling, authorization/privacy/secrets, dependency and configuration review | Independent PASS/BLOCKED report for the reviewed revision; no unresolved release blockers |
 | **Compliance Reviewer** | Applicable Korean/U.S. IT law, privacy, copyright/licenses and security-related compliance | Sources, applicability, findings and required actions recorded |
 | **DevOps Engineer** | Dockerfile/Compose, environment configs (`.env.example`), deploy scripts | Container builds cleanly, `/health` returns HTTP 200 |
@@ -36,7 +37,7 @@ The thirteen specialist roles are coordinated by the separate Squad Lead. Activa
 ---
 
 ### Role activation and handoffs
-- Thirteen roles are capabilities, not a requirement to spawn thirteen agents. For small edits the Lead covers these perspectives; delegate only for an independent deliverable or cost risk.
+- Fourteen roles are capabilities, not a requirement to spawn fourteen agents. For small edits the Lead covers these perspectives; delegate only for an independent deliverable or cost risk.
 - Stage 3 always activates an independent Security Review Engineer. If a separate reviewer is unavailable, mark BLOCKED; the Lead/implementer cannot self-approve. Small scope and budget pressure do not waive review.
 - Stage 0: Planner records trend sources, dates, maturity, and applicability in the PRD. Marketing defines audience/value/CTA; Finance defines budget, minimum staffing, and cost baseline.
 - Stages 1–2: Lead defines each role's scope, inputs, output, and verification. Finance checks incremental cost before extra delegation or scope changes. Hand off decisions, evidence, open issues, and file paths instead of full conversations.
@@ -47,8 +48,10 @@ The thirteen specialist roles are coordinated by the separate Squad Lead. Activa
 
 Every PR requires independent security PASS for the latest head before merge; changed commits or merge inputs invalidate previous approval. Apply the [PR merge gate](./engineering-squad/references/security-review_en.md#required-pr-merge-gate). Security is also a release prerequisite. Planner and Marketing must maintain dated adoption evidence and general security rationale in [security-research_en.md](./engineering-squad/references/security-research_en.md); popularity is not proof of safety.
 
+- Test Engineer reviews clear, quantified and verifiable completion criteria at Stages 0–1, then feature-level AC-test-evidence links and missing-test recommendations at Stage 3/PR review. QA/developers return dispositions; apply section 14 of [roles_en.md](./engineering-squad/references/roles_en.md).
+
 ### Recurring ideas and decisions
-- Creative Rookie supplies SNS evidence and ideas at kickoff, weekly active-project retrospectives and before launch messaging. Decision discussions include all 13 specialists plus Lead, even inactive roles: 14 equal ballots, at least 8 YES to adopt. Missing votes or ties defer; security/compliance gates remain mandatory. Apply section 13 and the decision discussion rules in [roles_en.md](./engineering-squad/references/roles_en.md).
+- Creative Rookie supplies SNS evidence and ideas at kickoff, weekly active-project retrospectives and before launch messaging. Decision discussions include all 14 specialists plus Lead, even inactive roles: 15 equal ballots, at least 8 YES to adopt. Missing votes defer; security/compliance gates remain mandatory. Apply section 13 and the decision discussion rules in [roles_en.md](./engineering-squad/references/roles_en.md).
 
 ## 2. 6-Stage Execution Pipeline
 
@@ -56,7 +59,7 @@ Every PR requires independent security PASS for the latest head before merge; ch
 flowchart TD
     S0["Stage 0: Planning & Research (Product Planner)"] --> S1["Stage 1: AI Harness & Interface Spec (Lead & AI Agent Eng)"]
     S1 --> S2["Stage 2: Split Development (Data, Backend, Frontend)"]
-    S2 --> S3["Stage 3: Quality, Security & Harness Check (QA, Security & AI Agent Eng)"]
+    S2 --> S3["Stage 3: Quality, Security & Harness Check (QA, Test, Security & AI Agent Eng)"]
     S3 --> S4["Stage 4: Containerization & Deploy Gate (DevOps Engineer)"]
     S4 --> S5["Stage 5: Reliability & Observability Check (SRE Engineer)"]
 ```
@@ -78,12 +81,13 @@ flowchart TD
 2. **Backend Engineer**: Builds endpoints and domain logic based on the agreed spec.
 3. **Frontend Engineer**: Builds UI components and state logic matching the backend API contract.
 
-### Stage 3: Quality, Security & Harness Verification (QA, Security & AI Agent Engineer)
-1. **QA Engineer**: Runs E2E tests for main user journeys, boundary checks, and error cases (negative tests).
-2. **AI Agent Engineer**: Validates agent tool calls and verifies marketplace manifests.
-3. **Security Review Engineer (mandatory)**: Apply [security-review_en.md](./engineering-squad/references/security-review_en.md), check current security advisories and project applicability with dated sources, issue a revision-bound PASS/BLOCKED report, and attach it to QA results. QA green alone cannot pass Stage 3.
-4. **Compliance Reviewer**: Review applicable Korean/U.S. IT legal and security-related compliance for relevant changes; record sources, applicability and required actions under section 12 of [roles_en.md](./engineering-squad/references/roles_en.md).
-5. **Self-Healing Loop**: Feeds test errors directly back to the responsible agent for quick fixes. Re-run affected tests and independent security review after changes; proceed to Stage 4 only when both QA and security pass.
+### Stage 3: Quality, Security & Harness Verification (QA, Test, Security & AI Agent Engineer)
+1. **Test Engineer**: Compare each feature criterion/measurement method with existing tests; submit missing-scenario recommendations with owners, priorities and expected results. Record unverified AC and QA/developer dispositions.
+2. **QA Engineer**: Runs E2E tests for main user journeys, boundary checks, and error cases (negative tests).
+3. **AI Agent Engineer**: Validates agent tool calls and verifies marketplace manifests.
+4. **Security Review Engineer (mandatory)**: Apply [security-review_en.md](./engineering-squad/references/security-review_en.md), check current security advisories and project applicability with dated sources, issue a revision-bound PASS/BLOCKED report, and attach it to QA results. QA green alone cannot pass Stage 3.
+5. **Compliance Reviewer**: Review applicable Korean/U.S. IT legal and security-related compliance for relevant changes; record sources, applicability and required actions under section 12 of [roles_en.md](./engineering-squad/references/roles_en.md).
+6. **Self-Healing Loop**: Feeds test errors directly back to the responsible agent for quick fixes. Re-run affected tests and independent security review after changes; proceed to Stage 4 only when both QA and security pass.
 
 ### Stage 4: Containerization & Deployment Gate (DevOps Engineer)
 - Writes multi-stage Dockerfile, docker-compose.yml, and deployment scripts.
