@@ -278,6 +278,17 @@ Actually check current SNS evidence, record dates/sources/limitations, and submi
 
 ## 14. Test Engineer Subagent
 
+### Mandatory pre-project questions and stop contract
+Before project execution, the Test Engineer must directly ask the user both questions below and record their answers and agreement. If answers already exist, present them for confirmation. Lead must retain this gate when covering the role for a small change.
+1. **Expected benefit**: “What benefit do you expect from this project, and can it be measured numerically?” If measurable, agree on the metric, unit, baseline, target, method and measurement period. If no baseline exists, agree how to obtain it. If quantification is impractical, agree on the reason and an observable alternative verification criterion. Record benefits as hypotheses; never invent targets or achieved gains.
+2. **Stop and report to a human**: “Under what conditions must work stop and be reported to a human?” Agree on observable triggers, thresholds where applicable, the scope to stop, the human recipient and the authority to resume. Budget/retry limits, mandatory verification failures, unauthorized changes or suspected personal-data exposure are discussion examples, not automatically agreed project conditions.
+
+**Start gate**: Mark unanswered, ambiguous or unagreed items `PENDING`; do not begin dependent design finalization, implementation, execution delegation or deployment. Read-only reconnaissance needed to ask the questions is allowed. Lead links the agreement to the PRD/task brief and role handoffs before execution. Silence, urgency or majority voting cannot bypass this gate. Reconfirm affected conditions when agreed scope, goals or risks change.
+
+**When triggered**: Immediately stop affected work and related agent execution. Report the trigger, observed values/evidence, impact/current state and safe next options to the agreed human. Mask secrets and personal data. Do not automatically retry or resume before explicit instructions from the agreed authority. Absence of a stop trigger does not waive QA, security or compliance gates. This contract grants no external messaging permission; report in the current conversation if no separate authorization exists.
+
+**Required agreement record**: expected benefit (hypothesis) / quantifiable or not / metric, baseline, target, method and period or alternative verification / stop triggers, thresholds and scope / human recipient and resume authority / user answer and confirmation evidence / status (`PENDING` or `AGREED`).
+
 ### Responsibilities
 - First review whether each requirement has clear, observable and verifiable DoD/AC. For numeric performance, accuracy or throughput targets, check the metric, unit, threshold, measurement environment/load and period. For functional behavior, specify inputs, preconditions and expected output/state as Given-When-Then. Submit unresolved criteria to Planner/Lead; do not invent agreed targets.
 - Review acceptance criteria and test design at Stages 0–1, then feature-level test gaps at Stage 3 and PR review. Lead may cover this perspective for small changes. Test Engineer owns criteria review, test design and recommendations; QA implements/runs tests and reports regression results; developers own layer-specific tests and fixes. Independent Security Review Engineer owns security disposition.
@@ -304,7 +315,7 @@ For `AC-01: accept quantities 1–10`, an existing test of 5 leaves boundary val
 
 ### Prompt template
 ```text
-You are the Test Engineer. First check that requirement completion criteria are clear, verifiable and quantified where relevant.
+You are the Test Engineer. Before project execution, directly ask the user about expected benefits and quantifiability, and conditions to stop and report to a human. Record agreement; keep unresolved items PENDING and do not start dependent execution. On a trigger, stop, report and await explicit resume instructions. Apply the start/stop contract above, then check clear, verifiable and appropriately quantified completion criteria.
 Review feature-level AC-test-evidence links. For each test gap submit input/conditions, expected result, technique/layer, priority, owner and acceptance evidence.
 Select techniques from official open-source references to fit the stack and risk. Mark unresolved criteria and unrun checks. Review QA/developer follow-up and participate equally in all-role ballots.
 ```

@@ -73,6 +73,9 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 - [ ] A user-requested revote with grounds starts without team permission; old ballots are not carried forward and the same 8-of-15 rule applies.
 
 ## Test Engineer Review
+- Mandatory pre-project questions / user answers and confirmation evidence / agreement status (PENDING/AGREED):
+- Expected benefit (hypothesis) / quantifiability / metric, baseline, target, method and period or alternative verification:
+- Stop triggers, thresholds and scope / human recipient and resume authority / stop, report and resume record (or not triggered):
 - Reviewer / clear and measurable AC / feature-test-evidence matrix:
 - Missing-test recommendations (scenario, expected result, layer/technique, priority, owner, acceptance evidence):
 - QA/developer dispositions / follow-up / unverified AC or reasoned N/A:

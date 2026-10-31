@@ -85,7 +85,7 @@ flowchart TD
 | **Backend** | REST/GraphQL API, 도메인 로직, 인증, 에러 핸들링 | 단위/통합 테스트 통과 & API 응답 확인 |
 | **Data Engineer** | DB 스키마(DDL), 마이그레이션(Up/Down), 쿼리 튜닝 | 마이그레이션 실행 & 롤백 테스트 검증 |
 | **QA Engineer** | E2E 시나리오 테스트, 엣지 케이스/부정 테스트 | 테스트 스위트 100% 통과 |
-| **Test Engineer** | 완료 기준 명확성·수치화, 기능별 검증 누락 검토 | AC-테스트-증거 검증표와 테스트 추가 의견·반영 상태 |
+| **Test Engineer** | 프로젝트 실행 전 기대효과·수치화 가능성 및 중단·사람 보고 조건 필수 질문, 완료 기준·검증 누락 검토 | 사용자와 확인한 시작·중단 합의, AC-테스트-증거 검증표와 추가 의견 |
 | **Security Review Engineer** | QA Stage 3 독립 보안·개인정보 검수 | 리비전별 PASS/BLOCKED, 배포 전 필수 |
 | **Compliance Reviewer** | 국내·미국 IT 법령 및 보안 준수 검토 | 출처·적용 여부·발견사항·조치 기록 |
 | **DevOps** | Dockerfile/Compose, 환경 설정(`.env.example`), 배포 스크립트 | 컨테이너 빌드 & `/health` 200 확인 |
