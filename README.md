@@ -58,6 +58,8 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 ## 👥 Engineering Squad: 14 Specialized Roles & DoD
 
+Alongside the 14 specialists and Lead, **Humanizer Editor** provides the final plain-language pass with `humanizer-kr` for Korean or `humanizer` for English. Explain jargon with plain terms and helpful examples while preserving facts, risks and unverified status. Lead may cover this non-voting responsibility; the 15-ballot/8-vote rule stays unchanged. See the [contract](skills/engineering-squad/references/roles_en.md#humanizer-editor-final-plain-language-explanation).
+
 ```mermaid
 flowchart TD
     PO["Product Planner\n(Brainstorming/Research/PRD)"] --> Lead["Squad Lead\n(Interface & Spec)"]

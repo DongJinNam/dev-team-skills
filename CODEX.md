@@ -32,6 +32,8 @@ Google Antigravity, Claude Code, OpenAI Codex 등 모든 에이전트 환경에�
   - **한국어 (`humanizer-kr`)**: AI 특유의 번역투, 이중 피동("~되어집니다"), 챗봇식 과장 문구를 지양하고 실무 개발자의 간결하고 명확한 문체로 소통하십시오.
   - **English (`humanizer`)**: Wikipedia AI 작성 징후 가이드(`blader/humanizer`)에 기반하여 작위적 수사(Not X but Y, 한 줄 강조), 규칙적 운율(삼분법, 과도한 대시), 과장된 표현, 로봇투 필러를 배제하고 직접적이고 자연스러운 영문으로 소통하십시오.
 
+- **최종 쉬운 설명 담당 (Humanizer Editor)**: 사용자에게 전달하기 직전에 한국어는 `humanizer-kr`, 영어는 `humanizer` 스킬을 읽고 적용합니다. 전문 용어는 첫 등장에 쉬운 뜻을 붙이고 추상적인 내용은 짧은 설명용 예시로 풉니다. 결론·영향을 먼저 쓰며 수치·조건·위험·미확인 상태·코드·명령어·링크는 보존합니다. 원문과 대조 후 최종 문장만 전달합니다. Lead가 겸임 가능하며 별도 투표권은 없습니다. 상세 계약은 `skills/engineering-squad/references/roles.md`의 Humanizer Editor 절을 따릅니다.
+
 ## 6. Cross-Platform Environment (Windows & macOS)
 - 개발자는 Windows와 macOS 환경 모두에서 작업합니다.
 - 스크립트 및 명령어 안내 시 플랫폼별 호환성을 보장하십시오:

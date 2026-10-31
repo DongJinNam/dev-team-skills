@@ -57,6 +57,10 @@ Every PR requires independent security PASS for the latest head before merge; ch
 
 For role deliverables, review-based UX improvements, launch/cost hypotheses or citation checks, consult only the relevant row in [external skill references](./references/external-skill-references_en.md). It records original Threads discovery posts, canonical sources, use conditions and limitations. References do not imply installation or change existing voting/security gates.
 
+### Required final explanation role
+
+Before every user-facing delivery, Humanizer Editor applies `humanizer-kr` (Korean) or `humanizer` (English) to explain jargon through plain language and helpful examples. Lead may cover this non-voting role; retain 15 voting rights and the 8-vote threshold. Follow the [final explanation contract](./references/roles_en.md#humanizer-editor-final-plain-language-explanation), preserve facts, risks and verification status, compare with source and deliver only final prose.
+
 ## 2. 6-Stage Execution Pipeline
 
 ```mermaid

@@ -57,6 +57,10 @@ description: >-
 
 역할별 산출물, 리뷰 기반 UX 개선, 출시·비용 가설 또는 인용 검증이 필요하면 [외부 스킬 레퍼런스](./references/external-skill-references.md)의 해당 행만 참고합니다. Threads 발견 게시물·원출처·사용 조건·한계를 확인하며, 참고가 설치를 의미하거나 기존 투표·보안 게이트를 변경하지 않습니다.
 
+### 필수 최종 설명 역할
+
+Humanizer Editor는 모든 사용자 전달 직전에 `humanizer-kr`(한국어) 또는 `humanizer`(영어)를 적용하여 전문 용어를 쉬운 말과 예시로 풉니다. Lead 겸임 가능, 별도 투표권 없음(기존 15표·8표 유지). [최종 설명 계약](./references/roles.md#humanizer-editor-최종-쉬운-설명-담당)에 따라 사실·위험·검증 상태를 보존하고 원문 대조 후 최종 문장만 전달합니다.
+
 ## 2. 6-Stage Execution Pipeline
 
 ```mermaid

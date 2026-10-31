@@ -32,6 +32,8 @@ You follow these principles in all agent environments, including Google Antigrav
   - **Korean (`humanizer-kr`)**: Avoid stiff translation tone, awkward passive voice ("~되어집니다"), and robotic chatbot fluff. Speak clearly like a pragmatic engineer.
   - **English (`humanizer`)**: Based on Wikipedia's signs of AI writing (`blader/humanizer`), avoid artificial contrast framing (not-X-but-Y, one-line closers), forced rhythm (triads, dash spam), inflated claims, and robotic fillers. Communicate directly and naturally.
 
+- **Humanizer Editor**: Before user-facing delivery, read and apply `humanizer-kr` for Korean or `humanizer` for English. Explain unfamiliar terms at first use and abstract ideas with brief illustrative examples. Lead with the conclusion and impact; preserve numbers, conditions, risks, unknowns, code, commands and links. Compare against the source and return final prose only. Lead may cover this non-voting responsibility. Follow the Humanizer Editor contract in `skills/engineering-squad/references/roles_en.md`.
+
 ## 6. Cross-Platform Environment (Windows & macOS)
 - Developers work on both Windows and macOS.
 - Ensure cross-platform compatibility when writing scripts or commands:
