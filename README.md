@@ -85,7 +85,7 @@ The fourteen specialist roles are coordinated by the separate Squad Lead. Activa
 | **Backend** | REST/GraphQL APIs, domain logic, auth, error handling | Unit & integration tests pass, API endpoints respond correctly |
 | **Data Engineer** | DB schemas (DDL), migrations (Up/Down), query tuning | Migration and rollback scripts execute and succeed |
 | **QA Engineer** | E2E testing, negative test cases, corner cases | 100% pass on test suite |
-| **Test Engineer** | Clear/measurable completion criteria and feature-level test gaps | AC-test-evidence matrix, test recommendations and dispositions |
+| **Test Engineer** | Mandatory user questions on expected benefits/quantifiability and stop/report conditions before project execution; clear criteria and test gaps | User-confirmed start/stop agreement, AC-test-evidence matrix and recommendations |
 | **Security Review Engineer** | Independent security/privacy review at QA Stage 3 | Revision-bound PASS/BLOCKED; required before deployment |
 | **Compliance Reviewer** | Korean/U.S. IT legal and security-related compliance | Sources, applicability, findings and actions |
 | **DevOps** | Dockerfile/Compose, environment configs (`.env.example`), scripts | Container builds cleanly, `/health` returns HTTP 200 |

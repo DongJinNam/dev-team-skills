@@ -69,6 +69,7 @@ flowchart TD
 ```
 
 ### Stage 0: Planning & Research (Product Planner)
+0. **Mandatory Test Engineer start questions**: Before project execution, directly ask the user “What benefit do you expect, and can it be quantified?” and “Under what conditions must work stop and be reported to a human?” Confirm existing answers with the user. Keep unagreed items `PENDING` and do not start dependent execution; on a trigger, immediately stop, report and await explicit resume instructions. Combined roles do not waive this step. Apply the start/stop contract and required record in section 14 of [roles_en.md](./references/roles_en.md).
 1. **Define the problem & brainstorm**: Find the user's core problem. Use the `brainstorming` skill with SCAMPER and HMW exercises.
 2. **Research**: Benchmarks similar products and tech stacks using the `research` subagent or web search.
 3. **Creative Rookie**: Supply current SNS evidence, a challenge and a small experiment; hold the all-role yes/no vote before finalizing the PRD.
