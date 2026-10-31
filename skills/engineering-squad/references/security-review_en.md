@@ -2,6 +2,16 @@
 
 A Security Review Engineer separate from the implementer reviews security alongside functional QA. Security is a release prerequisite ahead of schedule, cost and marketing. If no independent reviewer is available, remain BLOCKED. Neither scanner output nor AI review guarantees security or constitutes certification.
 
+
+## Required PR merge gate
+
+- Every PR requires an independent Security Review Engineer's **PASS for the current PR head commit**, with a review report, before merging. The reviewer must be separate from the author/implementer. Do not defer review until QA Stage 3 or deployment. Documentation/configuration-only PRs may narrow checks but must not skip the role.
+- The Lead/merger verifies reviewer, review date, reviewed head SHA, report and current-advisory evidence, and absence of unresolved blockers. Functional QA, general approval, green CI and author-ticked checkboxes do not substitute for security PASS.
+- A new commit, rebase, base-branch change, or base update that changes the actual merge diff/result invalidates approval. Obtain independent PASS for the latest head and the effects of changes against the target base before merging. Dependency/deployment configuration/artifact changes follow the same rule.
+- Do not merge with BLOCKED, unperformed review, missing report or target mismatch. The pre-deployment review contract remains in force.
+
+This is an agent/reviewer merge contract. A checkbox does not automatically lock GitHub's merge button. Mechanical enforcement requires separately configured protection rules and a trusted required status check.
+
 ## 1. Inputs and sequence
 
 1. At every review, check current security issues: authoritative vendor advisories, CISA KEV, CVE/NVD, ecosystem security advisories and relevant KISA/KrCERT notices. Record source URLs, publication/update date, check date, affected versions, project applicability and mitigation. Prioritize actively exploited issues. If current information cannot be obtained, record the gap; block release when an applicable risk cannot be assessed. Recheck before deployment and whenever dependencies, configuration or relevant advisories change. Do not claim continuous monitoring unless an actual monitoring job exists.
@@ -38,7 +48,7 @@ Attach these fields to QA results/PR. Store sensitive reproduction evidence in r
 
 ```text
 Disposition: PASS | BLOCKED
-Target: base/head commits, lockfile and deployment configuration/artifact identifiers
+Target: PR URL, base/head commits, lockfile and deployment configuration/artifact identifiers
 Reviewer: identifier separate from implementer, review date
 Scope: changed files/affected paths, data/trust boundaries, exclusions and rationale
 Current issues: sources, publication/update and check dates, affected versions, applicability, mitigations

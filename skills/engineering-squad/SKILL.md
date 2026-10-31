@@ -43,7 +43,7 @@ description: >-
 - 상세 산출물·계측 부재·예산 초과 처리 기준은 [roles.md](./references/roles.md)의 9–10절을 적용합니다.
 
 
-보안은 출시 선행조건입니다. Planner와 Marketing은 [security-research.md](./references/security-research.md)에 사고·채택 근거와 확인일을 유지하며 인기를 안전성의 증거로 취급하지 않습니다.
+모든 PR은 머지 전에 최신 head에 대한 독립 보안 PASS가 필수이며 commit/머지 입력 변경 시 기존 승인은 무효입니다. [PR 머지 게이트](./references/security-review.md#pr-머지-필수-게이트)를 적용합니다. 보안은 출시 선행조건이기도 합니다. Planner와 Marketing은 [security-research.md](./references/security-research.md)에 사고·채택 근거와 확인일을 유지하며 인기를 안전성의 증거로 취급하지 않습니다.
 
 ## 2. 6-Stage Execution Pipeline
 

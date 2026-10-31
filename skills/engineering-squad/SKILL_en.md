@@ -43,7 +43,7 @@ The eleven specialist roles are coordinated by the separate Squad Lead. Activate
 - Apply sections 9–10 of [roles_en.md](./references/roles_en.md) for deliverables, missing telemetry, and budget overruns.
 
 
-Security is a release prerequisite. Planner and Marketing must maintain dated incident and adoption evidence in [security-research_en.md](./references/security-research_en.md); popularity is not proof of safety.
+Every PR requires independent security PASS for the latest head before merge; changed commits or merge inputs invalidate previous approval. Apply the [PR merge gate](./references/security-review_en.md#required-pr-merge-gate). Security is also a release prerequisite. Planner and Marketing must maintain dated incident and adoption evidence in [security-research_en.md](./references/security-research_en.md); popularity is not proof of safety.
 
 ## 2. 6-Stage Execution Pipeline
 

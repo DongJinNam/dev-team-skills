@@ -59,3 +59,8 @@ flowchart TD
 ## 필수 보안 판정
 
 QA Stage 3에서 독립 Security Review Engineer를 활성화하고 [security-review.md](../engineering-squad/references/security-review.md)를 적용합니다. 기능 QA 통과나 ROI·비용 우선순위로 보안 게이트를 면제하지 않습니다. 출시 차단 사유는 Must Fix로 표시하고 Medium/Low 잔여 위험 수용은 해당 계약과 더 엄격한 조직 정책을 따릅니다.
+
+
+## PR 머지 필수 기준
+
+문서·설정 변경을 포함한 모든 PR의 머지 전에 최신 PR head에 대한 독립 Security Review Engineer PASS와 보고서를 필수로 확인합니다. [PR 머지 필수 게이트](../engineering-squad/references/security-review.md#pr-머지-필수-게이트)를 적용합니다. 미검수·BLOCKED·이전 리비전에 대한 검수로는 머지하지 않습니다. 새 commit 또는 머지 입력 변경 시 재검수하며 QA·일반 승인·CI 통과로 대체하지 않습니다.

@@ -40,3 +40,16 @@
 - [ ] Ran local health check script (`verify-health.ps1` or `verify-health.sh`) and it passed.
 - [ ] Cleaned up temporary files and debug logs.
 - [ ] Checked `git diff` to make sure there are no unintended changes.
+
+
+## Required Security Review — Merge Gate
+
+Do not merge until an independent Security Review Engineer has issued PASS for the latest PR head. Author-ticked checkboxes, QA and green CI do not replace the report. New commits or changed merge inputs require re-review.
+
+- Reviewer (separate from author/implementer):
+- Reviewed PR head SHA / target base SHA:
+- Review date / report link / current-advisory evidence:
+- Disposition: PENDING
+<!-- Update to PASS or BLOCKED only after independent review. -->
+- [ ] Independent security PASS matches the latest head and merge inputs.
+- [ ] Required evidence is complete and no unresolved merge blockers remain.
