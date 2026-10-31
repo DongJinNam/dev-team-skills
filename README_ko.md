@@ -58,6 +58,8 @@
 
 ## 👥 Engineering Squad: 14개 전문 역할 및 검증 기준
 
+14개 전문 역할·Lead와 별도로 **Humanizer Editor(쉬운 설명 담당)**가 최종 답변을 다듬습니다. 한국어는 `humanizer-kr`, 영어는 `humanizer`를 사용해 전문 용어를 쉬운 말·예시로 풀고 사실·위험·미검증 상태를 보존합니다. Lead 겸임 가능하며 별도 투표권 없이 기존 15표·8표 규칙을 유지합니다. [상세 계약](skills/engineering-squad/references/roles.md#humanizer-editor-최종-쉬운-설명-담당).
+
 ```mermaid
 flowchart TD
     PO["Product Planner\n(Brainstorming/Research/PRD)"] --> Lead["Squad Lead\n(Interface & Spec)"]
