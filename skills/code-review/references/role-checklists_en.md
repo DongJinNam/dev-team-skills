@@ -69,3 +69,17 @@ Use these focused checklists during code reviews based on the engineering roles 
 - [ ] Are telemetry proxies kept distinct from exact tokens or billed costs?
 - [ ] Are extra discussion/delegation justified and staffing minimized?
 - [ ] Are overruns reported while required quality and security checks remain intact?
+
+
+## 11. Security Review Engineer Checklist (mandatory)
+- [ ] Independent reviewer and report identify the exact reviewed revision and deployment target.
+- [ ] Authorization/tenant boundaries, personal data, secrets, input, supply chain and AI/tool risks have evidence or justified per-check N/A.
+- [ ] Missing checks, exposure suspicions and Critical/High issues block release; QA green is insufficient.
+- [ ] Fixes are retested; accepted residual risks have owner, deadline and service-owner/user approval.
+- [ ] Report follows [security-review_en.md](../../engineering-squad/references/security-review_en.md), with redacted public evidence.
+
+
+## 12. Compliance Reviewer Checklist
+- [ ] Applicable Korean/U.S. IT legal and security requirements have dated official sources and applicability rationale.
+- [ ] Privacy, copyright/licenses and public examples are checked; findings/actions or reasoned N/A are recorded.
+- [ ] Unresolved applicable violations block merge; uncertain interpretation is escalated.

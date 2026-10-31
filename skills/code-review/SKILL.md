@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: >-
-  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
+  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
 ---
 
 # High-ROI Code Review Workflow
@@ -16,7 +16,7 @@ description: >-
 
 | 등급 | 레벨 | 설명 | 머지 조건 |
 | :---: | :--- | :--- | :--- |
-| 🔴 | **[필수 / Must Fix]** | 버그, 데이터 유실 위험, 보안 취약점, 메모리 누수, 심각한 성능 저하, 롤백 불가능한 스키마 변경 | **반드시 수정 후 머지 가능** |
+| 🔴 | **[필수 / Must Fix]** | 버그, 데이터 유실 위험, 출시 차단 보안 취약점, 메모리 누수, 심각한 성능 저하, 롤백 불가능한 스키마 변경 | **반드시 수정 후 머지 가능** |
 | 🟡 | **[확인 요청 / Inquire & Verify]** | 설계 의도 확인 필요, 사이드 이펙트 우려, 불명확한 에지 케이스 처리, 트레이드오프 검토 | **작성자의 확인 및 답변 필수** |
 | 🟢 | **[권장 / Suggestion]** | 가독성 개선, 사소한 리팩토링, 디자인 패턴 적용 권장, 미세 최적화 | **작성자 판단 하에 선택적 반영 (머지 블로커 아님)** |
 
@@ -31,7 +31,7 @@ description: >-
 2. **Design Pattern & SOLID Grounded (설계 원칙 근거)**:
    - "그냥 이렇게 바꾸는 게 좋아 보입니다" 식의 주관적 의견을 배제하고, **단일 책임 원칙(SRP), 개방-폐쇄 원칙(OCP), 결합도 완화, 전략/팩토리/어댑터 패턴** 등 명확한 아키텍처 원칙에 기반하여 대안을 제시합니다.
 3. **Role-Tailored Perspective (직무 맞춤형)**:
-   - 변경된 코드 영역에 따라 해당 전문 역할(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE)의 관점에서 특화된 질문을 던집니다. ([role-checklists.md](./references/role-checklists.md) 참조)
+   - 변경된 코드 영역에 따라 해당 전문 역할(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Security Review Engineer, Compliance Reviewer, DevOps, SRE)의 관점에서 특화된 질문을 던집니다. ([role-checklists.md](./references/role-checklists.md) 참조)
 
 ---
 
@@ -54,3 +54,15 @@ flowchart TD
    - QA: 엣지 케이스 및 실패 시나리오 테스트 여부
    - DevOps/SRE: 환경변수 노출, 컨테이너 리소스 제한, 헬스체크 및 메트릭
 4. **대안 제시**: 문제를 지적할 때는 반드시 **"왜 문제인지"**와 **"최소 코드로 해결하는 대안(Alternative Code Snippet)"**을 함께 제공합니다.
+
+
+## 필수 보안 판정
+
+QA Stage 3에서 독립 Security Review Engineer를 활성화하고 [security-review.md](../engineering-squad/references/security-review.md)를 적용합니다. 기능 QA 통과나 ROI·비용 우선순위로 보안 게이트를 면제하지 않습니다. 출시 차단 사유는 Must Fix로 표시하고 Medium/Low 잔여 위험 수용은 해당 계약과 더 엄격한 조직 정책을 따릅니다.
+
+
+## PR 머지 필수 기준
+
+문서·설정 변경을 포함한 모든 PR의 머지 전에 최신 PR head에 대한 독립 Security Review Engineer PASS와 보고서를 필수로 확인합니다. [PR 머지 필수 게이트](../engineering-squad/references/security-review.md#pr-머지-필수-게이트)를 적용합니다. 미검수·BLOCKED·이전 리비전에 대한 검수로는 머지하지 않습니다. 새 commit 또는 머지 입력 변경 시 재검수하며 QA·일반 승인·CI 통과로 대체하지 않습니다.
+
+Compliance Reviewer는 관련 변경의 국내·미국 IT 법령 및 보안 준수 여부를 [역할 12](../engineering-squad/references/roles.md)에 따라 검토합니다. 출처·적용 여부·조치를 기록하고 적용되는 위반 사항이 미해결이면 머지를 차단합니다.

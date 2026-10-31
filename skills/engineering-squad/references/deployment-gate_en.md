@@ -1,20 +1,23 @@
 # Deployment Verification Gate (Definition of Done)
 
-Before declaring any deployment complete, you must pass all 7 verification gates below in order. Keep proof (logs, status codes, test outputs) for each gate.
+Before declaring any deployment complete, you must pass all 8 verification gates below in order. Keep proof (logs, status codes, test outputs) for each gate.
 
 ---
 
-## 7-Stage Comprehensive Verification Checklist
+## 8-Gate Comprehensive Verification Checklist
 
 | Gate | Responsible Role | Verification Area | Example Command | Passing Criteria |
 | :--- | :--- | :--- | :--- | :--- |
 | **Gate 1** | **Frontend / Backend** | **Build & Compile** | `npm run build` / `cargo build` / `go build` | Exit Code 0, 0 compile/type errors |
 | **Gate 2** | **Backend / Data** | **Unit & Integration Tests** | `npm test` / `pytest` / `go test ./...` | 0 failing tests |
 | **Gate 3** | **QA Engineer** | **E2E & Quality Gate** | `npx playwright test` / `cypress run` | 100% pass on core scenarios |
+| **Gate 3a** | **Security Review Engineer (independent)** | **Security/privacy review** | Review under [security-review_en.md](./security-review_en.md) | Revision-bound security PASS and report; no release blockers |
 | **Gate 4** | **DevOps Engineer** | **Environment Variables Match** | Check missing keys: `.env.example` vs `.env` | 0 missing required environment variables |
 | **Gate 5** | **DevOps Engineer** | **Container Startup** | `docker compose up -d --build` | Container state stays `Up (healthy)` |
 | **Gate 6** | **DevOps Engineer** | **Runtime Health Check** | `powershell -File ./scripts/verify-health.ps1` | HTTP status code `200 OK` |
 | **Gate 7** | **SRE Engineer** | **Reliability & Metrics Check** | `curl -f http://localhost:PORT/metrics` | Metrics endpoint responds & 0% error rate |
+
+Gate 3a runs at Stage 3 after functional QA and before any Stage 4 deployment. Missing review/evidence means BLOCKED. QA green cannot replace it; changed commit/lockfile/deployment configuration requires a new disposition.
 
 ---
 
