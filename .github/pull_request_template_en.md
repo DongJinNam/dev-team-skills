@@ -60,3 +60,11 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 - Findings and actions, or N/A rationale:
 - Disposition: PENDING
 <!-- Use PASS / BLOCKED / N/A with evidence after reviewing applicability. -->
+
+
+## Decision ballots
+- Proposal/version / decision-log link (all 14 roles, owners, YES/NO and reasons):
+- YES / NO / missing / outcome / minority views and reconsideration triggers:
+- SNS ideas, evidence and small experiment, or N/A rationale:
+- [ ] Each decision discussion includes 13 specialists + Lead, including inactive roles: one vote each, all 14 collected, at least 8 YES to adopt. Changes without a decision discussion have a reasoned N/A.
+- [ ] Ties/nonresponse defer; voting did not waive security/compliance blockers.

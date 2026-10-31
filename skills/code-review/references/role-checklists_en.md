@@ -83,3 +83,10 @@ Use these focused checklists during code reviews based on the engineering roles 
 - [ ] Applicable Korean/U.S. IT legal and security requirements have dated official sources and applicability rationale.
 - [ ] Privacy, copyright/licenses and public examples are checked; findings/actions or reasoned N/A are recorded.
 - [ ] Unresolved applicable violations block merge; uncertain interpretation is escalated.
+
+
+## 13. Creative Rookie & Decision Review
+- [ ] Are dated SNS evidence, ideas, small experiments and metrics recorded at kickoff, weekly retrospectives and launch review?
+- [ ] Are reasoned dissent and minority views preserved, with facts, hypotheses and unknowns distinguished?
+- [ ] Does each decision have all 14 role ballots/reasons (13 specialists plus Lead), the 8-vote threshold, and tie/missing-vote handling?
+- [ ] Does majority voting preserve user authorization and mandatory security/compliance gates?
