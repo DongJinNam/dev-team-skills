@@ -56,3 +56,16 @@ Use these focused checklists during code reviews based on the engineering roles 
 - [ ] **Resource Limits**: Are CPU and memory limits set on containers?
 - [ ] **Graceful Shutdown**: Does the service handle `SIGTERM` cleanly by completing in-flight requests before exiting?
 - [ ] **Observability**: Are structured JSON logs (with trace IDs and request IDs) generated for debugging?
+
+## 9. Product Marketing Review Checklist
+- [ ] Can the intended reader quickly identify value and next action?
+- [ ] Are demo claims linked to verification, with unimplemented features and projections labeled?
+- [ ] Is comprehension review labeled as real-user testing or internal review?
+- [ ] Is external publishing or ad spending explicitly authorized?
+
+## 10. Finance / FinOps Review Checklist
+- [ ] Are measured/estimated/unknown data, rate sources, dates, currencies, and periods distinguished?
+- [ ] Are input/output/cache charges and communication subsets counted without duplication?
+- [ ] Are telemetry proxies kept distinct from exact tokens or billed costs?
+- [ ] Are extra discussion/delegation justified and staffing minimized?
+- [ ] Are overruns reported while required quality and security checks remain intact?

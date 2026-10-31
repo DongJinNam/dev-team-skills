@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: >-
-  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
+  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
 ---
 
 # High-ROI Code Review Workflow
@@ -31,7 +31,7 @@ Every review comment should use a clear severity tag so the author knows what bl
 2. **Grounded in SOLID & Design Patterns**:
    - Avoid subjective feedback like "I just prefer this way." Back up your advice with solid principles: **Single Responsibility (SRP), Open-Closed (OCP), loose coupling, or Strategy/Factory patterns**.
 3. **Tailored by Role**:
-   - Review code through the lens of specific roles (Frontend, Backend, Data, QA, DevOps, SRE). (See [role-checklists_en.md](./references/role-checklists_en.md))
+   - Review code through the lens of specific roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, DevOps, SRE). (See [role-checklists_en.md](./references/role-checklists_en.md))
 
 ---
 
