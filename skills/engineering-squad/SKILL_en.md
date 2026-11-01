@@ -1,7 +1,7 @@
 ---
 name: engineering-squad
 description: >-
-  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE), and orchestrating end-to-end service deployments.
+  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE), orchestrating end-to-end service deployments, or producing scenario-based analysis and decision reports.
 ---
 
 # Engineering Squad & Service Deployment Workflow
@@ -60,6 +60,10 @@ For role deliverables, review-based UX improvements, launch/cost hypotheses or c
 ### Required final explanation role
 
 Before every user-facing delivery, Humanizer Editor applies `humanizer-kr` (Korean) or `humanizer` (English) to explain jargon through plain language and helpful examples. Lead may cover this non-voting role; retain 15 voting rights and the 8-vote threshold. Follow the [final explanation contract](./references/roles_en.md#humanizer-editor-final-plain-language-explanation), preserve facts, risks and verification status, compare with source and deliver only final prose.
+
+### Report conclusions and summaries
+
+For situation analysis, verification and decision reports, apply the [report conclusion and three-sentence contract](./references/report-summary_en.md). Lead classifies evidence scenarios and verdicts; Ponytail and Humanizer Editor preserve exactly three What/How/Why sentences; QA/Test Engineer checks the final result. Retain detailed evidence and existing mandatory report fields in the body.
 
 ## 2. 6-Stage Execution Pipeline
 

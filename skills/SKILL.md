@@ -1,7 +1,7 @@
 ---
 name: engineering-squad
 description: >-
-  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE), and orchestrating end-to-end service deployments.
+  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE), orchestrating end-to-end service deployments, or producing scenario-based analysis and decision reports.
 ---
 
 # Engineering Squad & Service Deployment Workflow
@@ -56,6 +56,10 @@ description: >-
 ### 외부 스킬 레퍼런스
 
 역할별 산출물, 리뷰 기반 UX 개선, 출시·비용 가설 또는 인용 검증이 필요하면 [외부 스킬 레퍼런스](./engineering-squad/references/external-skill-references.md)의 해당 행만 참고합니다. Threads 발견 게시물·원출처·사용 조건·한계를 확인하며, 참고가 설치를 의미하거나 기존 투표·보안 게이트를 변경하지 않습니다.
+
+### 보고서 결론·요약
+
+상황 분석·검증·의사결정 보고서는 [보고서 결론과 3문장 요약 계약](./engineering-squad/references/report-summary.md)을 필수 적용합니다. Lead가 근거 상태별 시나리오와 판정을 정리하고, Ponytail과 Humanizer Editor는 무엇을·어떻게·왜의 정확히 3문장을 보존하며 QA/Test Engineer가 최종 결과를 검수합니다. 상세 근거와 기존 필수 보고 필드는 본문에 유지합니다.
 
 ## 2. 6-Stage Execution Pipeline
 

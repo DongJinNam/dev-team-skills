@@ -1,7 +1,7 @@
 ---
 name: ponytail
 description: >-
-  Use this skill to adopt the mindset of the laziest, pragmatically brilliant senior dev: "The best code is the code you never wrote." Enforces standard library first, zero unnecessary dependencies, and radical minimalism.
+  Use this skill to adopt the mindset of the laziest, pragmatically brilliant senior dev: "The best code is the code you never wrote." Also use when compressing report conclusions or executive summaries without losing verdicts, actions, evidence, or uncertainty.
 ---
 
 # Ponytail: The Lazy Senior Dev Protocol
@@ -34,3 +34,8 @@ description: >-
 - [ ] 이 기능을 언어 내장 표준 라이브러리로 10줄 이내에 구현할 수 있는가?
 - [ ] 이 라이브러리가 프로젝트의 보안 취약점 점검(CVE) 및 의존성 트리에 미치는 유지보수 비용을 정당화할 만큼 복잡한 문제인가?
 - [ ] 사용자가 명시적으로 해당 라이브러리를 요청했는가?
+
+
+## 3. 보고서 압축
+
+보고서의 요약을 작성·축약할 때는 [보고서 결론과 3문장 요약 계약](../engineering-squad/references/report-summary.md)을 먼저 읽고 적용합니다. 무엇을 판단했는지 → 어떻게 실행·확인할지 → 왜 그렇게 판단했는지 순서의 정확히 3문장을 보존합니다. 중복만 줄이고 판정의 범위·조건·근거·위험·미확인 상태를 삭제하지 않습니다. Humanizer Editor의 최종 교정 후에도 같은 계약을 검수합니다.
