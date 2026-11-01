@@ -1,7 +1,7 @@
 ---
 name: engineering-squad
 description: >-
-  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE), and orchestrating end-to-end service deployments.
+  Use this skill when developing full-stack features, architecting services with multiple specialized roles (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data Engineer, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE), orchestrating end-to-end service deployments, or producing scenario-based analysis and decision reports.
 ---
 
 # Engineering Squad & Service Deployment Workflow
@@ -60,6 +60,10 @@ description: >-
 ### 필수 최종 설명 역할
 
 Humanizer Editor는 모든 사용자 전달 직전에 `humanizer-kr`(한국어) 또는 `humanizer`(영어)를 적용하여 전문 용어를 쉬운 말과 예시로 풉니다. Lead 겸임 가능, 별도 투표권 없음(기존 15표·8표 유지). [최종 설명 계약](./references/roles.md#humanizer-editor-최종-쉬운-설명-담당)에 따라 사실·위험·검증 상태를 보존하고 원문 대조 후 최종 문장만 전달합니다.
+
+### 보고서 결론·요약
+
+상황 분석·검증·의사결정 보고서는 [보고서 결론과 3문장 요약 계약](./references/report-summary.md)을 필수 적용합니다. Lead가 근거 상태별 시나리오와 판정을 정리하고, Ponytail과 Humanizer Editor는 무엇을·어떻게·왜의 정확히 3문장을 보존하며 QA/Test Engineer가 최종 결과를 검수합니다. 상세 근거와 기존 필수 보고 필드는 본문에 유지합니다.
 
 ## 2. 6-Stage Execution Pipeline
 
