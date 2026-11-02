@@ -125,7 +125,7 @@ python -m pip install -r scripts/requirements-harness.txt
 ./scripts/verify-harness.sh
 ```
 
-`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. UTF-8 BOM, LF/CRLF and paths with spaces are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS:
+`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. UTF-8 BOM, LF/CRLF and paths with spaces are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS. On Windows, run Bash tests from Git Bash so the subprocess uses Git Bash rather than WSL's `bash.exe`; from PowerShell select `HARNESS_LAUNCHER=pwsh`:
 
 ```bash
 python -m unittest discover -s tests -v

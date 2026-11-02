@@ -32,7 +32,14 @@ jobs:
       - name: Install package validation dependency
         run: python -m pip install -r scripts/requirements-harness.txt
 
-      - name: Run shared normal and error cases through the selected launcher
+      - name: Run shared normal and error cases through Bash
+        if: matrix.launcher == 'bash'
+        shell: bash
+        run: python -m unittest discover -s tests -v
+
+      - name: Run shared normal and error cases through PowerShell
+        if: matrix.launcher == 'pwsh'
+        shell: pwsh
         run: python -m unittest discover -s tests -v
 
       - name: Verify repository through Bash
