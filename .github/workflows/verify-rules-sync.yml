@@ -35,7 +35,15 @@ jobs:
       - name: Run shared normal and error cases through Bash
         if: matrix.launcher == 'bash'
         shell: bash
-        run: python -m unittest discover -s tests -v
+        run: |
+          # Native Windows subprocess lookup can select WSL's bash.exe.
+          # Pass the exact Git Bash executable that Actions is running.
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            export HARNESS_BASH="$(cygpath -w "$BASH")"
+          else
+            export HARNESS_BASH="$BASH"
+          fi
+          python -m unittest discover -s tests -v
 
       - name: Run shared normal and error cases through PowerShell
         if: matrix.launcher == 'pwsh'

@@ -131,6 +131,7 @@ python -m pip install -r scripts/requirements-harness.txt
 python -m unittest discover -s tests -v
 # HARNESS_LAUNCHER=bash|pwsh|python 으로 실행기 선택 (기본값: bash)
 # PowerShell 예: $env:HARNESS_LAUNCHER = 'pwsh'
+# Windows Git Bash: export HARNESS_BASH="$(cygpath -w "$BASH")"
 ```
 
 이 검사는 **저장소의 패키지 구조 계약**을 확인합니다. 공급사 전체 스키마나 설치 호환성을 보장하지 않습니다. 에이전트 행동·제품 테스트·독립 보안 검수는 이 명령에서 `NOT_RUN`으로 표시하며, 기존 승인 게이트는 그대로 적용합니다.

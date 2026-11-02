@@ -45,7 +45,8 @@ class HarnessTests(unittest.TestCase):
         launcher = os.environ.get("HARNESS_LAUNCHER", "bash")
         scripts = self.root / "scripts"
         commands = {
-            "bash": ["bash", (scripts / "verify-harness.sh").as_posix()],
+            "bash": [os.environ.get("HARNESS_BASH") or shutil.which("bash") or "bash",
+                     (scripts / "verify-harness.sh").as_posix()],
             "pwsh": ["pwsh", "-NoLogo", "-NoProfile", "-NonInteractive", "-File",
                      str(scripts / "verify-harness.ps1")],
             "python": [sys.executable, str(scripts / "verify-harness.py")],

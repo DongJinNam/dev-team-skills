@@ -131,6 +131,7 @@ python -m pip install -r scripts/requirements-harness.txt
 python -m unittest discover -s tests -v
 # Choose an entry point with HARNESS_LAUNCHER=bash|pwsh|python (default: bash).
 # PowerShell example: $env:HARNESS_LAUNCHER = 'pwsh'
+# Windows Git Bash: export HARNESS_BASH="$(cygpath -w "$BASH")"
 ```
 
 This is a **local package-structure contract**, not complete vendor-schema validation or proof of installation compatibility. Agent behavior, product tests and independent security review are explicitly `NOT_RUN` by this command; existing approval gates still apply.
