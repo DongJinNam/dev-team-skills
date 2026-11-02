@@ -8,6 +8,10 @@ description: >-
 
 이 스킬은 **기획자(Product Planner / PM)**와 엔지니어링 리드가 새로운 제품이나 기능을 기획할 때, 사용자의 진짜 문제를 발굴하고, 구조화된 브레인스토밍과 리서치를 통해 검증 가능한 최소 기능 제품(MVP) 및 PRD(Product Requirement Document)로 구체화하는 표준 실행 지침입니다.
 
+## Superpowers와 함께 사용할 때
+
+두 패키지를 함께 사용하면 [담당 계약](../engineering-squad/references/superpowers-compatibility.md)을 먼저 읽습니다. 확인된 출처로 스킬을 선택하고 기획·검증 기록을 하나로 공유하며, 유효한 승인 자료는 재사용하고 빠진 범위만 보완합니다. 필수 kickoff 재확인, 검토별 목적, 최신 head 독립 보안 게이트는 유지합니다.
+
 ---
 
 ## 1. Core Planning Principles (기획 3대 원칙)

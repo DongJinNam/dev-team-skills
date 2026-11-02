@@ -8,6 +8,10 @@ description: >-
 
 This skill is the standard guide for **Product Planners (PMs)** and Engineering Leads when designing new features or products. It helps you discover real user problems, run structured brainstorming, and turn ideas into a testable Minimum Viable Product (MVP) and Lean PRD (Product Requirement Document).
 
+## Superpowers workflow ownership
+
+If both packages participate, first read the [ownership contract](../engineering-squad/references/superpowers-compatibility_en.md). Use verified qualified identities and a single planning/evidence record; reuse valid approvals and supplement only missing scope. Keep mandatory kickoff confirmation, distinct review purposes and current-head independent security gates.
+
 ---
 
 ## 1. Core Planning Principles

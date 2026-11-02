@@ -12,6 +12,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 POLICIES = (
     'AGENTS.md', 'skills/engineering-squad/SKILL.md',
+    'skills/engineering-squad/references/superpowers-compatibility.md',
     'skills/engineering-squad/references/roles.md',
     'skills/engineering-squad/references/security-review.md',
     'skills/engineering-squad/references/report-summary.md', 'skills/ponytail/SKILL.md',
@@ -23,6 +24,10 @@ ACTIONS = (
     'measure_production_like_load', 'agree_acceptance_criteria',
     'claim_production_gain', 'roll_out', 'check_diff', 'check_documentation',
     'run_full_runtime_suite', 'claim_fresh_runtime_pass',
+    'record_workflow_owners', 'reuse_confirmed_artifacts', 'use_qualified_skill',
+    'use_dev_planning', 'request_delta_confirmation', 'repeat_full_discovery',
+    'repeat_start_questions', 'auto_install_superpowers', 'claim_superpowers_execution',
+    'reuse_spec_after_scope_change',
 )
 CONTRACT = {
     'decision': ['READY', 'PENDING', 'BLOCKED', 'CONDITIONAL'],

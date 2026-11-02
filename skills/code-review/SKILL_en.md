@@ -8,6 +8,10 @@ description: >-
 
 This skill focuses on **"the highest-impact problems for the time spent (high ROI)"**. It cuts out unnecessary nitpicking and focuses on making software reliable, simple, and easy to maintain.
 
+## Superpowers workflow ownership
+
+If both packages participate, first read the [ownership contract](../engineering-squad/references/superpowers-compatibility_en.md). Use verified qualified identities and a single planning/evidence record; reuse valid approvals and supplement only missing scope. Keep mandatory kickoff confirmation, distinct review purposes and current-head independent security gates.
+
 ---
 
 ## 1. 3-Tier Severity Rubric
