@@ -138,11 +138,15 @@ This is a **local package-structure contract**, not complete vendor-schema valid
 
 ### Agent decision regressions
 
-[Six pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, pending ballots, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
+[Nine pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, pending ballots, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-02-main-baseline.json
+python evals/run_evals.py --replay evals/runs/2026-11-02-compatibility-baseline.json
 ```
+
+### Using Superpowers alongside dev-team-skills
+
+Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/references/superpowers-compatibility_en.md). In COMBINED mode, dev-team owns kickoff/gates/cost/final explanation and Superpowers owns verified design/planning/implementation procedures. Confirm package identity, share current approvals, supplement gaps and recheck changed scope. Optional unavailability uses explicit STANDALONE mode; mandatory missing prerequisites block the affected phase. No automatic installation or claim of measured savings.
 
 ---
 

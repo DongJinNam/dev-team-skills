@@ -8,6 +8,10 @@ description: >-
 
 이 스킬은 **"Input 대비 Output(ROI)이 가장 큰 핵심 문제"**에 집중하여, 불필요한 사소한 트집(Nitpicking)을 배제하고 소프트웨어의 견고함과 유지보수성을 극대화하는 코드 리뷰를 수행합니다.
 
+## Superpowers와 함께 사용할 때
+
+두 패키지를 함께 사용하면 [담당 계약](../engineering-squad/references/superpowers-compatibility.md)을 먼저 읽습니다. 확인된 출처로 스킬을 선택하고 기획·검증 기록을 하나로 공유하며, 유효한 승인 자료는 재사용하고 빠진 범위만 보완합니다. 필수 kickoff 재확인, 검토별 목적, 최신 head 독립 보안 게이트는 유지합니다.
+
 ---
 
 ## 1. 3단계 리뷰 심각도 분류 체계 (Severity Rubric)

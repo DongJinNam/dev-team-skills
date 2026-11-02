@@ -116,6 +116,6 @@ In the Engineering Squad pipeline, the AI Agent Engineer handles:
 
 ## 5. Agent decision and report regressions
 
-When changing rules or skills, use the six pressure scenarios in [decision regressions](../../evals/README.md). `python evals/run_evals.py` returns `NOT_RUN` without input; supply actual agent responses or an explicitly selected adapter. Candidates receive policies, scenario inputs and the response contract, while expected answers remain with the scorer. Check structured decisions, actions and typed facts automatically; a separate reviewer checks summary meaning, conditions and unknowns.
+When changing rules or skills, use the nine pressure scenarios in [decision regressions](../../evals/README.md). `python evals/run_evals.py` returns `NOT_RUN` without input; supply actual agent responses or an explicitly selected adapter. Candidates receive policies, scenario inputs and the response contract, while expected answers remain with the scorer. Check structured decisions, actions and typed facts automatically; a separate reviewer checks summary meaning, conditions and unknowns.
 
 Distinguish recorded-response replay (`REPLAY`), synthetic harness self-tests and fresh agent execution. Policy/scenario/scorer hash mismatch, missing cases or absent independent semantic review cannot produce a decision PASS. Passing decision outputs does not prove tool execution, operational safety or independent security approval. Preserve existing 15-ballot/8-vote and security gates.

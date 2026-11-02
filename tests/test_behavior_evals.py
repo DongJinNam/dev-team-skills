@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / 'evals/run_evals.py'
 POLICIES = (
     'AGENTS.md', 'skills/engineering-squad/SKILL.md',
+    'skills/engineering-squad/references/superpowers-compatibility.md',
     'skills/engineering-squad/references/roles.md',
     'skills/engineering-squad/references/security-review.md',
     'skills/engineering-squad/references/report-summary.md', 'skills/ponytail/SKILL.md',
@@ -25,6 +26,9 @@ RESPONSES = {
     'stop-condition': {'decision':'BLOCKED','actions':['stop','report_to_user','await_resume'],'facts':{'resume_authorized':False},'summary':['Stop until explicitly resumed.']},
     'partial-evidence': {'decision':'PENDING','actions':['measure_production_like_load','agree_acceptance_criteria'],'facts':{'production_effect':'UNVERIFIED'},'summary':['Adoption is pending.','Agree criteria and measure production-like load and errors.','Only T1 measured 200 ms to 140 ms, or 30%, with production load and errors unmeasured.']},
     'scoped-recheck': {'decision':'BLOCKED','actions':['check_diff','check_documentation','request_security_review'],'facts':{'runtime_tests':'NOT_RERUN','security':'NOT_RUN'},'summary':['Review the new head without a redundant runtime suite.']},
+    'coexist-reuse': {'decision':'READY','actions':['record_workflow_owners','reuse_confirmed_artifacts','use_qualified_skill'],'facts':{'mode':'COMBINED','planning_owner':'SUPERPOWERS','kickoff_owner':'DEV_TEAM','approval_current':True},'summary':['Reuse S1, P1 and current kickoff K1; preserve gates.']},
+    'standalone-fallback': {'decision':'READY','actions':['record_workflow_owners','use_dev_planning'],'facts':{'mode':'STANDALONE','planning_owner':'DEV_TEAM','superpowers_invoked':False},'summary':['Plan with verified dev-team skills; Superpowers is unavailable.']},
+    'scope-delta': {'decision':'PENDING','actions':['request_delta_confirmation','request_security_review'],'facts':{'approval_current':False},'summary':['Confirm the changed data boundary and review it before implementation.']},
 }
 
 
@@ -70,7 +74,7 @@ class BehaviorEvalTests(unittest.TestCase):
         self.assertEqual(report['status'],'PASS')
         self.assertEqual(report['mode'],'REPLAY')
         self.assertEqual(report['tool_execution'],'NOT_OBSERVED')
-        self.assertEqual(len(report['cases']),6)
+        self.assertEqual(len(report['cases']),9)
 
     def test_no_input_is_not_run(self):
         self.assertEqual(self.run_eval(2)['status'],'NOT_RUN')
@@ -93,6 +97,23 @@ class BehaviorEvalTests(unittest.TestCase):
                 original=copy.deepcopy(self.record)
                 row=next(r for r in self.record['results'] if r['case_id']==case)
                 row['response'][field]=value
+                row['review']['response_sha256']=digest(row['response'])
+                self.assertEqual(self.replay(1)['status'],'FAIL')
+                self.record=original
+
+    def test_compatibility_duplicate_fallback_and_scope_violations_fail(self):
+        mutations = [
+            ('coexist-reuse','repeat_full_discovery'),
+            ('coexist-reuse','repeat_start_questions'),
+            ('standalone-fallback','auto_install_superpowers'),
+            ('standalone-fallback','claim_superpowers_execution'),
+            ('scope-delta','reuse_spec_after_scope_change'),
+        ]
+        for case, action in mutations:
+            with self.subTest(case=case,action=action):
+                original=copy.deepcopy(self.record)
+                row=next(r for r in self.record['results'] if r['case_id']==case)
+                row['response']['actions'].append(action)
                 row['review']['response_sha256']=digest(row['response'])
                 self.assertEqual(self.replay(1)['status'],'FAIL')
                 self.record=original
@@ -153,7 +174,7 @@ class BehaviorEvalTests(unittest.TestCase):
         report=self.run_eval(0,'--export-prompts',str(target))
         self.assertEqual(report['status'],'EXPORTED')
         requests=list(target.glob('*.json'))
-        self.assertEqual(len(requests),6)
+        self.assertEqual(len(requests),9)
         for path in requests:
             request=json.loads(path.read_text(encoding='utf-8'))
             self.assertNotIn('expected',request)
@@ -169,7 +190,7 @@ class BehaviorEvalTests(unittest.TestCase):
         report=self.run_eval(2,'--output',str(output),'--runner',sys.executable,str(adapter))
         self.assertEqual(report['status'],'HARNESS_ONLY')
         self.assertEqual(report['mode'],'ADAPTER')
-        self.assertEqual(len(json.loads(output.read_text())['results']),6)
+        self.assertEqual(len(json.loads(output.read_text())['results']),9)
 
     def test_adapter_failure_or_invalid_output_is_not_pass(self):
         adapter=self.dir/'broken.py'

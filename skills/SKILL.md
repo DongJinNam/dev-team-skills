@@ -61,6 +61,10 @@ description: >-
 
 상황 분석·검증·의사결정 보고서는 [보고서 결론과 3문장 요약 계약](./engineering-squad/references/report-summary.md)을 필수 적용합니다. Lead가 근거 상태별 시나리오와 판정을 정리하고, Ponytail과 Humanizer Editor는 무엇을·어떻게·왜의 정확히 3문장을 보존하며 QA/Test Engineer가 최종 결과를 검수합니다. 상세 근거와 기존 필수 보고 필드는 본문에 유지합니다.
 
+### Superpowers와 절차 분담
+
+Superpowers도 함께 사용할 때는 Stage 0 전에 [담당·산출물 재사용 계약](./engineering-squad/references/superpowers-compatibility.md)을 읽습니다. 실제 패키지 출처·사용 가능 여부와 COMBINED/STANDALONE 모드를 확인하고, 필수 질문·승인·독립 보안 게이트를 유지하면서 확인된 kickoff·설계·계획 근거를 공유합니다.
+
 ## 2. 6-Stage Execution Pipeline
 
 ```mermaid
@@ -74,7 +78,7 @@ flowchart TD
 
 ### Stage 0: 기획 & 리서치 (Product Planner)
 0. **Test Engineer 필수 시작 질문**: 프로젝트 실행 전에 사용자에게 “어떤 기대효과를 얻고 이를 수치화할 수 있나요?”와 “어떤 조건에서 멈추고 사람에게 보고해야 하나요?”를 직접 묻고 합의합니다. 기존 답변은 제시해 재확인합니다. 미합의는 `PENDING`으로 두고 의존 실행을 시작하지 않으며, 중단 조건 발생 시 즉시 중단·보고하고 명시적 재개 지시를 기다립니다. 역할을 겸임해도 생략하지 않습니다. [roles.md](./engineering-squad/references/roles.md) 14절의 시작·중단 계약과 필수 기록을 적용합니다.
-1. **문제 정의 및 아이디어 발산**: 사용자의 핵심 문제를 정의하고 `brainstorming` 스킬을 활용하여 SCAMPER 및 HMW 발산.
+1. **문제 정의 및 아이디어 발산**: 사용자의 핵심 문제를 정의하고 [이 저장소의 기획 지침](./brainstorming/SKILL.md)으로 SCAMPER 및 HMW를 사용합니다. COMBINED 모드에서는 위 계약의 Superpowers 설계·계획 담당에 필요한 입력만 보완합니다.
 2. **리서치 연계**: 내장 `research` 서브에이전트 또는 웹 리서치로 유사 서비스 및 기술 스택 벤치마킹.
 3. **Creative Rookie**: 최신 SNS 근거·반론·최소 실험을 제출하고 PRD 확정 전 전 역할 찬반 투표를 수행합니다.
 

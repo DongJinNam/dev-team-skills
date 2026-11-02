@@ -138,11 +138,15 @@ python -m unittest discover -s tests -v
 
 ### 에이전트 판단·보고 회귀시험
 
-[6개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 투표 보류, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
+[9개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 투표 보류, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-02-main-baseline.json
+python evals/run_evals.py --replay evals/runs/2026-11-02-compatibility-baseline.json
 ```
+
+### Superpowers와 함께 사용
+
+[단계별 담당·승인 자료 재사용 계약](skills/engineering-squad/references/superpowers-compatibility.md)을 적용합니다. COMBINED에서는 dev-team이 시작 질문·게이트·비용·최종 설명을 맡고, Superpowers가 확인된 설계·계획·구현 절차를 맡습니다. 패키지 출처와 현재 승인을 확인해 공유하고 누락·변경분만 보완합니다. 선택 사항이 없으면 STANDALONE으로 진행하되 필수 선행조건 부재는 해당 단계를 차단합니다. 자동 설치나 측정하지 않은 비용 절감 수치를 주장하지 않습니다.
 
 ---
 
