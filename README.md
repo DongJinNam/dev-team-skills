@@ -136,6 +136,14 @@ python -m unittest discover -s tests -v
 
 This is a **local package-structure contract**, not complete vendor-schema validation or proof of installation compatibility. Agent behavior, product tests and independent security review are explicitly `NOT_RUN` by this command; existing approval gates still apply.
 
+### Agent decision regressions
+
+[Six pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, pending ballots, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
+
+```bash
+python evals/run_evals.py --replay evals/runs/2026-11-02-main-baseline.json
+```
+
 ---
 
 ## 💻 Installation & Usage Guide
