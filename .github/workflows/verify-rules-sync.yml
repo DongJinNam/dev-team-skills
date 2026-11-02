@@ -2,19 +2,45 @@ name: Verify Rules and Harness Synchronization
 
 on:
   push:
-    branches: [ main, feature/** ]
+    branches: [ main, feature/**, fix/** ]
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+
 jobs:
   check-sync-and-harness:
-    name: Check Rules, Skills, and Marketplace Harness Consistency
-    runs-on: ubuntu-latest
+    name: Package validation (${{ matrix.os }}, ${{ matrix.launcher }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        launcher: [bash, pwsh]
+    runs-on: ${{ matrix.os }}
+    env:
+      HARNESS_LAUNCHER: ${{ matrix.launcher }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Verification Harness Script
-        run: |
-          chmod +x scripts/verify-harness.sh
-          ./scripts/verify-harness.sh
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install package validation dependency
+        run: python -m pip install -r scripts/requirements-harness.txt
+
+      - name: Run shared normal and error cases through the selected launcher
+        run: python -m unittest discover -s tests -v
+
+      - name: Verify repository through Bash
+        if: matrix.launcher == 'bash'
+        shell: bash
+        run: bash scripts/verify-harness.sh
+
+      - name: Verify repository through PowerShell
+        if: matrix.launcher == 'pwsh'
+        shell: pwsh
+        run: ./scripts/verify-harness.ps1

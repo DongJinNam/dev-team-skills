@@ -109,7 +109,13 @@ This repository supports the packaging standards of **Google Antigravity**, **Cl
 
 ### 🔍 Deterministic Harness Verification (Cross-Platform)
 
-We verify all 4 manifests, every SKILL.md frontmatter, and strict SHA-256 hash synchronization across the 5 constitution rule files (`GEMINI.md`, `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, `rules/AGENTS.md`):
+Both shell entry points call the same Python validator. It parses all four JSON manifests (nonblank string `name`/`description`, and an object array `plugins` for the marketplace), safely parses each skill's leading and closed YAML frontmatter, rejects duplicate keys, and checks SHA-256 byte synchronization across the five constitution files. If any English constitution file is present, all five English files must exist and match too.
+
+Requires **Python 3.10+** and **PyYAML**. JSON and hashing use the standard library; YAML uses a safe parser rather than a handwritten YAML implementation. Install the pinned dependency with the same interpreter the launcher uses (`python3`, then `python`, then Windows `py -3`):
+
+```bash
+python -m pip install -r scripts/requirements-harness.txt
+```
 
 ```bash
 # Windows (PowerShell)
@@ -118,6 +124,16 @@ We verify all 4 manifests, every SKILL.md frontmatter, and strict SHA-256 hash s
 # macOS / Linux (Bash)
 ./scripts/verify-harness.sh
 ```
+
+`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. UTF-8 BOM, LF/CRLF and paths with spaces are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS:
+
+```bash
+python -m unittest discover -s tests -v
+# Choose an entry point with HARNESS_LAUNCHER=bash|pwsh|python (default: bash).
+# PowerShell example: $env:HARNESS_LAUNCHER = 'pwsh'
+```
+
+This is a **local package-structure contract**, not complete vendor-schema validation or proof of installation compatibility. Agent behavior, product tests and independent security review are explicitly `NOT_RUN` by this command; existing approval gates still apply.
 
 ---
 
