@@ -109,7 +109,13 @@ flowchart TD
 
 ### 🔍 결정론적 하네스 무결성 검증 (Cross-Platform)
 
-4대 매니페스트 유효성, 전체 스킬 Frontmatter, 그리고 5대 헌법 룰(`GEMINI.md`, `CLAUDE.md`, `CODEX.md`, `AGENTS.md`, `rules/AGENTS.md`)의 SHA-256 동기화 상태를 로컬 및 CI 환경에서 엄격하게 검증합니다:
+Bash와 PowerShell이 같은 Python 검증기를 호출합니다. JSON 매니페스트 4개의 문법과 비어 있지 않은 문자열 `name`·`description`, 마켓플레이스 `plugins`의 객체 배열 여부를 검사합니다. 각 스킬은 파일 첫머리에 닫힌 YAML Frontmatter가 있어야 하며, 안전한 파서로 `name`·`description`을 확인하고 중복 키를 거부합니다. 헌법 5개 파일은 SHA-256으로 바이트 단위 동기화를 검사하고, 영문 파일이 하나라도 있으면 영문 5개도 모두 존재하고 일치해야 합니다.
+
+**Python 3.10 이상과 PyYAML이 필요합니다.** JSON·해시는 표준 라이브러리로 처리하고, YAML은 직접 파서를 구현하는 대신 안전한 파서를 사용합니다. 실행기가 선택하는 인터프리터(`python3`, `python`, Windows의 `py -3` 순서)와 같은 Python으로 고정 버전 의존성을 설치합니다:
+
+```bash
+python -m pip install -r scripts/requirements-harness.txt
+```
 
 ```bash
 # Windows (PowerShell)
@@ -118,6 +124,17 @@ flowchart TD
 # macOS / Linux (Bash)
 ./scripts/verify-harness.sh
 ```
+
+`--root <경로>`로 다른 패키지 디렉터리를 선택할 수 있습니다. 종료 코드는 패키지 PASS `0`, 잘못된 패키지 `1`, 필수 실행 환경 부재·잘못된 인자 `2`입니다. UTF-8 BOM, LF/CRLF, 공백을 포함한 경로를 지원합니다. CI는 Linux·Windows·macOS에서 동일한 정상·오류 입력을 Bash·PowerShell로 각각 검사합니다. Windows의 Bash 시험은 Git Bash에서 실행해야 WSL의 `bash.exe` 대신 Git Bash를 선택합니다. PowerShell에서 실행할 때는 `HARNESS_LAUNCHER=pwsh`를 지정합니다:
+
+```bash
+python -m unittest discover -s tests -v
+# HARNESS_LAUNCHER=bash|pwsh|python 으로 실행기 선택 (기본값: bash)
+# PowerShell 예: $env:HARNESS_LAUNCHER = 'pwsh'
+# Windows Git Bash: export HARNESS_BASH="$(cygpath -w "$BASH")"
+```
+
+이 검사는 **저장소의 패키지 구조 계약**을 확인합니다. 공급사 전체 스키마나 설치 호환성을 보장하지 않습니다. 에이전트 행동·제품 테스트·독립 보안 검수는 이 명령에서 `NOT_RUN`으로 표시하며, 기존 승인 게이트는 그대로 적용합니다.
 
 ---
 
