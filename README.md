@@ -58,7 +58,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 ## 👥 Engineering Squad: 14 Specialized Roles & DoD
 
-Alongside the 14 specialists and Lead, **Humanizer Editor** provides the final plain-language pass with `humanizer-kr` for Korean or `humanizer` for English. Explain jargon with plain terms and helpful examples while preserving facts, risks and unverified status. Lead may cover this non-voting responsibility; the 15-ballot/8-vote rule stays unchanged. See the [contract](skills/engineering-squad/references/roles_en.md#humanizer-editor-final-plain-language-explanation).
+Alongside the 14 specialists and Lead, **Humanizer Editor** provides the final plain-language pass with `humanizer-kr` for Korean or `humanizer` for English. Explain jargon with plain terms and helpful examples while preserving facts, risks and unverified status. Lead may cover this non-voting responsibility; tiered decision governance applies. See the [contract](skills/engineering-squad/references/roles_en.md#humanizer-editor-final-plain-language-explanation).
 
 ```mermaid
 flowchart TD
@@ -138,10 +138,10 @@ This is a **local package-structure contract**, not complete vendor-schema valid
 
 ### Agent decision regressions
 
-[Nine pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, pending ballots, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
+[Fourteen pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, tiered decision ownership, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-02-compatibility-baseline.json
+python evals/run_evals.py --replay evals/runs/2026-11-04-tiered-decisions.json
 ```
 
 ### Using Superpowers alongside dev-team-skills
@@ -236,9 +236,9 @@ Included at [`.github/pull_request_template.md`](./.github/pull_request_template
 
 ---
 
-### Creative Rookie & all-role majority vote
+### Tiered decision ownership & Creative Rookie
 
-At kickoff, weekly active-project retrospectives and before launch messaging, the Rookie checks SNS evidence and proposes fresh ideas, reasoned dissent and small experiments. All 14 specialists plus Lead vote, including inactive roles: 15 equal voting rights; 8 YES adopts immediately without waiting for all ballots. If neither side has 8 votes, remain PENDING. A dissatisfied user can request a fresh vote with their grounds; old votes are not carried forward. Mandatory security/compliance gates cannot be waived by voting. See [role and voting rules](skills/engineering-squad/references/roles_en.md).
+Organize existing roles as **Tier 1 Tech Lead → Tier 2 domain owners → Tier 3 specialists**. Domain owners decide local alternatives; Tech Lead resolves cross-domain conflict from evidence and dissent. Preserve Rookie ideas and user appeals; fifteen ballots/eight votes are advisory on request. Seniority cannot waive security, compliance, budget or authorization. See [decision governance](skills/engineering-squad/references/decision-governance_en.md).
 
 ## 📜 License
 MIT License

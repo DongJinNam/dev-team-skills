@@ -6,7 +6,7 @@
 
 | 레퍼런스 / 원출처 | 참고할 부분 | 담당 역할 · 사용 조건 | 산출물 · 한계 |
 | :--- | :--- | :--- | :--- |
-| [Agency Agents](https://github.com/msitarzewski/agency-agents) | `engineering/`, `design/`, `marketing/`, `testing/`, `security/`, `finance/`의 역할별 작업·결과물 구성 | Lead·해당 전문 역할: 인계 산출물이나 검토 기준이 모호할 때 필요한 역할 문서만 확인 | 입력·산출물·DoD 계약 개선안. 전체 조직을 호출하거나 기존 역할·15표 중 8표 규칙을 대체하지 않음 |
+| [Agency Agents](https://github.com/msitarzewski/agency-agents) | `engineering/`, `design/`, `marketing/`, `testing/`, `security/`, `finance/`의 역할별 작업·결과물 구성 | Lead·해당 전문 역할: 인계 산출물이나 검토 기준이 모호할 때 필요한 역할 문서만 확인 | 입력·산출물·DoD 계약 개선안. 전체 조직을 호출하거나 Tier별 결정·필수 게이트 계약을 대체하지 않음 |
 | [Replica Skill](https://github.com/Jakeschincariol/replica-skill) | `replica-recon`, `replica-entrepreneur`, `replica-test`: 기능 조사·불만 분석·검증의 연결 | Planner·Creative Rookie·Frontend·QA·Test: 기존 서비스의 사용 흐름과 공개 리뷰를 비교할 때 | 리뷰 URL·관찰·개선 가설·AC·회귀 시나리오. 리뷰 표본의 편향을 기록하고 코드·상표·이미지·문구의 복제 허가로 해석하지 않음 |
 | [Founder Skill](https://github.com/Jakeschincariol/founder-skill) | `founder-marketing`, `founder-cfo`, `founder-launch`, `founder-consumer` | Marketing·Finance·Planner: 출시 메시지, 단위당 기여이익, 작은 시장 실험을 설계할 때 | 대상·가치·CTA·비용 가정·실험 성공 기준. 가상 구매자는 실고객이나 사용 후기·매출 예측이 아니며 100명 시뮬레이션을 기본 실행하지 않음 |
 | [Scientific Agent Skills](https://github.com/K-Dense-AI/scientific-agent-skills) | [citation-management](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/citation-management/SKILL.md), [scientific-critical-thinking](https://github.com/K-Dense-AI/scientific-agent-skills/blob/main/skills/scientific-critical-thinking/SKILL.md) | Planner·AI Agent Engineer·Test: 논문 인용이나 실험 근거가 실제 필요한 작업에 한해 선택 | 저자·제목·연도·DOI와 주장-근거 대응표, 불확실성. 인용 메타데이터 확인은 주장 검증과 별개. 과학 DB·바이오 도구를 일반 개발에 일괄 도입하지 않음 |

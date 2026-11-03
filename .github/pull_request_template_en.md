@@ -62,15 +62,16 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 <!-- Use PASS / BLOCKED / N/A with evidence after reviewing applicability. -->
 
 
-## Decision ballots
-- Proposal/version / decision-log link (15 roles/owners, received YES/NO/reasons or PENDING):
-- YES / NO / missing / outcome / minority views and reconsideration triggers:
-- SNS ideas, evidence and small experiment, or N/A rationale:
-- [ ] Each decision discussion includes 14 specialists + Lead, including inactive roles: one vote each; 8 YES adopts immediately without waiting for all ballots. Changes without a decision discussion have a reasoned N/A.
-- [ ] Unsubmitted roles stay PENDING; if neither side has 8 votes, remain PENDING. Voting did not waive security/compliance blockers.
-
-- User grounds for revote / new proposal version / fresh tally / prior-result history (or N/A):
-- [ ] A user-requested revote with grounds starts without team permission; old ballots are not carried forward and the same 8-of-15 rule applies.
+## Tiered decision review
+- Proposal/version / scope / affected domains / reversibility:
+- Accountable owner/tier / delegation evidence and expiry / actual actor and combined roles:
+- Alternatives / evidence / dissent / accepted or rejected reasons / reconsideration triggers:
+- Selection verdict (DECIDED/PENDING/BLOCKED) / execution readiness and remaining gates:
+- Advisory ballots if requested (received YES/NO/missing; never automatic adoption):
+- User appeal / paused follow-ups / reassessment and prior history (or N/A):
+- [ ] Domain decisions use the relevant Tier 2; shared-contract/cross-domain conflicts go to Tech Lead; undelegated changes go to the user.
+- [ ] Neither seniority nor votes waive required QA, independent security, compliance or explicit resumption.
+- [ ] Process-limited delegation is not reused for another project; user appeals are accepted without team permission.
 
 ## Test Engineer Review
 - Mandatory pre-project questions / user answers and confirmation evidence / agreement status (PENDING/AGREED):

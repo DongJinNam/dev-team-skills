@@ -88,7 +88,7 @@ Use these focused checklists during code reviews based on the engineering roles 
 ## 13. Creative Rookie & Decision Review
 - [ ] Are dated SNS evidence, ideas, small experiments and metrics recorded at kickoff, weekly retrospectives and launch review?
 - [ ] Are reasoned dissent and minority views preserved, with facts, hypotheses and unknowns distinguished?
-- [ ] Does each decision preserve 15 voting rights (14 specialists plus Lead), adopt immediately at 8 YES, record unsubmitted roles as PENDING, and avoid waiting for all ballots?
+- [ ] Are Tier 1/2/3 owners, escalation, delegation, evidence, dissent, verdict and execution readiness recorded without waiting for unrelated ballots?
 - [ ] Does majority voting preserve user authorization and mandatory security/compliance gates?
 
 - [ ] Does user dissatisfaction with supplied grounds trigger a fresh round without team permission, preserving history and clearing prior votes?

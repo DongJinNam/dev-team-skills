@@ -58,7 +58,7 @@
 
 ## 👥 Engineering Squad: 14개 전문 역할 및 검증 기준
 
-14개 전문 역할·Lead와 별도로 **Humanizer Editor(쉬운 설명 담당)**가 최종 답변을 다듬습니다. 한국어는 `humanizer-kr`, 영어는 `humanizer`를 사용해 전문 용어를 쉬운 말·예시로 풀고 사실·위험·미검증 상태를 보존합니다. Lead 겸임 가능하며 별도 투표권 없이 기존 15표·8표 규칙을 유지합니다. [상세 계약](skills/engineering-squad/references/roles.md#humanizer-editor-최종-쉬운-설명-담당).
+14개 전문 역할·Lead와 별도로 **Humanizer Editor(쉬운 설명 담당)**가 최종 답변을 다듬습니다. 한국어는 `humanizer-kr`, 영어는 `humanizer`를 사용해 전문 용어를 쉬운 말·예시로 풀고 사실·위험·미검증 상태를 보존합니다. Lead 겸임 가능하며 추가 결정권 없이 Tier별 결정 계약을 따릅니다. [상세 계약](skills/engineering-squad/references/roles.md#humanizer-editor-최종-쉬운-설명-담당).
 
 ```mermaid
 flowchart TD
@@ -138,10 +138,10 @@ python -m unittest discover -s tests -v
 
 ### 에이전트 판단·보고 회귀시험
 
-[9개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 투표 보류, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
+[14개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 계층별 책임 결정, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-02-compatibility-baseline.json
+python evals/run_evals.py --replay evals/runs/2026-11-04-tiered-decisions.json
 ```
 
 ### Superpowers와 함께 사용
@@ -239,9 +239,9 @@ codex plugin install dev-team-skills
 
 ---
 
-### Creative Rookie & 전 역할 다수결
+### Tier별 의사결정과 Creative Rookie
 
-신입은 기획 시작·진행 프로젝트 주간 회고·출시 메시지 확정 전에 SNS 근거를 확인하고 새 아이디어·반론·최소 실험을 제안합니다. 의사결정 토론은 비활성 역할도 포함해 14개 전문 역할과 Lead가 각 1표(총 15표)를 가지며 찬성 8표가 모이면 전원 투표 완료를 기다리지 않고 즉시 가결합니다. 어느 쪽도 8표가 없으면 PENDING입니다. 사용자가 만족하지 않아 근거를 제시하며 재투표를 요청하면 이전 표를 이월하지 않고 새로 투표합니다. 필수 보안·컴플라이언스 검수는 표결로 면제하지 않습니다. [상세 역할·투표 규칙](skills/engineering-squad/references/roles.md).
+기존 14개 역할을 **Tier 1 Tech Lead → Tier 2 분야 책임자 → Tier 3 실행 역할**로 구성합니다. 분야 내 결정은 해당 책임자가, 분야 간 충돌은 Tech Lead가 근거·반론으로 판단합니다. 신입의 아이디어·반론과 사용자 재검토 권한은 유지하며 15표·8표는 요청 시 자문으로만 사용합니다. 보안·컴플라이언스 차단과 예산·권한을 직급으로 면제할 수 없습니다. [상세 역할·결정 계약](skills/engineering-squad/references/decision-governance.md).
 
 ## 📜 License
 MIT License

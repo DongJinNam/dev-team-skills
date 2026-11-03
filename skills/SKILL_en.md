@@ -12,6 +12,8 @@ This skill is the standard execution guide for building, testing, and deploying 
 
 ## 1. Squad Roles & Responsibilities
 
+Use **Tier 1 Tech Lead** as the existing Squad Lead alias. Before decisions, read and apply [tiered decision governance](./engineering-squad/references/decision-governance_en.md) for the Tier 2/Tier 3 role map, routing, authority and decision record.
+
 The fourteen specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; Security Review Engineer is mandatory at Stage 3 and must be a reviewer separate from the implementer.
 
 | Role | Scope | Required Definition of Done (DoD) |
@@ -41,7 +43,7 @@ The fourteen specialist roles are coordinated by the separate Squad Lead. Activa
 - Stage 3 always activates an independent Security Review Engineer. If a separate reviewer is unavailable, mark BLOCKED; the Lead/implementer cannot self-approve. Small scope and budget pressure do not waive review.
 - Stage 0: Planner records trend sources, dates, maturity, and applicability in the PRD. Marketing defines audience/value/CTA; Finance defines budget, minimum staffing, and cost baseline.
 - Stages 1–2: Lead defines each role's scope, inputs, output, and verification. Finance checks incremental cost before extra delegation or scope changes. Hand off decisions, evidence, open issues, and file paths instead of full conversations.
-- Stage 3: Marketing checks comprehension and claims against verified results; Finance checks variance and duplicate debate. Default to one proposal and one response before all roles decide by yes/no majority vote. Extra rounds require new evidence and expected value.
+- Stage 3: Marketing checks comprehension and claims against verified results; Finance checks variance and duplicate debate. After one proposal and one rebuttal, the relevant Tier 2 decides; Tech Lead resolves cross-domain conflicts. Extra rounds require new evidence and expected value.
 - Stages 4–5: Marketing delivers a launch draft reflecting actual deployment status; Finance delivers final costs and an operating-cost forecast. Check authorization separately before external publication.
 - Apply sections 9–10 of [roles_en.md](./engineering-squad/references/roles_en.md) for deliverables, missing telemetry, and budget overruns.
 
@@ -51,7 +53,7 @@ Every PR requires independent security PASS for the latest head before merge; ch
 - Test Engineer reviews clear, quantified and verifiable completion criteria at Stages 0–1, then feature-level AC-test-evidence links and missing-test recommendations at Stage 3/PR review. QA/developers return dispositions; apply section 14 of [roles_en.md](./engineering-squad/references/roles_en.md).
 
 ### Recurring ideas and decisions
-- Creative Rookie supplies SNS evidence and ideas at kickoff, weekly active-project retrospectives and before launch messaging. Decision discussions include all 14 specialists plus Lead, even inactive roles: 15 equal voting rights; 8 YES adopts immediately without waiting for every ballot. If neither side has 8 votes, remain PENDING. If the user is dissatisfied and requests a revote with their grounds, start a new round with fresh ballots under the same rule. Security/compliance gates remain mandatory. Apply section 13 and the decision discussion rules in [roles_en.md](./engineering-squad/references/roles_en.md).
+- Creative Rookie supplies SNS evidence, dissent and experiments on the existing cadence. Consult relevant roles, then Tier 2 decides within its domain and Tier 1 Tech Lead resolves cross-domain conflicts. Fifteen ballots/eight votes are advisory on request, not automatic adoption or execution authority. Preserve user reconsideration and mandatory gates. Apply [tiered decision governance](./engineering-squad/references/decision-governance_en.md).
 
 ### External skill references
 
@@ -80,7 +82,7 @@ flowchart TD
 0. **Mandatory Test Engineer start questions**: Before project execution, directly ask the user “What benefit do you expect, and can it be quantified?” and “Under what conditions must work stop and be reported to a human?” Confirm existing answers with the user. Keep unagreed items `PENDING` and do not start dependent execution; on a trigger, immediately stop, report and await explicit resume instructions. Combined roles do not waive this step. Apply the start/stop contract and required record in section 14 of [roles_en.md](./engineering-squad/references/roles_en.md).
 1. **Define the problem & brainstorm**: Find the user's core problem. Use [this repository's planning guidance](./brainstorming/SKILL_en.md) for SCAMPER/HMW inputs. In COMBINED mode, supplement only the inputs missing from the Superpowers-owned design/plan.
 2. **Research**: Benchmarks similar products and tech stacks using the `research` subagent or web search.
-3. **Creative Rookie**: Supply current SNS evidence, a challenge and a small experiment; hold the all-role yes/no vote before finalizing the PRD.
+3. **Creative Rookie**: Supply current SNS evidence, a challenge and a small experiment; record relevant dissent and the Product Lead’s reasoned decision before finalizing the PRD.
 
 4. **Write a Lean PRD**: Use RICE scoring and MoSCoW prioritization to set key hypotheses, MVP scope, user stories, and Given-When-Then acceptance criteria (AC).
 
