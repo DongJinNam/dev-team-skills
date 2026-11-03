@@ -12,7 +12,7 @@ description: >-
 
 ## 1. Squad Roles & Responsibilities
 
-14개 전문 역할과 별도로 Squad Lead가 조율합니다. 필요한 역할을 활성화하되 Stage 3의 보안 검수 엔지니어는 필수이며 구현자와 별도 검토자로 구성합니다.
+기존 Squad Lead를 **Tier 1 Tech Lead**로 명시하고 14개 전문 역할을 Tier 2 분야 책임자와 Tier 3 실행 역할로 나눕니다. 작업 분해·대안 선택 전에 [Tier별 의사결정 계약](./engineering-squad/references/decision-governance.md)의 역할표·결정 경로·권한·기록을 읽고 적용합니다. Stage 3의 독립 보안 검수는 필수입니다.
 
 | 역할 | 담당 영역 | 검증 기준 (DoD) |
 | :--- | :--- | :--- |
@@ -41,7 +41,7 @@ description: >-
 - Stage 3에서는 독립 Security Review Engineer를 항상 활성화합니다. 별도 검토자가 없으면 BLOCKED로 기록하고 Lead/구현자의 자기 승인으로 대체하지 않습니다. 작은 범위·예산 압박으로 생략하지 않습니다.
 - Stage 0: Planner는 출처·날짜·성숙도·적용 가치를 담은 트렌드 근거를 PRD에 기록합니다. Marketing은 대상·가치·CTA를, Finance는 예산·최소 역할 구성·비용 기준선을 정의합니다.
 - Stage 1–2: Lead는 역할별 범위·입력·산출물·검증 기준을 명시합니다. Finance는 추가 위임과 범위 변경의 증분 비용을 점검합니다. 전체 대화 대신 결정·근거·미해결 사항과 파일 경로만 인계합니다.
-- Stage 3: Marketing은 검증된 결과로 이해도와 주장 근거를 검토하고, Finance는 비용 편차와 중복 토론을 점검합니다. 기본 토론은 제안 1회와 반론 1회 후 전 역할 찬반·다수결로 결정합니다. 추가 라운드는 새 근거와 기대 가치를 기록합니다.
+- Stage 3: Marketing은 검증된 결과로 이해도와 주장 근거를 검토하고, Finance는 비용 편차와 중복 토론을 점검합니다. 제안 1회·반론 1회 후 해당 Tier 2가 결정하며 분야 간 충돌은 Tech Lead가 조정합니다. 추가 라운드는 새 근거와 기대 가치를 기록합니다.
 - Stage 4–5: Marketing은 실제 배포 상태를 반영한 출시 초안을, Finance는 최종 비용표와 운영비 전망을 전달합니다. 외부 게시 권한은 별도로 확인합니다.
 - 상세 산출물·계측 부재·예산 초과 처리 기준은 [roles.md](./engineering-squad/references/roles.md)의 9–10절을 적용합니다.
 
@@ -51,7 +51,7 @@ description: >-
 - Test Engineer는 Stage 0–1에서 완료 기준의 명확성·수치화·검증 방법을 검토하고 Stage 3/PR에서 기능별 AC-테스트-증거와 누락 테스트 추가 의견을 제출합니다. QA/개발자가 반영 결과를 회신하며 상세 계약은 [roles.md](./engineering-squad/references/roles.md) 14절을 따릅니다.
 
 ### 정기 아이디어 및 의사결정
-- Creative Rookie는 기획 시작·활성 프로젝트 주간 회고·출시 메시지 확정 전에 SNS 근거와 아이디어를 제출합니다. 의사결정 토론은 비활성 역할도 포함한 14개 전문 역할과 Lead의 총 15표 중 찬성 8표가 모이면 전원 투표 완료를 기다리지 않고 즉시 가결합니다. 어느 쪽도 8표가 없으면 PENDING입니다. 사용자가 결과에 만족하지 않아 근거를 제시하며 재투표를 요청하면 같은 규칙으로 새 표를 받습니다. 보안·컴플라이언스 게이트는 면제하지 않습니다. [역할·투표 규칙](./engineering-squad/references/roles.md)의 13절과 의사결정 토론 규칙을 적용합니다.
+- Creative Rookie는 기존 주기에 SNS 근거·반론·실험을 제출합니다. 관련 역할 자문 → Tier 2 분야 결정 → 다분야 충돌 시 Tier 1 Tech Lead 조정을 적용합니다. 15표·8표는 요청 시 자문 집계이며 자동 가결·실행 권한이 아닙니다. 사용자 재검토 요청과 필수 게이트를 유지합니다. [Tier별 의사결정 계약](./engineering-squad/references/decision-governance.md)을 따릅니다.
 
 ### 외부 스킬 레퍼런스
 
@@ -80,7 +80,7 @@ flowchart TD
 0. **Test Engineer 필수 시작 질문**: 프로젝트 실행 전에 사용자에게 “어떤 기대효과를 얻고 이를 수치화할 수 있나요?”와 “어떤 조건에서 멈추고 사람에게 보고해야 하나요?”를 직접 묻고 합의합니다. 기존 답변은 제시해 재확인합니다. 미합의는 `PENDING`으로 두고 의존 실행을 시작하지 않으며, 중단 조건 발생 시 즉시 중단·보고하고 명시적 재개 지시를 기다립니다. 역할을 겸임해도 생략하지 않습니다. [roles.md](./engineering-squad/references/roles.md) 14절의 시작·중단 계약과 필수 기록을 적용합니다.
 1. **문제 정의 및 아이디어 발산**: 사용자의 핵심 문제를 정의하고 [이 저장소의 기획 지침](./brainstorming/SKILL.md)으로 SCAMPER 및 HMW를 사용합니다. COMBINED 모드에서는 위 계약의 Superpowers 설계·계획 담당에 필요한 입력만 보완합니다.
 2. **리서치 연계**: 내장 `research` 서브에이전트 또는 웹 리서치로 유사 서비스 및 기술 스택 벤치마킹.
-3. **Creative Rookie**: 최신 SNS 근거·반론·최소 실험을 제출하고 PRD 확정 전 전 역할 찬반 투표를 수행합니다.
+3. **Creative Rookie**: 최신 SNS 근거·반론·최소 실험을 제출하고 PRD 확정 전 관련 역할의 반론과 Product Lead의 근거 있는 결정을 기록합니다.
 
 4. **린 PRD 작성**: RICE 점수표와 MoSCoW를 바탕으로 핵심 가설, MVP 스코프, 유저 스토리 및 Given-When-Then 인수 기준(AC) 확정.
 

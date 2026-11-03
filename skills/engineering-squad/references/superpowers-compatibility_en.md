@@ -21,7 +21,7 @@ Resolve colliding names such as `brainstorming` using a verified package-qualifi
 | Implementation, TDD and root-cause diagnosis | Verified Superpowers execution / TDD / debugging process | dev Lead connects role scope/interfaces; preserve the selected execution method and do not invent unavailable agent tools |
 | Verification before completion | One evidence record maintained by Lead | Share actual commands/results/NOT_RUN for the applicable revision/scope; do not repeat identical checks per package |
 | QA, independent security, compliance, merge/deployment | dev-team gates | Generic Superpowers code-quality approval does not replace independent security PASS for the latest head/base |
-| Cost, voting and final explanation | dev-team FinOps / Lead / Humanizer | Preserve 15 ballots / 8 votes, user-grounded revotes, measured/estimated/unknown costs and three-sentence report contract |
+| Cost, voting and final explanation | dev-team FinOps / Lead / Humanizer | Preserve tiered accountable decisions, advisory ballots, user-grounded reconsideration, measured/estimated/unknown costs and three-sentence report contract |
 
 In `STANDALONE`, existing dev-team owners handle planning and implementation too. Both modes preserve mandatory gates. Record owners and actual guidance per phase rather than declaring one entire package superior. If mandatory rules cannot be satisfied together, stop the affected work and report the conflict, evidence and alternatives to the user.
 

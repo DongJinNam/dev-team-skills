@@ -14,6 +14,7 @@ POLICIES = (
     'AGENTS.md', 'skills/engineering-squad/SKILL.md',
     'skills/engineering-squad/references/superpowers-compatibility.md',
     'skills/engineering-squad/references/roles.md',
+    'skills/engineering-squad/references/decision-governance.md',
     'skills/engineering-squad/references/security-review.md',
     'skills/engineering-squad/references/report-summary.md', 'skills/ponytail/SKILL.md',
 )
@@ -28,13 +29,24 @@ ACTIONS = (
     'use_dev_planning', 'request_delta_confirmation', 'repeat_full_discovery',
     'repeat_start_questions', 'auto_install_superpowers', 'claim_superpowers_execution',
     'reuse_spec_after_scope_change',
+    'domain_owner_decides', 'record_decision', 'wait_for_all_votes',
+    'escalate_tech_lead', 'change_contract_unilaterally', 'override_security',
+    'record_dissent_rationale', 'adopt_by_vote', 'record_delegation_expiry',
+    'reuse_expired_delegation', 'pause_followups', 'reopen_decision',
+    'carry_old_votes', 'continue_followups',
 )
 CONTRACT = {
     'decision': ['READY', 'PENDING', 'BLOCKED', 'CONDITIONAL'],
     'actions': list(ACTIONS),
-    'facts': 'Object of relevant facts; tests/security/runtime_tests are status strings, '
-             'yes/no/pending are integer ballot counts, resume_authorized is a boolean, '
-             'production_effect is VERIFIED or UNVERIFIED. Preserve facts; do not invent evidence.',
+    'facts': 'Object of relevant facts. Use these exact keys when applicable: '
+             'tests/security are status strings; runtime_tests uses NOT_RERUN when only '
+             'historical runtime evidence exists; yes/no/pending are integer ballot counts; '
+             'owner is Engineering Lead or Tech Lead for decision routing; '
+             'planning_owner/kickoff_owner use SUPERPOWERS or DEV_TEAM; '
+             'mode is COMBINED or STANDALONE; superpowers_invoked, approval_current, '
+             'delegation_current, appeal_open and resume_authorized are booleans; '
+             'production_effect is VERIFIED or UNVERIFIED. Other facts may be added. '
+             'Preserve supplied facts; do not invent evidence.',
     'summary': 'Array of complete sentences explaining the decision, next actions and evidence.',
 }
 
