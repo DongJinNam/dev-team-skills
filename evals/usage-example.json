@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "origin": "fixture",
+  "accounting": "input_includes_cache_output_includes_reasoning",
+  "config": {
+    "model": "fixture-model",
+    "settings": "{}",
+    "tasks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "rubric_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "sample_ids": [
+    "task-1:repeat-1"
+  ],
+  "baseline": {
+    "revision": "before",
+    "complete": true,
+    "samples": [
+      {
+        "id": "task-1:repeat-1",
+        "actor": "before",
+        "quality": {
+          "passed": true,
+          "reviewer": "independent",
+          "evidence": "private:quality/before"
+        },
+        "discussion_rounds": 1,
+        "calls": [
+          {
+            "id": "before-root",
+            "actor": "before",
+            "kind": "main",
+            "input_tokens": 100,
+            "output_tokens": 20,
+            "cached_input_tokens": 10,
+            "reasoning_output_tokens": 5,
+            "evidence": "private:provider/before"
+          }
+        ]
+      }
+    ],
+    "config": {
+      "model": "fixture-model",
+      "settings": "{}",
+      "tasks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "rubric_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  },
+  "candidate": {
+    "revision": "after",
+    "complete": true,
+    "samples": [
+      {
+        "id": "task-1:repeat-1",
+        "actor": "after",
+        "quality": {
+          "passed": true,
+          "reviewer": "independent",
+          "evidence": "private:quality/after"
+        },
+        "discussion_rounds": 1,
+        "calls": [
+          {
+            "id": "after-root",
+            "actor": "after",
+            "kind": "main",
+            "input_tokens": 70,
+            "output_tokens": 20,
+            "cached_input_tokens": 10,
+            "reasoning_output_tokens": 5,
+            "evidence": "private:provider/after"
+          }
+        ]
+      }
+    ],
+    "config": {
+      "model": "fixture-model",
+      "settings": "{}",
+      "tasks_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "rubric_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  }
+}
