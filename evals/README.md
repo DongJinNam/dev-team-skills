@@ -79,3 +79,7 @@ python -m unittest discover -s tests -v
 Unit tests deliberately use synthetic fixtures and simulated review metadata to test the checker, including false-PASS prevention. They are harness self-tests, not model evaluations. CI runs those self-tests plus a labeled baseline replay; it makes no fresh paid model calls. Policy/scenario/scorer edits require current matching records; a stale baseline blocks replay until evidence is refreshed.
 
 Both 2026-11-02 records remain historical and return STALE under the new policies/suite/scorer. The tiered record contains newly collected responses, not relabeled old hashes.
+
+## Token efficiency (separate offline comparison)
+
+Use [the usage log comparison guide](token-efficiency.md) and `python evals/compare_usage.py private-usage.json`. Missing usage stays PENDING; fixtures cannot establish measured savings. This comparator does not modify the fourteen-case decision replay or collect live model usage. Actual efficiency remains unmeasured until complete, comparable provider records and independent quality evidence are supplied.
