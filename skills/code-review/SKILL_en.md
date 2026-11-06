@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: >-
-  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
+  Use when reviewing code or engineering artifacts for high-impact correctness, risk, maintainability, and relevant specialist checks under the squad's accountable owners.
 ---
 
 # High-ROI Code Review Workflow
@@ -69,4 +69,4 @@ At QA Stage 3, activate an independent Security Review Engineer and apply [secur
 
 Require an independent Security Review Engineer PASS and report for the latest PR head before every merge, including documentation/configuration changes. Apply the [required PR merge gate](../engineering-squad/references/security-review_en.md#required-pr-merge-gate). Missing/BLOCKED/stale review prevents merge. New commits or changed merge inputs require re-review; QA, general approval and green CI cannot substitute for security PASS.
 
-Compliance Reviewer checks relevant Korean/U.S. IT legal and security-related compliance; see [role 12](../engineering-squad/references/roles_en.md). Record sources, applicability and actions; unresolved applicable violations block merge.
+Security coordinates the Compliance Reviewer capability and checks relevant Korean/U.S. IT legal and security-related compliance; see [compliance responsibility](../engineering-squad/references/roles_en.md). Record sources, applicability and actions; unresolved applicable violations block merge.

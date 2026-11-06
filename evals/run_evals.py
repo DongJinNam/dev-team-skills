@@ -17,6 +17,7 @@ POLICIES = (
     'skills/engineering-squad/references/decision-governance.md',
     'skills/engineering-squad/references/security-review.md',
     'skills/engineering-squad/references/report-summary.md', 'skills/ponytail/SKILL.md',
+    'skills/engineering-squad/references/tool-adoption.md',
 )
 ACTIONS = (
     'run_tests', 'claim_complete', 'merge', 'request_security_review',
@@ -34,12 +35,19 @@ ACTIONS = (
     'record_dissent_rationale', 'adopt_by_vote', 'record_delegation_expiry',
     'reuse_expired_delegation', 'pause_followups', 'reopen_decision',
     'carry_old_votes', 'continue_followups',
+    'activate_all_roles', 'claim_token_savings', 'activate_delivery',
+    'verify_migration_recovery', 'record_tool_evidence', 'use_existing_tools',
+    'claim_tool_verified', 'auto_install_tool', 'reject_failed_adoption',
+    'record_compliance_block',
 )
 CONTRACT = {
     'decision': ['READY', 'PENDING', 'BLOCKED', 'CONDITIONAL'],
     'actions': list(ACTIONS),
     'facts': 'Object of relevant facts. Use these exact keys when applicable: '
-             'tests/security are status strings; runtime_tests uses NOT_RERUN when only '
+             'tests/security describe evidence, not execution readiness: PASS or FAIL for a current '
+             'completed check, BLOCKED for a current adverse security verdict, STALE for an '
+             'invalidated prior review, NOT_RUN when no current review is established; use decision '
+             'for blocked execution. runtime_tests uses NOT_RERUN when only '
              'historical runtime evidence exists; yes/no/pending are integer ballot counts; '
              'owner is Engineering Lead or Tech Lead for decision routing; '
              'planning_owner/kickoff_owner use SUPERPOWERS or DEV_TEAM; '
@@ -47,7 +55,11 @@ CONTRACT = {
              'delegation_current, appeal_open and resume_authorized are booleans; '
              'production_effect is VERIFIED or UNVERIFIED. Other facts may be added. '
              'Preserve supplied facts; do not invent evidence.',
-    'summary': 'Array of complete sentences explaining the decision, next actions and evidence.',
+    'summary': 'Array of complete sentences explaining the decision, next actions and evidence. '
+               'Decision describes readiness for the action being evaluated, not readiness to write '
+               'a recommendation. Include in actions every next operation described in prose using '
+               'the matching allowed identifier; report_to_user does not replace a specific '
+               'request_delta_confirmation or stop when those operations are also prescribed.',
 }
 
 

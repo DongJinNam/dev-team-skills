@@ -4,22 +4,17 @@
 
 This contract replaces automatic majority selection. Record scope, reversibility, affected domains, accountable decision owner and delegation evidence first. User goals, budgets, authorization and higher-priority instructions govern. Tiers describe responsibility, not model pricing or mandatory agent calls.
 
-| Tier | Existing role / responsibility | Escalation |
+| Tier | Owner / scope | Escalation |
 | --- | --- | --- |
-| 1 | **Tech Lead (same role as Squad Lead / Main Agent)**: architecture, shared contracts, cross-domain priorities and risk | User for undelegated strategy, budget or authorization changes |
-| 2 | **Product Planner / Product Lead**: priorities, PRD and message alignment within approved goals | Tech Lead |
-| 2 | **AI Agent Engineer / Engineering Lead**: harness and implementation direction within approved architecture; coordinate technical evidence | Tech Lead |
-| 2 | **Test Engineer / Quality Lead**: acceptance criteria, verification plans and test gaps | Tech Lead; cannot pass required unverified criteria |
-| 2 | **DevOps Engineer / Delivery Lead**: delivery plan, operational handoff and recovery readiness | Tech Lead; deployment authorization remains separate |
-| 2 | **Finance / FinOps**: cost evidence and savings within limits | Tech Lead; user for limit changes |
-| 2 | **Security Review Engineer**: independent security verdict | Direct blocker report to Tech Lead; apply security-review_en.md |
-| 2 | **Compliance Reviewer**: applicable law/license review and blockers | Direct report to Tech Lead; expert review for uncertain interpretation |
-| 3 | **Frontend Engineer, Backend Engineer, Data Engineer**: implementation and layer tests within approved contracts | Engineering Lead |
-| 3 | **QA Engineer**: functional/regression execution and evidence | Quality Lead |
-| 3 | **SRE Engineer**: reliability, observability and recovery validation | Delivery Lead; Tech Lead for SLO/architecture conflicts |
-| 3 | **Product Marketing, Creative Rookie**: messaging/user evidence, dissent and small experiments | Product Lead; direct to Tech Lead for safety/authority concerns |
+| 1 | **Tech Lead**: shared architecture, cross-domain choices, cost/FinOps | User for undelegated goals, budgets or authority |
+| 2 | **Product Lead**: priorities, PRD, messages, experiments | Tech Lead |
+| 2 | **Engineering Lead**: implementation, layer tests, harness, technical evidence | Tech Lead |
+| 2 | **Quality Lead**: kickoff/stops, AC, test design/execution and gaps | Tech Lead; required unverified criteria cannot pass |
+| 2 | **Delivery Lead**: deployment, operations, reliability and recovery | Tech Lead; deployment authority stays separate |
+| 2 | **Security Review Engineer**: independent security, compliance applicability/actions | Direct blocker report; expert review for uncertain legal interpretation |
+| 3 | Narrowly delegated executors in the relevant domain | Assigned Tier 2; direct to Tech Lead for safety/authority concerns |
 
-Reuse the fourteen roles and Lead. Humanizer Editor and Ponytail edit/simplify without additional decision rights. Lead may cover domain responsibilities on small tasks; disclose combined roles. Do not invent assent or summon every role. Independent security review cannot be combined with implementation/Lead. Engineering ownership coordinates specialist evidence rather than claiming universal expertise.
+Consolidate 15 role names (14 specialists plus Lead) into six accountable owners. The previous Tier 1/2 decision-owner count was eight; it is now six. Neither comparison measures agent calls or cost savings. Apply the [legacy-name and capability mapping](./roles_en.md); Tier 3 adds no standing titles. Record Lead's combined duties on small tasks. Independent Security cannot be combined with implementation/Lead. Budget-limit changes stay with the user; unresolved applicable compliance violations retain a separate blocking status. Humanizer/Ponytail are editing duties without extra decision rights. Never invent inactive-role assent.
 
 ## 2. Decision routing
 

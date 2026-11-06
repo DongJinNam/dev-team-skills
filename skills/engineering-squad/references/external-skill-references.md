@@ -2,6 +2,21 @@
 
 확인일: 2026-10-31 (KST). Threads 리포스트에서 발견한 후보를 원저장소 README·파일 목록 또는 공식 문서와 대조한 참고 목록입니다. 아래 활용 방법은 우리 팀의 적용 제안이며 외부 스킬의 설치·실행 검증 결과가 아닙니다.
 
+
+## 우선 검토할 실행·검증 도구 (2026-11-06 KST)
+
+[활용 증거 계약](./tool-adoption.md)으로 선택한다. 아래는 공식 원문을 확인한 후보이며 저장소 전체의 설치·실행 현황이 아니다. 실제 사용은 작업별 기록으로 증명한다. 웹에 표시된 stars는 확인 시점의 반올림된 관심 지표이며 실사용자 수·최근 증가율이 아니다.
+
+| 후보 / 공식 출처 | 관찰한 관심 지표 | 작업 조건·담당·적용 방법 | 상태·한계 |
+| --- | --- | --- | --- |
+| [Superpowers](https://github.com/obra/superpowers) | 약 313.1k stars | Engineering/Quality: 설계·TDD·원인 분석·완료 검증. [협업 계약](./superpowers-compatibility.md)으로 계획 담당 단일화 | 공식 README INSPECTED; 이번 작성 환경의 7.0.1 지침은 AVAILABLE/읽기 확인. 모든 사용자 환경에 설치되었다는 뜻 아님; MIT와 실제 선택 파일 재확인 |
+| [Anthropic skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md) | skills 저장소 약 187.8k stars | Quality: 스킬 변경의 예시 요청·결과·회귀 평가를 설계 | INSPECTED; upstream 스크립트 NOT_RUN. 저장소/개별 파일 라이선스를 구분하고 호스트별 평가 도구 조건 확인 |
+| [Playwright CLI + skills](https://github.com/microsoft/playwright-cli), [공식 안내](https://playwright.dev/docs/getting-started-cli) | 약 15.0k stars | Engineering/Quality: 실제 브라우저 작업에 기존 도구와 비교; 토큰 부담이 문제면 CLI, 상태 유지 탐색이 필요하면 MCP의 적합성 검토 | INSPECTED, 실행 NOT_RUN. Apache-2.0 표시·Node/브라우저/OS 조건 재확인. 공식 효율 설명은 우리 프로젝트의 실측 절감률 아님 |
+| [Agent Skills 규격](https://agentskills.io/specification), [저장소](https://github.com/agentskills/agentskills) | 약 27.0k stars | Engineering: frontmatter와 필요한 참조만 읽는 구조, 스킬 패키지 검사 | INSPECTED; 규격 적합성과 각 호스트의 설치/호환 성공은 별도 검증. 규격 문서는 실행 도구 아님 |
+
+선택은 인기도 순서가 아니다. 이 저장소 개선에서는 Superpowers의 실제 제공된 절차와 자체 하네스/행동 평가를 사용한다. Playwright는 브라우저 기능 변경이 없어 도입 보류하며, Anthropic upstream 평가 스크립트도 중복 도입하지 않는다. 아래 SNS 발견 목록은 특수 목적 후보로 유지하고 기본 로딩에서 제외한다.
+
+
 ## 역할별 선택
 
 | 레퍼런스 / 원출처 | 참고할 부분 | 담당 역할 · 사용 조건 | 산출물 · 한계 |

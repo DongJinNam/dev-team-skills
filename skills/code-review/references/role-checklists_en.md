@@ -1,5 +1,7 @@
 # Role-Tailored Review Checklists
 
+These are specialist checklists, not independent standing roles. Select only affected checks through the [six-owner mapping](../../engineering-squad/references/roles_en.md).
+
 Use these focused checklists during code reviews based on the engineering roles involved.
 
 ---
