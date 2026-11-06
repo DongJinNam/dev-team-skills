@@ -73,10 +73,18 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 - [ ] Neither seniority nor votes waive required QA, independent security, compliance or explicit resumption.
 - [ ] Process-limited delegation is not reused for another project; user appeals are accepted without team permission.
 
-## Test Engineer Review
+## Quality Lead Review (Test Engineer / QA)
 - Mandatory pre-project questions / user answers and confirmation evidence / agreement status (PENDING/AGREED):
 - Expected benefit (hypothesis) / quantifiability / metric, baseline, target, method and period or alternative verification:
 - Stop triggers, thresholds and scope / human recipient and resume authority / stop, report and resume record (or not triggered):
 - Reviewer / clear and measurable AC / feature-test-evidence matrix:
 - Missing-test recommendations (scenario, expected result, layer/technique, priority, owner, acceptance evidence):
 - QA/developer dispositions / follow-up / unverified AC or reasoned N/A:
+
+
+## External tool use (if relevant)
+
+- Problem/AC, candidate/source/revision or check date, owner:
+- State, actual method/command, artifact/log, result and limits:
+- Existing alternative, decision/reason, cost status, recheck trigger:
+- Otherwise: N/A with reason. See the [contract](../skills/engineering-squad/references/tool-adoption_en.md).

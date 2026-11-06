@@ -1,5 +1,7 @@
 # Role-Tailored Review Checklists
 
+아래는 독립 상설 역할이 아닌 전문 역량 체크리스트다. [6개 책임 역할 매핑](../../engineering-squad/references/roles.md)에 따라 영향받은 항목만 선택한다.
+
 각 직무별 전문성을 반영하여 코드 리뷰 및 변경 사항 검토 시 집중 점검해야 하는 체크리스트입니다.
 
 ---

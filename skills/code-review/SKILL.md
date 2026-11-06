@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: >-
-  Use this skill to conduct high-ROI, design-pattern-grounded code reviews tailored to each engineering role (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE) with a 3-tier severity classification (Must Fix, Inquire, Suggestion).
+  Use when reviewing code or engineering artifacts for high-impact correctness, risk, maintainability, and relevant specialist checks under the squad's accountable owners.
 ---
 
 # High-ROI Code Review Workflow
@@ -43,7 +43,7 @@ description: >-
 
 ```mermaid
 flowchart TD
-    A["1. PR 설명 & 카카오페이 템플릿 검토"] --> B["2. 🔴 High-Risk 핵심 변경영역 스캔"]
+    A["1. PR 설명 & PR 템플릿 검토"] --> B["2. 🔴 High-Risk 핵심 변경영역 스캔"]
     B --> C["3. 역할별 체크리스트 기반 정밀 검토"]
     C --> D["4. 🔴 / 🟡 / 🟢 태그 분류 코멘트 작성"]
     D --> E["5. 최종 리뷰 요약 (Summary & Action Items)"]
@@ -69,4 +69,4 @@ QA Stage 3에서 독립 Security Review Engineer를 활성화하고 [security-re
 
 문서·설정 변경을 포함한 모든 PR의 머지 전에 최신 PR head에 대한 독립 Security Review Engineer PASS와 보고서를 필수로 확인합니다. [PR 머지 필수 게이트](../engineering-squad/references/security-review.md#pr-머지-필수-게이트)를 적용합니다. 미검수·BLOCKED·이전 리비전에 대한 검수로는 머지하지 않습니다. 새 commit 또는 머지 입력 변경 시 재검수하며 QA·일반 승인·CI 통과로 대체하지 않습니다.
 
-Compliance Reviewer는 관련 변경의 국내·미국 IT 법령 및 보안 준수 여부를 [역할 12](../engineering-squad/references/roles.md)에 따라 검토합니다. 출처·적용 여부·조치를 기록하고 적용되는 위반 사항이 미해결이면 머지를 차단합니다.
+Security가 조정하는 Compliance Reviewer 역량은 관련 변경의 국내·미국 IT 법령 및 보안 준수 여부를 [컴플라이언스 책임](../engineering-squad/references/roles.md)에 따라 검토합니다. 출처·적용 여부·조치를 기록하고 적용되는 위반 사항이 미해결이면 머지를 차단합니다.

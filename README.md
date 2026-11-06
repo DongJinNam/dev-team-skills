@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > A cross-platform (Windows & macOS) collection of AI coding agent skills and rules, inspired by Andrej Karpathy's engineering philosophy and practical senior engineering principles.  
-> It helps you run a 14-role engineering squad (Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE) across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
+> It helps you run a task-sized engineering squad with six accountable owners across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
 
 ---
 
@@ -13,7 +13,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 | Feature | Typical Prompt / Rule Lists | **dev-team-skills** |
 | :--- | :--- | :--- |
-| **Team Coverage** | Only single-coder or simple pair programming | **Full lifecycle squad of 14 roles: planning, marketing, FinOps, AI harness, dev, QA, test design, security, deployment, and SRE** |
+| **Team Coverage** | Only single-coder or simple pair programming | **Six accountable owners with task-specific product, engineering, quality, security and delivery capabilities** |
 | **Quality Check** | Relies on LLM hallucination ("I finished it") | **Deterministic evaluation harness (`verify-harness`) and self-healing loop** |
 | **Packaging & Ecosystem**| Manual copy-pasting of text files | **100% compliant with Antigravity, Claude Code, and OpenAI Codex marketplaces** |
 | **Engineering Mindset** | Unnecessary boilerplate and too many libraries | **Karpathy principles & Ponytail (Standard Library First, YAGNI, minimum code)** |
@@ -45,7 +45,7 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 | Skill Name | Description | Key Features |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 14-role agent squad & 6-step deployment pipeline | Clear collaboration across planning, harness, dev, QA, test design, security, deployment, and SRE |
+| **`engineering-squad`** | Six-owner squad & task-sized execution | Clear collaboration across planning, harness, dev, QA, test design, security, deployment, and SRE |
 | **`brainstorming`** | Product planning, problem definition & idea generation | SCAMPER, HMW, RICE scoring, Lean PRD template, linked with `research` subagent |
 | **`harness-engineering`** | AI agent evaluation harness & marketplace packaging | Deterministic oracles, 3-platform packaging (`plugin.json`, `.claude-plugin`, `.codex-plugin`), self-healing loop |
 | **`code-review`** | High-ROI design pattern reviews by role | 3 severity tiers (🔴Must Fix / 🟡Review Needed / 🟢Suggestion), tailored checklists |
@@ -56,44 +56,26 @@ Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives
 
 ---
 
-## 👥 Engineering Squad: 14 Specialized Roles & DoD
+## 👥 Engineering Squad: six accountable owners
 
-Alongside the 14 specialists and Lead, **Humanizer Editor** provides the final plain-language pass with `humanizer-kr` for Korean or `humanizer` for English. Explain jargon with plain terms and helpful examples while preserving facts, risks and unverified status. Lead may cover this non-voting responsibility; tiered decision governance applies. See the [contract](skills/engineering-squad/references/roles_en.md#humanizer-editor-final-plain-language-explanation).
+Fifteen former role names (fourteen specialists plus Lead) map to six owners. The Tier 1/2 decision-owner count changes from eight to six; neither number measures active agents or token savings.
 
-```mermaid
-flowchart TD
-    PO["Product Planner\n(Brainstorming/Research/PRD)"] --> Lead["Squad Lead\n(Interface & Spec)"]
-    AI["AI Agent Engineer\n(Harness & Marketplace)"] --> Lead
-    Lead --> FE["Frontend Engineer\n(UI/Client)"]
-    Lead --> BE["Backend Engineer\n(API/Domain)"]
-    Lead --> DE["Data Engineer\n(Schema/ETL)"]
-    FE & BE & DE --> QA["QA Engineer\n(E2E/Edge Cases)"]
-    QA --> SEC["Security Review Engineer\n(Mandatory PASS/BLOCKED)"]
-    SEC & AI --> DevOps["DevOps Engineer\n(Docker/Deploy)"]
-    DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
-```
+| Owner | Consolidated responsibilities |
+| --- | --- |
+| Tech Lead | Cross-domain decisions, FinOps, handoffs, final plain-language editing |
+| Product Lead | Planning, marketing, evidence, dissent experiments |
+| Engineering Lead | Frontend, backend, data and AI/harness capabilities |
+| Quality Lead | Test criteria/design, QA execution and AC evidence |
+| Delivery Lead | DevOps, SRE, deployment and recovery |
+| Security Review Engineer | Independent security plus separate compliance applicability/actions |
 
-The fourteen specialist roles are coordinated by the separate Squad Lead. Activate roles as needed; an independent Security Review Engineer is mandatory at QA Stage 3.
+A documentation edit defaults to Lead combining duties plus independent Security; a feature activates Engineering/Quality; product or operational changes add the relevant owner. Assign narrow specialists only for distinct outputs or expertise. Required checks remain even when roles are combined.
 
-| Role | Scope | Required Definition of Done (DoD) |
-| :--- | :--- | :--- |
-| **Product Planner** | Problem definition, brainstorming, market research, Lean PRD | Lean PRD complete with hypothesis, MVP scope, acceptance criteria |
-| **Creative Rookie** | Challenge consensus, check SNS trends, propose ideas regularly | Dated evidence, idea cards, smallest experiment and ballot rationale |
-| **Product Marketing** | Value proposition, readable demos and launch drafts | Audience, CTA, evidence and comprehension review |
-| **Finance / FinOps** | Token, coordination, development and operating costs | Cost status, variance and actionable savings |
-| **AI Agent Engineer** | Agent eval harness, tool schemas, marketplace packaging | Verification harness script passes with full green report |
-| **Squad Lead** | Task breakdown, interface contracts, agent coordination | E2E integration scenario passes |
-| **Frontend** | UI components, client state, API calls, browser UI | Production build passes (`npm run build`) with zero type errors |
-| **Backend** | REST/GraphQL APIs, domain logic, auth, error handling | Unit & integration tests pass, API endpoints respond correctly |
-| **Data Engineer** | DB schemas (DDL), migrations (Up/Down), query tuning | Migration and rollback scripts execute and succeed |
-| **QA Engineer** | E2E testing, negative test cases, corner cases | 100% pass on test suite |
-| **Test Engineer** | Mandatory user questions on expected benefits/quantifiability and stop/report conditions before project execution; clear criteria and test gaps | User-confirmed start/stop agreement, AC-test-evidence matrix and recommendations |
-| **Security Review Engineer** | Independent security/privacy review at QA Stage 3 | Revision-bound PASS/BLOCKED; required before deployment |
-| **Compliance Reviewer** | Korean/U.S. IT legal and security-related compliance | Sources, applicability, findings and actions |
-| **DevOps** | Dockerfile/Compose, environment configs (`.env.example`), scripts | Container builds cleanly, `/health` returns HTTP 200 |
-| **SRE** | SLO/SLI metrics, observability (`/metrics`), load testing, recovery | Light load test passes, metrics collection verified |
+Read the [canonical workflow](skills/engineering-squad/SKILL_en.md), [capability and legacy-name mapping](skills/engineering-squad/references/roles_en.md), and [decision governance](skills/engineering-squad/references/decision-governance_en.md). Every PR still needs current-head/base independent security PASS before merge; unresolved applicable compliance violations remain blocking. Keep kickoff/stop rules and user appeals.
 
-Security review is a release prerequisite alongside functional QA. See the [security contract](skills/engineering-squad/references/security-review_en.md) and [dated skill/incident research](skills/engineering-squad/references/security-research_en.md). Missing evidence or unresolved release blockers stop deployment.
+External references are candidates, not proof of use. The [adoption contract](skills/engineering-squad/references/tool-adoption_en.md) separates DISCOVERED / INSPECTED / AVAILABLE / APPLIED / VERIFIED and actual PASS/FAIL/NOT_RUN evidence. The [dated shortlist](skills/engineering-squad/references/external-skill-references_en.md) covers Superpowers, skill-creator, Playwright CLI and the Agent Skills specification. Read only what the task needs.
+
+The [design and debate](docs/superpowers/specs/2026-11-06-lean-squad-design.md) explains alternatives, objections and validation limits. Document reduction is not a measured token-efficiency gain.
 
 ---
 
@@ -141,7 +123,7 @@ This is a **local package-structure contract**, not complete vendor-schema valid
 [Fourteen pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, tiered decision ownership, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-04-tiered-decisions.json
+python evals/run_evals.py --replay evals/runs/2026-11-06-lean-squad.json
 ```
 
 ### Using Superpowers alongside dev-team-skills
@@ -217,7 +199,7 @@ codex plugin install dev-team-skills
 - In Codex CLI, type `/plugins` to open the interactive manager, search for `dev-team-skills`, and enable it.
 
 #### Option C: Project Agent Instructions
-- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and 14-role guidelines when starting a session.
+- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and links to task-relevant capabilities when starting a session.
 
 ---
 
@@ -238,7 +220,7 @@ Included at [`.github/pull_request_template.md`](./.github/pull_request_template
 
 ### Tiered decision ownership & Creative Rookie
 
-Organize existing roles as **Tier 1 Tech Lead → Tier 2 domain owners → Tier 3 specialists**. Domain owners decide local alternatives; Tech Lead resolves cross-domain conflict from evidence and dissent. Preserve Rookie ideas and user appeals; fifteen ballots/eight votes are advisory on request. Seniority cannot waive security, compliance, budget or authorization. See [decision governance](skills/engineering-squad/references/decision-governance_en.md).
+Organize the six owners and delegated capabilities as **Tier 1 Tech Lead → Tier 2 domain owners → Tier 3 specialists**. Domain owners decide local alternatives; Tech Lead resolves cross-domain conflict from evidence and dissent. Preserve Rookie ideas and user appeals; fifteen ballots/eight votes are advisory on request. Seniority cannot waive security, compliance, budget or authorization. See [decision governance](skills/engineering-squad/references/decision-governance_en.md).
 
 ## 📜 License
 MIT License

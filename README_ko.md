@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > Andrej Karpathy의 엔지니어링 철학과 실용주의 시니어 개발 원칙을 기반으로 구축된 크로스 플랫폼(Windows/macOS) AI 코딩 에이전트 스킬 & 룰 모음 저장소입니다.  
-> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 14개 전문 직무(Product Planner, Creative Rookie, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE)로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
+> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 6개 책임 역할과 필요한 전문 역량으로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
 
 ---
 
@@ -13,7 +13,7 @@
 
 | 비교 항목 | 일반 에이전트 프롬프트 / 룰 모음 | **dev-team-skills** |
 | :--- | :--- | :--- |
-| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **기획, 마케팅, 재무부터 AI 하네스, 개발, QA, 배포, 관측성까지 14개 역할 스쿼드 전 주기 커버** |
+| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **6개 책임 역할로 기획·개발·품질·보안·운영을 연결하고 전문 역량을 선택 활성화** |
 | **품질 보증 방식** | LLM의 "완료했습니다"라는 환각에 의존 | **결정론적 평가 하네스(`verify-harness`) 및 자가 치유(Self-healing) 루프** |
 | **확장성 & 생태계** | 로컬 텍스트 복사 및 수동 설정 | **Antigravity, Claude Code, OpenAI Codex 3대 마켓플레이스 규격 100% 호환** |
 | **실용주의 철학** | 불필요한 보일러플레이트 및 라이브러리 남용 | **Andrej Karpathy 원칙 & Ponytail (Standard Library First, YAGNI, 최소 코드)** |
@@ -45,10 +45,10 @@
 
 | 스킬 이름 | 설명 | 주요 특징 |
 | :--- | :--- | :--- |
-| **`engineering-squad`** | 14개 역할 기반 에이전트 조직화 & 6단계 배포 오케스트레이션 | 기획, 마케팅, 재무, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
+| **`engineering-squad`** | 6개 책임 역할 & 작업 크기에 맞춘 실행 | 기획, 마케팅, 재무, AI 하네스, 개발, QA, 배포, SRE 협업 및 체계적 파이프라인 |
 | **`brainstorming`** | 제품 기획, 문제 정의 및 체계적 아이디어 도출 | SCAMPER, HMW, RICE 점수표, 린 PRD 템플릿, `research` 서브에이전트 연계 |
 | **`harness-engineering`** | AI 에이전트 평가 하네스 및 마켓플레이스 패키징 | 결정론적 오라클, 3대 Marketplace 규격(`plugin.json`, `.claude-plugin`, `.codex-plugin`), 자가 치유 루프 |
-| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 14개 직무 맞춤형 체크리스트 |
+| **`code-review`** | ROI 중심의 역할별 디자인 패턴 코드 리뷰 | 3단계 심각도(🔴필수 / 🟡확인요청 / 🟢권장), 필요한 전문 역량별 체크리스트 |
 | **`ponytail`** | 극단적 미니멀리즘 시니어 개발자 사고방식 | Standard Library First, 무분별한 래퍼/의존성 제거 |
 | **`humanizer`** | 영문 AI 문체 패턴 제거 (English) | Wikipedia AI 작성 징후 가이드 기반 작위적 수사, 삼분법, 과장, 로봇투 제거 |
 | **`humanizer-kr`** | 자연스러운 한국어 테크니컬 라이팅 | AI 번역투, 이중 피동 제거, 의도 보존 윤문 |
@@ -56,44 +56,26 @@
 
 ---
 
-## 👥 Engineering Squad: 14개 전문 역할 및 검증 기준
+## 👥 Engineering Squad: 6개 책임 역할
 
-14개 전문 역할·Lead와 별도로 **Humanizer Editor(쉬운 설명 담당)**가 최종 답변을 다듬습니다. 한국어는 `humanizer-kr`, 영어는 `humanizer`를 사용해 전문 용어를 쉬운 말·예시로 풀고 사실·위험·미검증 상태를 보존합니다. Lead 겸임 가능하며 추가 결정권 없이 Tier별 결정 계약을 따릅니다. [상세 계약](skills/engineering-squad/references/roles.md#humanizer-editor-최종-쉬운-설명-담당).
+기존 15개 역할명(14개 전문 역할+Lead)을 6개 책임 역할로 통합합니다. Tier 1/2 결정 책임자는 8개에서 6개로 줄어듭니다. 어느 수치도 실제 호출 인원이나 토큰 절감률을 뜻하지 않습니다.
 
-```mermaid
-flowchart TD
-    PO["Product Planner\n(Brainstorming/Research/PRD)"] --> Lead["Squad Lead\n(Interface & Spec)"]
-    AI["AI Agent Engineer\n(Harness & Marketplace)"] --> Lead
-    Lead --> FE["Frontend Engineer\n(UI/Client)"]
-    Lead --> BE["Backend Engineer\n(API/Domain)"]
-    Lead --> DE["Data Engineer\n(Schema/ETL)"]
-    FE & BE & DE --> QA["QA Engineer\n(E2E/Edge Cases)"]
-    QA --> SEC["Security Review Engineer\n(Mandatory PASS/BLOCKED)"]
-    SEC & AI --> DevOps["DevOps Engineer\n(Docker/Deploy)"]
-    DevOps --> SRE["SRE Engineer\n(Observability/SLO)"]
-```
+| 책임 역할 | 통합 업무 |
+| --- | --- |
+| Tech Lead | 분야 간 결정·FinOps·인계·최종 쉬운 설명 |
+| Product Lead | 기획·마케팅·근거·반론 실험 |
+| Engineering Lead | 프론트엔드·백엔드·데이터·AI/하네스 역량 |
+| Quality Lead | 완료 기준·테스트 설계·QA 실행·AC 증거 |
+| Delivery Lead | DevOps·SRE·배포·복구 |
+| Security Review Engineer | 독립 보안 판정과 별도 컴플라이언스 적용성/조치 |
 
-14개 전문 역할과 별도로 Squad Lead가 조율합니다. 필요한 역할을 활성화하되 QA Stage 3의 독립 보안 검수 엔지니어는 필수입니다.
+문서 수정은 Lead 겸임과 독립 Security를 기본으로 하고, 기능 변경에는 Engineering/Quality를 활성화합니다. 제품·운영 변경은 해당 책임자를 추가하며 독립 산출물이나 전문성이 필요할 때만 범위를 나눕니다. 겸임해도 필수 검증을 생략하지 않습니다.
 
-| 역할 | 담당 영역 | 필수 검증 기준 (DoD) |
-| :--- | :--- | :--- |
-| **Product Planner** | 문제 정의, 브레인스토밍, 시장/기술 리서치, 린 PRD 명세 | 린 PRD(가설, MVP 스코프, 인수 조건) 작성 완료 |
-| **Creative Rookie** | 합의의 가정에 반론, 최신 SNS 트렌드와 정기 아이디어 제안 | 출처·확인일·최소 실험을 담은 아이디어 카드와 찬반 근거 |
-| **Product Marketing** | 한눈에 이해되는 가치·데모·출시 초안 | 대상·CTA·주장 근거·이해도 검토 |
-| **Finance / FinOps** | 토큰·커뮤니케이션·개발·운영 비용 | 비용 상태·예산 편차·절감 대안 |
-| **AI Agent Engineer** | 에이전트 평가 하네스(Eval) 구축, 도구 스키마, 마켓플레이스 패키징 | 하네스 검증 스크립트 실행 및 통과 리포트 |
-| **Squad Lead** | 요구사항 분해, 인터페이스/계약 정의, 에이전트 간 조율 | E2E 통합 시나리오 통과 |
-| **Frontend** | UI 컴포넌트, 클라이언트 상태, API 연동, 브라우저 인터랙션 | 프로덕션 번들 빌드 (`npm run build`) 통과 |
-| **Backend** | REST/GraphQL API, 도메인 로직, 인증, 에러 핸들링 | 단위/통합 테스트 통과 & API 응답 확인 |
-| **Data Engineer** | DB 스키마(DDL), 마이그레이션(Up/Down), 쿼리 튜닝 | 마이그레이션 실행 & 롤백 테스트 검증 |
-| **QA Engineer** | E2E 시나리오 테스트, 엣지 케이스/부정 테스트 | 테스트 스위트 100% 통과 |
-| **Test Engineer** | 프로젝트 실행 전 기대효과·수치화 가능성 및 중단·사람 보고 조건 필수 질문, 완료 기준·검증 누락 검토 | 사용자와 확인한 시작·중단 합의, AC-테스트-증거 검증표와 추가 의견 |
-| **Security Review Engineer** | QA Stage 3 독립 보안·개인정보 검수 | 리비전별 PASS/BLOCKED, 배포 전 필수 |
-| **Compliance Reviewer** | 국내·미국 IT 법령 및 보안 준수 검토 | 출처·적용 여부·발견사항·조치 기록 |
-| **DevOps** | Dockerfile/Compose, 환경 설정(`.env.example`), 배포 스크립트 | 컨테이너 빌드 & `/health` 200 확인 |
-| **SRE** | SLO/SLI 지표, Observability(`/metrics`), 부하 테스트, 장애 복구 | 경량 부하 테스트 통과 & 메트릭 수집 검증 |
+[정본 실행 지침](skills/engineering-squad/SKILL.md), [역량·기존 명칭 매핑](skills/engineering-squad/references/roles.md), [Tier별 결정](skills/engineering-squad/references/decision-governance.md)을 적용합니다. 모든 PR의 머지 전 최신 head/base 독립 보안 PASS와 미해결 컴플라이언스 위반 차단, 기존 시작/중단 질문과 사용자 이의를 유지합니다.
 
-보안 검수는 기능 QA와 함께 출시 선행조건입니다. [보안 계약](skills/engineering-squad/references/security-review.md)과 [스킬·사고 조사 근거](skills/engineering-squad/references/security-research.md)를 참조하십시오. 증거 부재나 미해결 출시 차단 사유가 있으면 배포를 중단합니다.
+외부 자료는 후보이며 사용 증거가 아닙니다. [활용 계약](skills/engineering-squad/references/tool-adoption.md)은 DISCOVERED / INSPECTED / AVAILABLE / APPLIED / VERIFIED와 실제 PASS/FAIL/NOT_RUN을 구분합니다. [확인일을 남긴 후보 목록](skills/engineering-squad/references/external-skill-references.md)에서 Superpowers·skill-creator·Playwright CLI·Agent Skills 규격 중 작업에 필요한 부분만 읽습니다.
+
+[개선안·토론안](docs/superpowers/specs/2026-11-06-lean-squad-design.md)에 대안·반론·검증 한계를 기록했습니다. 문서 분량 감소를 토큰 실측 절감으로 표현하지 않습니다.
 
 ---
 
@@ -138,10 +120,10 @@ python -m unittest discover -s tests -v
 
 ### 에이전트 판단·보고 회귀시험
 
-[14개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 계층별 책임 결정, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
+[19개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 계층별 책임 결정, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-04-tiered-decisions.json
+python evals/run_evals.py --replay evals/runs/2026-11-06-lean-squad.json
 ```
 
 ### Superpowers와 함께 사용
@@ -220,7 +202,7 @@ codex plugin install dev-team-skills
 - Codex CLI 프롬프트에서 `/plugins`를 입력하여 인터랙티브 플러그인 매니저를 열고 `dev-team-skills`를 검색하여 활성화합니다.
 
 #### 방법 C: 프로젝트 코딩 에이전트 지침 연동
-- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 헌법과 14개 직무 가이드라인이 자동으로 컨텍스트에 주입됩니다.
+- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 호스트 지원 범위에서 헌법을 읽고 필요한 전문 역량 지침을 선택합니다.
 
 ---
 
@@ -241,7 +223,7 @@ codex plugin install dev-team-skills
 
 ### Tier별 의사결정과 Creative Rookie
 
-기존 14개 역할을 **Tier 1 Tech Lead → Tier 2 분야 책임자 → Tier 3 실행 역할**로 구성합니다. 분야 내 결정은 해당 책임자가, 분야 간 충돌은 Tech Lead가 근거·반론으로 판단합니다. 신입의 아이디어·반론과 사용자 재검토 권한은 유지하며 15표·8표는 요청 시 자문으로만 사용합니다. 보안·컴플라이언스 차단과 예산·권한을 직급으로 면제할 수 없습니다. [상세 역할·결정 계약](skills/engineering-squad/references/decision-governance.md).
+6개 책임 역할과 위임한 전문 역량을 **Tier 1 Tech Lead → Tier 2 분야 책임자 → Tier 3 실행 역할**로 구성합니다. 분야 내 결정은 해당 책임자가, 분야 간 충돌은 Tech Lead가 근거·반론으로 판단합니다. 신입의 아이디어·반론과 사용자 재검토 권한은 유지하며 15표·8표는 요청 시 자문으로만 사용합니다. 보안·컴플라이언스 차단과 예산·권한을 직급으로 면제할 수 없습니다. [상세 역할·결정 계약](skills/engineering-squad/references/decision-governance.md).
 
 ## 📜 License
 MIT License
