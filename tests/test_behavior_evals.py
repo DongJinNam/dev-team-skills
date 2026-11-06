@@ -202,7 +202,7 @@ class BehaviorEvalTests(unittest.TestCase):
     def test_adoption_policy_is_exported_and_snapshot_bound(self):
         target=self.dir/'requests'
         self.run_eval(0,'--export-prompts',str(target))
-        request=json.loads((target/'unverified-tool.json').read_text())
+        request=json.loads((target/'unverified-tool.json').read_text(encoding='utf-8'))
         path='skills/engineering-squad/references/tool-adoption.md'
         self.assertIn(path,request['policies'])
         self.record['snapshot'][path]='stale'
