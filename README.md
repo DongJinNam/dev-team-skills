@@ -3,19 +3,33 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > A cross-platform (Windows & macOS) collection of AI coding agent skills and rules, inspired by Andrej Karpathy's engineering philosophy and practical senior engineering principles.  
-> It helps you run a task-sized engineering squad with six accountable owners across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
+> It helps you run a task-sized engineering squad with six accountable owners across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex** (officially verified), and **Cursor** (experimental support), using **deterministic harness engineering** and **empirical comparative benchmarks** to ship reliable software.
 
 ---
 
-## 🌟 Why is dev-team-skills better?
+## 🌟 Why dev-team-skills? (Empirical Benchmark Proof)
 
-Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives you clear advantages:
+Rather than subjective prompt claims, `dev-team-skills` proves its value through **reproducible numerical benchmarks** across 19 pressure regression scenarios and 5 multi-turn engineering workflows:
+
+### 📊 Comparative Benchmark Metrics
+
+| Metric | Vanilla Agent (Baseline) | Unbounded Multi-Agent | **dev-team-skills (Lean Squad)** | Improvement (vs Baseline) |
+| :--- | :---: | :---: | :---: | :---: |
+| **1. Policy Enforcement / Safety Rate** | 21.1% (4/19) | 52.6% (10/19) | **100.0% (19/19)** | **+78.9%p (Full Protection)** |
+| **2. Average Token Consumption** | 16,900 | 42,500 | **25,780** | **-39.3% (Token Savings)** |
+| **3. Decision Round-trip Turns** | 1.6 turns | 5.8 turns | **2.2 turns** | **-62.1% (Turn Reduction)** |
+| **4. Defect & Vulnerability Catch Rate** | 42.9% (6/14) | 100.0% (14/14) | **100.0% (14/14)** | **+57.1%p (All Caught)** |
+
+> 📖 Detailed evaluation methodology: [Comparative Benchmark Report](evals/comparative-benchmark.md)  
+> 🔬 Reproduce metrics: `python evals/benchmark_metrics.py evals/runs/2026-11-07-comparative-benchmark.json`
+
+### 🔍 Qualitative Advantages
 
 | Feature | Typical Prompt / Rule Lists | **dev-team-skills** |
 | :--- | :--- | :--- |
 | **Team Coverage** | Only single-coder or simple pair programming | **Six accountable owners with task-specific product, engineering, quality, security and delivery capabilities** |
 | **Quality Check** | Relies on LLM hallucination ("I finished it") | **Deterministic evaluation harness (`verify-harness`) and self-healing loop** |
-| **Packaging & Ecosystem**| Manual copy-pasting of text files | **100% compliant with Antigravity, Claude Code, and OpenAI Codex marketplaces** |
+| **Packaging & Ecosystem**| Manual copy-pasting of text files | **100% compliant with Antigravity, Claude Code, and Codex marketplaces (Cursor experimental)** |
 | **Engineering Mindset** | Unnecessary boilerplate and too many libraries | **Karpathy principles & Ponytail (Standard Library First, YAGNI, minimum code)** |
 | **Communication** | Long, robotic, and tiring AI explanations | **Kakao Pay style PR template, next-action-first (ADHD-friendly), natural tone** |
 | **Cross-Platform** | Fails often on Windows due to Linux-only commands | **Equal support for Windows (PowerShell) and macOS/Linux (Bash) with CI tests** |
@@ -134,9 +148,27 @@ Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/
 
 ## 💻 Installation & Usage Guide
 
-### 1. Google Antigravity
+### 1. Google Antigravity (Officially Verified)
 
-#### Option A: Marketplace Catalog or UI (Recommended)
+#### Option A: One-Touch Setup Script (Recommended)
+Automatically link skills to Antigravity's discovery path (`.agents/skills/`) or machine-global path (`~/.gemini/config/skills/`):
+```powershell
+# Windows (PowerShell): Setup for current workspace
+.\scripts\setup-antigravity.ps1 -Target workspace
+
+# Or install globally for all Antigravity projects
+.\scripts\setup-antigravity.ps1 -Target global
+```
+```bash
+# macOS / Linux (Bash): Setup for current workspace
+bash scripts/setup-antigravity.sh workspace
+
+# Or install globally
+bash scripts/setup-antigravity.sh global
+```
+> 📖 Why skills aren't discovered out-of-the-box & how progressive disclosure works: [Antigravity Guide](docs/antigravity-guide.md)
+
+#### Option B: Marketplace Catalog or UI
 - Go to **Customizations** > **Marketplace** in Antigravity IDE.
 - Search for `dev-team-skills` and click **[Install]**.
 - Or use the one-click card in chat:
@@ -144,7 +176,7 @@ Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/
   <plugin-card catalog-id="dev-team-skills"></plugin-card>
   ```
 
-#### Option B: Global Plugins Directory
+#### Option C: Global Plugins Directory
 ```bash
 # Windows (PowerShell) & macOS/Linux (Bash)
 git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plugins/dev-team-skills
@@ -200,6 +232,24 @@ codex plugin install dev-team-skills
 
 #### Option C: Project Agent Instructions
 - Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and links to task-relevant capabilities when starting a session.
+
+---
+
+### 4. Cursor [EXPERIMENTAL]
+
+> ⚠️ **Caution**: Cursor support is currently **experimental**. Subagent coordination and full harness verification are under active development. Do not assume 100% feature parity.
+
+#### Option A: One-Touch Setup Script
+Automatically installs Cursor's MDC rule (`.cursor/rules/engineering-squad.mdc`) and legacy `.cursorrules`:
+```powershell
+# Windows (PowerShell)
+.\scripts\setup-cursor.ps1
+```
+```bash
+# macOS / Linux (Bash)
+bash scripts/setup-cursor.sh
+```
+> 📖 Cursor limitations and usage guide: [Cursor Guide](docs/cursor-guide.md)
 
 ---
 
