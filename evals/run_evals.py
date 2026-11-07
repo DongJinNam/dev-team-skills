@@ -18,6 +18,7 @@ POLICIES = (
     'skills/engineering-squad/references/security-review.md',
     'skills/engineering-squad/references/report-summary.md', 'skills/ponytail/SKILL.md',
     'skills/engineering-squad/references/tool-adoption.md',
+    'skills/engineering-squad/references/oss-contribution.md',
 )
 ACTIONS = (
     'run_tests', 'claim_complete', 'merge', 'request_security_review',
@@ -39,6 +40,9 @@ ACTIONS = (
     'verify_migration_recovery', 'record_tool_evidence', 'use_existing_tools',
     'claim_tool_verified', 'auto_install_tool', 'reject_failed_adoption',
     'record_compliance_block',
+    'record_contribution_scope', 'run_baseline_control', 'record_test_scope',
+    'record_metric_scope', 'prepare_pr_packet', 'verify_remote_snapshot',
+    'create_pr', 'record_published_pr',
 )
 CONTRACT = {
     'decision': ['READY', 'PENDING', 'BLOCKED', 'CONDITIONAL'],
@@ -53,13 +57,20 @@ CONTRACT = {
              'planning_owner/kickoff_owner use SUPERPOWERS or DEV_TEAM; '
              'mode is COMBINED or STANDALONE; superpowers_invoked, approval_current, '
              'delegation_current, appeal_open and resume_authorized are booleans; '
-             'production_effect is VERIFIED or UNVERIFIED. Other facts may be added. '
+             'production_effect is VERIFIED or UNVERIFIED; selected_item names the chosen candidate; '
+             'regression_baseline and docker_suite use PASS, FAIL or NOT_RUN; '
+             'stress_cause uses UNVERIFIED, EXISTING, INTRODUCED or ENVIRONMENT; '
+             'latency_effect is MEASURED or UNMEASURED; files/additions/deletions are integer '
+             'complete-change counts; connector_write is PASS or FAIL; remote_match is '
+             'VERIFIED, MISMATCH or UNVERIFIED. Other facts may be added. '
              'Preserve supplied facts; do not invent evidence.',
     'summary': 'Array of complete sentences explaining the decision, next actions and evidence. '
                'Decision describes readiness for the action being evaluated, not readiness to write '
                'a recommendation. Include in actions every next operation described in prose using '
                'the matching allowed identifier; report_to_user does not replace a specific '
-               'request_delta_confirmation or stop when those operations are also prescribed.',
+               'request_delta_confirmation or stop when those operations are also prescribed. '
+               'Include required record_* evidence-handoff actions even when the corresponding '
+               'facts are already filled.',
 }
 
 
