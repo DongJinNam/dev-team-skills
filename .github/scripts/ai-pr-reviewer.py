@@ -163,7 +163,9 @@ def call_github_models(token: str, system_prompt: str, user_prompt: str) -> str:
             if choices:
                 return choices[0].get("message", {}).get("content", "")
     except json.JSONDecodeError as e:
-        print(f"[-] GitHub Models JSON Decode Error: {e}")
+        preview = body[:120].replace("\n", " ") if 'body' in locals() else ''
+        print(f"[-] GitHub Models JSON Decode Error: {e} | body preview: {preview!r}")
+        print("[!] GitHub Models inference API was fully retired on 2026-07-30; a non-JSON body (e.g. plain 'OK') is expected. Use the LLM_API_KEY free-provider path instead.")
     except urllib.error.HTTPError as e:
         print(f"[-] GitHub Models HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
     except Exception as e:
@@ -283,6 +285,50 @@ def call_openai_api(api_key: str, system_prompt: str, user_prompt: str) -> str:
     return ""
 
 
+def call_openai_compatible(base_url: str, api_key: str, model: str, system_prompt: str, user_prompt: str) -> str:
+    # Any OpenAI-compatible chat-completions endpoint (e.g. Groq free tier,
+    # Gemini OpenAI-compatible endpoint). Configured via LLM_* env vars so a
+    # free-tier API key is enough; no subscription or GitHub Models needed.
+    url = base_url.rstrip("/") + "/chat/completions"
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.2,
+        "max_tokens": 4096
+    }
+    data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}"
+        },
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=90) as resp:
+            raw_body = resp.read()
+            if not raw_body:
+                print("[-] OpenAI-compatible API returned empty response body.")
+                return ""
+            body = raw_body.decode("utf-8")
+            parsed = json.loads(body)
+            choices = parsed.get("choices", [])
+            if choices:
+                return choices[0].get("message", {}).get("content", "")
+    except json.JSONDecodeError as e:
+        print(f"[-] OpenAI-compatible API JSON Decode Error: {e}")
+    except urllib.error.HTTPError as e:
+        print(f"[-] OpenAI-compatible API HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
+    except Exception as e:
+        print(f"[-] OpenAI-compatible API Error: {e}")
+    return ""
+
+
 def main():
     pr_number = os.environ.get("PR_NUMBER", "")
     base_ref = os.environ.get("BASE_REF", "main")
@@ -350,25 +396,35 @@ Git Diff:
     gh_token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     gemini_key = os.environ.get("GEMINI_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
+    llm_api_key = os.environ.get("LLM_API_KEY")
+    llm_base_url = os.environ.get("LLM_BASE_URL", "https://api.groq.com/openai/v1")
+    llm_model = os.environ.get("LLM_MODEL", "llama-3.3-70b-versatile")
 
     review_result = ""
 
-    # Priority 1: GitHub Models using default GITHUB_TOKEN (Zero external API Key needed)
+    # Priority 1: GitHub Models using default GITHUB_TOKEN (RETIRED 2026-07-30: endpoint no longer returns JSON; kept only so the failure is logged before falling through)
     if gh_token:
         print("[*] Calling GitHub Models (gpt-4o-mini) via GITHUB_TOKEN...")
         review_result = call_github_models(gh_token, system_prompt, user_prompt)
 
-    # Priority 2: Gemini API Key (if provided in GitHub Secrets)
+    # Priority 2: OpenAI-compatible free-tier provider (LLM_API_KEY secret;
+    # defaults to Groq free tier. Gemini's OpenAI-compatible endpoint also
+    # works by setting LLM_BASE_URL/LLM_MODEL repository variables.)
+    if not review_result and llm_api_key:
+        print(f"[*] Calling OpenAI-compatible API ({llm_model}) via LLM_API_KEY...")
+        review_result = call_openai_compatible(llm_base_url, llm_api_key, llm_model, system_prompt, user_prompt)
+
+    # Priority 3: Gemini API Key (if provided in GitHub Secrets)
     if not review_result and gemini_key:
         print("[*] Calling Gemini API for Squad Review...")
         review_result = call_gemini_api(gemini_key, system_prompt, user_prompt)
 
-    # Priority 3: OpenAI API Key (if provided in GitHub Secrets)
+    # Priority 4: OpenAI API Key (if provided in GitHub Secrets)
     if not review_result and openai_key:
         print("[*] Calling OpenAI API for Squad Review...")
         review_result = call_openai_api(openai_key, system_prompt, user_prompt)
 
-    # Priority 4: Local Antigravity Subscription via AgentAPI
+    # Priority 5: Local Antigravity Subscription via AgentAPI
     if not review_result and find_antigravity_agentapi():
         print("[*] Local Antigravity AgentAPI detected. Using Antigravity subscription model...")
         review_result = call_antigravity_agentapi(system_prompt, user_prompt)
