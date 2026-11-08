@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import urllib.request
 import urllib.error
+import urllib.parse
 
 # Ensure UTF-8 output on all platforms (including Windows consoles)
 if hasattr(sys.stdout, "reconfigure"):
@@ -289,6 +290,10 @@ def call_openai_compatible(base_url: str, api_key: str, model: str, system_promp
     # Any OpenAI-compatible chat-completions endpoint (e.g. Groq free tier,
     # Gemini OpenAI-compatible endpoint). Configured via LLM_* env vars so a
     # free-tier API key is enough; no subscription or GitHub Models needed.
+    parsed_url = urllib.parse.urlparse(base_url)
+    if parsed_url.scheme != "https" or not parsed_url.netloc:
+        print(f"[-] OpenAI-compatible API URL rejected (https URL required): {base_url!r}")
+        return ""
     url = base_url.rstrip("/") + "/chat/completions"
     payload = {
         "model": model,
@@ -323,7 +328,8 @@ def call_openai_compatible(base_url: str, api_key: str, model: str, system_promp
     except json.JSONDecodeError as e:
         print(f"[-] OpenAI-compatible API JSON Decode Error: {e}")
     except urllib.error.HTTPError as e:
-        print(f"[-] OpenAI-compatible API HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
+        err_preview = e.read().decode('utf-8', errors='ignore')[:120].replace("\n", " ")
+        print(f"[-] OpenAI-compatible API HTTP Error: {e.code} - {err_preview!r}")
     except Exception as e:
         print(f"[-] OpenAI-compatible API Error: {e}")
     return ""
@@ -397,8 +403,11 @@ Git Diff:
     gemini_key = os.environ.get("GEMINI_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
     llm_api_key = os.environ.get("LLM_API_KEY")
-    llm_base_url = os.environ.get("LLM_BASE_URL", "https://api.groq.com/openai/v1")
-    llm_model = os.environ.get("LLM_MODEL", "llama-3.3-70b-versatile")
+    # The workflow injects these variables even when unset (empty string),
+    # and os.environ.get's default only applies when the key is absent.
+    # Use `or` so an empty value falls back to the documented defaults.
+    llm_base_url = os.environ.get("LLM_BASE_URL") or "https://api.groq.com/openai/v1"
+    llm_model = os.environ.get("LLM_MODEL") or "llama-3.3-70b-versatile"
 
     review_result = ""
 
