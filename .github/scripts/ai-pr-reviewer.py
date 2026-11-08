@@ -17,6 +17,7 @@ import shutil
 import subprocess
 import urllib.request
 import urllib.error
+import urllib.parse
 
 # Ensure UTF-8 output on all platforms (including Windows consoles)
 if hasattr(sys.stdout, "reconfigure"):
@@ -163,7 +164,9 @@ def call_github_models(token: str, system_prompt: str, user_prompt: str) -> str:
             if choices:
                 return choices[0].get("message", {}).get("content", "")
     except json.JSONDecodeError as e:
-        print(f"[-] GitHub Models JSON Decode Error: {e}")
+        preview = body[:120].replace("\n", " ") if 'body' in locals() else ''
+        print(f"[-] GitHub Models JSON Decode Error: {e} | body preview: {preview!r}")
+        print("[!] GitHub Models inference API was fully retired on 2026-07-30; a non-JSON body (e.g. plain 'OK') is expected. Use the LLM_API_KEY free-provider path instead.")
     except urllib.error.HTTPError as e:
         print(f"[-] GitHub Models HTTP Error: {e.code} - {e.read().decode('utf-8', errors='ignore')}")
     except Exception as e:
@@ -283,6 +286,66 @@ def call_openai_api(api_key: str, system_prompt: str, user_prompt: str) -> str:
     return ""
 
 
+def call_openai_compatible(base_url: str, api_key: str, model: str, system_prompt: str, user_prompt: str) -> str:
+    # Any OpenAI-compatible chat-completions endpoint (e.g. Groq free tier,
+    # Gemini OpenAI-compatible endpoint). Configured via LLM_* env vars so a
+    # free-tier API key is enough; no subscription or GitHub Models needed.
+    parsed_url = urllib.parse.urlparse(base_url)
+    if parsed_url.scheme != "https" or not parsed_url.netloc:
+        print(f"[-] OpenAI-compatible API URL rejected (https URL required): {base_url!r}")
+        return ""
+    url = base_url.rstrip("/") + "/chat/completions"
+    # Free tiers meter the whole request (input + reserved output) per
+    # minute; Groq's free TPM is 8,000, which the full prompt exceeds.
+    # Bound this provider's request: cap the user prompt and reserve fewer
+    # output tokens. Other providers keep the full prompt.
+    max_prompt_chars = int(os.environ.get("LLM_MAX_PROMPT_CHARS", "8000"))
+    if len(user_prompt) > max_prompt_chars:
+        print(f"[*] Truncating user prompt for free-tier token budget: {len(user_prompt)} -> {max_prompt_chars} chars")
+        user_prompt = user_prompt[:max_prompt_chars] + "\n\n...[Prompt truncated for free-tier token limit]..."
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.2,
+        "max_tokens": int(os.environ.get("LLM_MAX_TOKENS", "1024"))
+    }
+    data = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url,
+        data=data,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+            # Groq (Cloudflare) rejects the default Python-urllib signature
+            # with HTTP 403 error 1010; send an explicit User-Agent.
+            "User-Agent": "dev-team-skills-review-bot/1.0"
+        },
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=90) as resp:
+            raw_body = resp.read()
+            if not raw_body:
+                print("[-] OpenAI-compatible API returned empty response body.")
+                return ""
+            body = raw_body.decode("utf-8")
+            parsed = json.loads(body)
+            choices = parsed.get("choices", [])
+            if choices:
+                return choices[0].get("message", {}).get("content", "")
+    except json.JSONDecodeError as e:
+        print(f"[-] OpenAI-compatible API JSON Decode Error: {e}")
+    except urllib.error.HTTPError as e:
+        err_preview = e.read().decode('utf-8', errors='ignore')[:120].replace("\n", " ")
+        print(f"[-] OpenAI-compatible API HTTP Error: {e.code} - {err_preview!r}")
+    except Exception as e:
+        print(f"[-] OpenAI-compatible API Error: {e}")
+    return ""
+
+
 def main():
     pr_number = os.environ.get("PR_NUMBER", "")
     base_ref = os.environ.get("BASE_REF", "main")
@@ -350,25 +413,45 @@ Git Diff:
     gh_token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     gemini_key = os.environ.get("GEMINI_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
+    llm_api_key = os.environ.get("LLM_API_KEY")
+    # The workflow injects these variables even when unset (empty string),
+    # and os.environ.get's default only applies when the key is absent.
+    # Use `or` so an empty value falls back to the documented defaults.
+    llm_base_url = os.environ.get("LLM_BASE_URL") or "https://api.groq.com/openai/v1"
+    llm_model = os.environ.get("LLM_MODEL") or "openai/gpt-oss-120b"
 
     review_result = ""
 
-    # Priority 1: GitHub Models using default GITHUB_TOKEN (Zero external API Key needed)
+    # Priority 1: GitHub Models using default GITHUB_TOKEN (RETIRED 2026-07-30: endpoint no longer returns JSON; kept only so the failure is logged before falling through)
     if gh_token:
         print("[*] Calling GitHub Models (gpt-4o-mini) via GITHUB_TOKEN...")
         review_result = call_github_models(gh_token, system_prompt, user_prompt)
 
-    # Priority 2: Gemini API Key (if provided in GitHub Secrets)
+    # Priority 2: OpenAI-compatible free-tier provider (LLM_API_KEY secret;
+    # defaults to Groq free tier (openai/gpt-oss-120b; llama-3.3-70b-versatile was retired for free tiers on 2026-08-16). Gemini's OpenAI-compatible endpoint also
+    # works by setting LLM_BASE_URL/LLM_MODEL repository variables.)
+    if not review_result and llm_api_key:
+        print(f"[*] Calling OpenAI-compatible API ({llm_model}) via LLM_API_KEY...")
+        # Free-tier token budgets cannot carry the full checklist block;
+        # this provider gets the same rules with the checklists replaced by
+        # a pointer note. The review stays auxiliary either way.
+        system_prompt_lite = system_prompt.replace(
+            "[필요한 전문 역량 체크리스트]\n" + role_checklists,
+            "[필요한 전문 역량 체크리스트]\n(무료 티어 토큰 한도로 체크리스트 전문은 이 제공자 호출에서 생략. 심각도 체계와 역할 매핑은 위에 있음.)"
+        )
+        review_result = call_openai_compatible(llm_base_url, llm_api_key, llm_model, system_prompt_lite, user_prompt)
+
+    # Priority 3: Gemini API Key (if provided in GitHub Secrets)
     if not review_result and gemini_key:
         print("[*] Calling Gemini API for Squad Review...")
         review_result = call_gemini_api(gemini_key, system_prompt, user_prompt)
 
-    # Priority 3: OpenAI API Key (if provided in GitHub Secrets)
+    # Priority 4: OpenAI API Key (if provided in GitHub Secrets)
     if not review_result and openai_key:
         print("[*] Calling OpenAI API for Squad Review...")
         review_result = call_openai_api(openai_key, system_prompt, user_prompt)
 
-    # Priority 4: Local Antigravity Subscription via AgentAPI
+    # Priority 5: Local Antigravity Subscription via AgentAPI
     if not review_result and find_antigravity_agentapi():
         print("[*] Local Antigravity AgentAPI detected. Using Antigravity subscription model...")
         review_result = call_antigravity_agentapi(system_prompt, user_prompt)

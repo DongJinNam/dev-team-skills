@@ -3,7 +3,7 @@ name: AI Code Review Bot
 on:
   pull_request:
     branches: [ main ]
-    types: [ opened, synchronize, reopened ]
+    types: [ opened, synchronize, reopened, closed ]
 
 permissions:
   contents: read
@@ -13,11 +13,18 @@ permissions:
 jobs:
   ai-squad-review:
     name: AI Squad Code Review (GitHub Models Cloud)
+    # On 'closed', run only when the PR was actually merged. The merged run
+    # reviews the merge commit on main, so every merge gets one review pass
+    # with the workflow and script exactly as merged.
+    if: github.event.action != 'closed' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          # For a merged PR, check out the merge commit itself so
+          # 'git diff HEAD~1...HEAD' in the reviewer yields the merged diff.
+          ref: ${{ github.event.action == 'closed' && github.event.pull_request.merge_commit_sha || github.sha }}
           fetch-depth: 0
 
       - name: Set up Python
@@ -25,8 +32,17 @@ jobs:
         with:
           python-version: "3.11"
 
+      # GitHub Models was fully retired on 2026-07-30, so the free path is now
+      # an OpenAI-compatible free-tier provider: create a free API key (e.g.
+      # Groq) and save it as the LLM_API_KEY repository secret. To use Gemini's
+      # free tier instead, also set repository variables LLM_BASE_URL=
+      # https://generativelanguage.googleapis.com/v1beta/openai and
+      # LLM_MODEL=<gemini model>. No paid subscription is required.
       - name: Run AI Code Reviewer via GitHub Models (0-Key Free Cloud)
         env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
