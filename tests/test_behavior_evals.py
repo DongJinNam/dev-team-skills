@@ -249,7 +249,7 @@ class BehaviorEvalTests(unittest.TestCase):
         report=self.run_eval(2,'--output',str(output),'--runner',sys.executable,str(adapter))
         self.assertEqual(report['status'],'HARNESS_ONLY')
         self.assertEqual(report['mode'],'ADAPTER')
-        self.assertEqual(len(json.loads(output.read_text())['results']),len(RESPONSES))
+        self.assertEqual(len(json.loads(output.read_text(encoding='utf-8'))['results']),len(RESPONSES))
 
     def test_adapter_failure_or_invalid_output_is_not_pass(self):
         adapter=self.dir/'broken.py'

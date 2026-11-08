@@ -8,6 +8,8 @@ description: >-
 
 Work through six accountable owners; assign specialist capabilities only to relevant tasks. Role count is not agent count. Apply [roles and kickoff/stop rules](./references/roles_en.md) and [tiered decisions](./references/decision-governance_en.md) before decomposition.
 
+Read skills and references as UTF-8. Specify encoding, for example `Get-Content -LiteralPath <path> -Encoding UTF8` in Windows PowerShell or `read_text(encoding='utf-8')` in Python. If text is corrupted, reread it before interpreting the instructions; if it remains unreadable, record the limitation for the dependent step. Confirm installation listing, skill discovery and actual use separately; success at one does not establish the others.
+
 ## Accountable owners
 
 | Owner | Single accountability | Existing capabilities |

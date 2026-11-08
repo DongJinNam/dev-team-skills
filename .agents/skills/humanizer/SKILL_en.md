@@ -1,4 +1,4 @@
-﻿---
+---
 name: humanizer
 description: |
   Rewrite AI-sounding text so it reads like the writer without changing what it says.

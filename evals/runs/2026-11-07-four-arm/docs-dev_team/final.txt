@@ -1,0 +1,1 @@
+Updated README.md only with `setup --source .` and `verify --json`, removing the obsolete command and unsupported compatibility claim; toy_cli.py is unchanged. All five documented commands passed locally, including the expected JSON output. The instructions match the actual CLI help; no cross-platform tests or independent review were performed.

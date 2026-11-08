@@ -162,13 +162,21 @@ class HarnessTests(unittest.TestCase):
                 self.write("skills/example/SKILL.md", text)
                 self.run_harness(False)
 
-    def test_bom_crlf_and_spaces_in_skill_path(self):
+    def test_crlf_and_spaces_in_skill_path(self):
         (self.root / "skills/example/SKILL.md").unlink()
         named = VALID_SKILL.replace("name: example", "name: space 한글")
-        self.write("skills/space 한글/SKILL.md", "\ufeff" + named.replace("\n", "\r\n"))
+        self.write("skills/space 한글/SKILL.md", named.replace("\n", "\r\n"))
         self.regenerate_catalog()
         self.sync_mirror()
         self.run_harness(True)
+
+    def test_skill_bom_is_rejected_like_codex_loader(self):
+        self.write("skills/example/SKILL.md", "\ufeff" + VALID_SKILL)
+        self.run_harness(False)
+
+    def test_english_skill_variant_is_also_validated(self):
+        self.write("skills/example/SKILL_en.md", "\ufeff" + VALID_SKILL)
+        self.run_harness(False)
 
     def test_mirror_drift_fails(self):
         target = self.root / ".agents/skills/example/SKILL.md"

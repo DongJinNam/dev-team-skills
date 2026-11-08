@@ -1,0 +1,184 @@
+{
+  "scope": "Local CLI install and cached skill files only; no agent invocation",
+  "agent_activation": "NOT_RUN",
+  "superiority": "NOT_ESTABLISHED",
+  "runs": [
+    {
+      "index": 1,
+      "legacy_command": {
+        "argv": [
+          "plugin",
+          "install",
+          "dev-team-skills"
+        ],
+        "exit_code": 2,
+        "elapsed_seconds": 0.118,
+        "stdout": "",
+        "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\nerror: unrecognized subcommand 'install'\n\n  tip: a similar subcommand exists: 'list'\n\nUsage: codex plugin [OPTIONS] <COMMAND>\n\nFor more information, try '--help'.\n"
+      },
+      "corrected_steps": [
+        {
+          "argv": [
+            "plugin",
+            "marketplace",
+            "add",
+            "<REPO>",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.219,
+          "stdout": "{\n  \"marketplaceName\": \"dev-team-skills-marketplace\",\n  \"installedRoot\": \"<REPO>\",\n  \"alreadyAdded\": false\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        },
+        {
+          "argv": [
+            "plugin",
+            "add",
+            "dev-team-skills@dev-team-skills-marketplace",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 1.428,
+          "stdout": "{\n  \"pluginId\": \"dev-team-skills@dev-team-skills-marketplace\",\n  \"name\": \"dev-team-skills\",\n  \"marketplaceName\": \"dev-team-skills-marketplace\",\n  \"version\": \"1.1.0\",\n  \"installedPath\": \"<TEMP>\\\\plugins\\\\cache\\\\dev-team-skills-marketplace\\\\dev-team-skills\\\\1.1.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        },
+        {
+          "argv": [
+            "plugin",
+            "list",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.159,
+          "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"dev-team-skills@dev-team-skills-marketplace\",\n      \"name\": \"dev-team-skills\",\n      \"marketplaceName\": \"dev-team-skills-marketplace\",\n      \"version\": \"1.1.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"<REPO>\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"\\\\\\\\?\\\\<REPO>\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        }
+      ],
+      "skill_files_matched": 8,
+      "skill_files_expected": 8,
+      "passed": true
+    },
+    {
+      "index": 2,
+      "legacy_command": {
+        "argv": [
+          "plugin",
+          "install",
+          "dev-team-skills"
+        ],
+        "exit_code": 2,
+        "elapsed_seconds": 0.133,
+        "stdout": "",
+        "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\nerror: unrecognized subcommand 'install'\n\n  tip: a similar subcommand exists: 'list'\n\nUsage: codex plugin [OPTIONS] <COMMAND>\n\nFor more information, try '--help'.\n"
+      },
+      "corrected_steps": [
+        {
+          "argv": [
+            "plugin",
+            "marketplace",
+            "add",
+            "<REPO>",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.168,
+          "stdout": "{\n  \"marketplaceName\": \"dev-team-skills-marketplace\",\n  \"installedRoot\": \"<REPO>\",\n  \"alreadyAdded\": false\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        },
+        {
+          "argv": [
+            "plugin",
+            "add",
+            "dev-team-skills@dev-team-skills-marketplace",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 1.216,
+          "stdout": "{\n  \"pluginId\": \"dev-team-skills@dev-team-skills-marketplace\",\n  \"name\": \"dev-team-skills\",\n  \"marketplaceName\": \"dev-team-skills-marketplace\",\n  \"version\": \"1.1.0\",\n  \"installedPath\": \"<TEMP>\\\\plugins\\\\cache\\\\dev-team-skills-marketplace\\\\dev-team-skills\\\\1.1.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        },
+        {
+          "argv": [
+            "plugin",
+            "list",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.172,
+          "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"dev-team-skills@dev-team-skills-marketplace\",\n      \"name\": \"dev-team-skills\",\n      \"marketplaceName\": \"dev-team-skills-marketplace\",\n      \"version\": \"1.1.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"<REPO>\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"\\\\\\\\?\\\\<REPO>\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        }
+      ],
+      "skill_files_matched": 8,
+      "skill_files_expected": 8,
+      "passed": true
+    },
+    {
+      "index": 3,
+      "legacy_command": {
+        "argv": [
+          "plugin",
+          "install",
+          "dev-team-skills"
+        ],
+        "exit_code": 2,
+        "elapsed_seconds": 0.176,
+        "stdout": "",
+        "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\nerror: unrecognized subcommand 'install'\n\n  tip: a similar subcommand exists: 'list'\n\nUsage: codex plugin [OPTIONS] <COMMAND>\n\nFor more information, try '--help'.\n"
+      },
+      "corrected_steps": [
+        {
+          "argv": [
+            "plugin",
+            "marketplace",
+            "add",
+            "<REPO>",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.232,
+          "stdout": "{\n  \"marketplaceName\": \"dev-team-skills-marketplace\",\n  \"installedRoot\": \"<REPO>\",\n  \"alreadyAdded\": false\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        },
+        {
+          "argv": [
+            "plugin",
+            "add",
+            "dev-team-skills@dev-team-skills-marketplace",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 1.54,
+          "stdout": "{\n  \"pluginId\": \"dev-team-skills@dev-team-skills-marketplace\",\n  \"name\": \"dev-team-skills\",\n  \"marketplaceName\": \"dev-team-skills-marketplace\",\n  \"version\": \"1.1.0\",\n  \"installedPath\": \"<TEMP>\\\\plugins\\\\cache\\\\dev-team-skills-marketplace\\\\dev-team-skills\\\\1.1.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        },
+        {
+          "argv": [
+            "plugin",
+            "list",
+            "--json"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.199,
+          "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"dev-team-skills@dev-team-skills-marketplace\",\n      \"name\": \"dev-team-skills\",\n      \"marketplaceName\": \"dev-team-skills-marketplace\",\n      \"version\": \"1.1.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"<REPO>\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"\\\\\\\\?\\\\<REPO>\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+          "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"<TEMP_PARENT>\\\\\" (codex_home: AbsolutePathBuf(\"<TEMP>\"))\n"
+        }
+      ],
+      "skill_files_matched": 8,
+      "skill_files_expected": 8,
+      "passed": true
+    }
+  ],
+  "cli_version": "codex-cli 0.167.0",
+  "platform": "nt",
+  "base_revision": "633e36d8dc6ea75956bc86d717bbb5738775b22f",
+  "package_sha256": {
+    ".codex-plugin/plugin.json": "3bb1d137f1b0f31fe88f957902211051f3b39c030656802bae28c0d99baad0c2",
+    ".claude-plugin/marketplace.json": "2d2f3b94178016cfc684ed094d711ce11c20094aa8c4e7dc271c0a89314e3f05"
+  },
+  "summary": {
+    "legacy_successes": 0,
+    "corrected_successes": 3,
+    "total": 3
+  }
+}

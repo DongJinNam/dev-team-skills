@@ -1,0 +1,5 @@
+Fixed `app.py` to validate every nonblank row, including duplicates, preserve strings exactly, reject boolean amounts, and count only the first row for each ID.
+
+Added regression tests. `python -B -m unittest discover -s tests -v` passed all 8 tests.
+
+No dependencies or commits added. Hidden acceptance tests were unavailable.

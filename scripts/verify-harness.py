@@ -98,7 +98,8 @@ def main():
         check(path, lambda path=path: manifest(path))
 
     def skill(path):
-        lines = path.read_text(encoding="utf-8-sig").splitlines()
+        # Codex requires --- at byte zero; stripping a BOM masks a load failure.
+        lines = path.read_text(encoding="utf-8").splitlines()
         if not lines or lines[0] != "---":
             raise ValueError("YAML frontmatter must start at the first line")
         try:
@@ -118,6 +119,9 @@ def main():
         def capture(path=path):
             parsed[path] = skill(path)
         check(path.relative_to(root).as_posix(), capture)
+
+    for path in sorted((root / "skills").rglob("SKILL_en.md")):
+        check(path.relative_to(root).as_posix(), lambda path=path: skill(path))
 
     # Coded skill invariants (decision 2026-11-08, Phase 1 item A1).
     # SKL-001: a SKILL.md lives only at skills/SKILL.md (compatibility

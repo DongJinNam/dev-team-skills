@@ -1,0 +1,5 @@
+Implemented `paginate` in `app.py` with strict parameter validation, correct metadata, ordered slices, and unchanged input.
+
+Added tests covering empty input, page boundaries, invalid values, and large integers.
+
+Validation: `python -B -m unittest discover -s tests -v` — all 5 tests passed. No external dependencies or commits.

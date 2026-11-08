@@ -1,0 +1,7 @@
+Fixed `app.py` to validate every row before deduplication, skip blank lines, preserve strings exactly, and count only the first valid row per ID.
+
+Added `tests/test_app.py`. All 11 tests pass with:
+
+`python -B -m unittest discover -s tests -v`
+
+Used only Python’s standard library. No commits created.

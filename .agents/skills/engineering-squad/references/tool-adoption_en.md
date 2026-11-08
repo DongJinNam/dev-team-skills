@@ -24,6 +24,14 @@ States describe claims, not automatic promotions. Record the highest supported s
 
 `result: PASS / FAIL / NOT_RUN` is separate. Failed use stays APPLIED + FAIL; unrun stays NOT_RUN, never VERIFIED + PASS. Missing evidence retains the last supported state. VERIFIED identifies passed AC and limits; security approval remains governed separately.
 
+## When comparing task outcomes
+
+- Before execution, fix model/effort, host/OS, package versions/hashes, common tasks, hidden acceptance checks, failure criteria, repeats and time/usage limits. Verify actual model records and provide the same tool authority and initial guidance. A skill-layer comparison does not measure a full product with hooks, MCP or child agents. Check policy-read encoding and loading errors in every arm.
+- Retain started failures, timeouts and aborts in the denominator. Record retries, extra hints, order and cache differences. Define file preparation, successful installation commands, unique skill discovery, actual use and task completion separately. An untested host stays NOT_RUN; another host's success is not a substitute.
+- Where practical, blind independent artifact reviewers to conditions. Apply newly discovered edge cases uniformly as posthoc exploratory checks, separate from frozen scores. Never overwrite earlier artifacts, scores or policy hashes as results for a new version.
+- Separate input, cached input and output; do not add cached or reasoning subsets twice. Distinguish actor-only tokens from the full workflow including preparation, retries, children and independent review. Missing usage is UNMEASURED. Fewer cache-inclusive tokens alone do not establish monetary savings.
+- Differences observed in a small sample do not establish general superiority, equivalence or noninferiority (not worse than a predefined margin). Such claims require effect targets, margins, sample sizes and analysis fixed before execution. Unproven superiority does not mean not inferior. Check existing execution authority and budget before additional experiments.
+
 ## One task record
 
 Add one row/block to the existing PR/task record instead of another evaluation document.

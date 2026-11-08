@@ -1,0 +1,41 @@
+{
+  "cli": "0.167.0",
+  "model_calls": 0,
+  "method": "app-server initialize + skills/list; temporary unauthenticated home",
+  "before": {
+    "names": [
+      "brainstorming",
+      "code-review",
+      "engineering-squad",
+      "engineering-squad",
+      "harness-engineering",
+      "humanizer-kr",
+      "i-have-adhd",
+      "ponytail"
+    ],
+    "errors": [
+      {
+        "path": "skills/humanizer/SKILL.md",
+        "message": "missing YAML frontmatter delimited by ---"
+      }
+    ],
+    "unique_skill_count": 7,
+    "package_entry_count": 8
+  },
+  "after": {
+    "names": [
+      "brainstorming",
+      "code-review",
+      "engineering-squad",
+      "engineering-squad",
+      "harness-engineering",
+      "humanizer",
+      "humanizer-kr",
+      "i-have-adhd",
+      "ponytail"
+    ],
+    "errors": [],
+    "unique_skill_count": 8,
+    "package_entry_count": 9
+  }
+}
