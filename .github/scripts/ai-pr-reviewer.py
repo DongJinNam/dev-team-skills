@@ -295,6 +295,14 @@ def call_openai_compatible(base_url: str, api_key: str, model: str, system_promp
         print(f"[-] OpenAI-compatible API URL rejected (https URL required): {base_url!r}")
         return ""
     url = base_url.rstrip("/") + "/chat/completions"
+    # Free tiers meter the whole request (input + reserved output) per
+    # minute; Groq's free TPM is 8,000, which the full prompt exceeds.
+    # Bound this provider's request: cap the user prompt and reserve fewer
+    # output tokens. Other providers keep the full prompt.
+    max_prompt_chars = int(os.environ.get("LLM_MAX_PROMPT_CHARS", "8000"))
+    if len(user_prompt) > max_prompt_chars:
+        print(f"[*] Truncating user prompt for free-tier token budget: {len(user_prompt)} -> {max_prompt_chars} chars")
+        user_prompt = user_prompt[:max_prompt_chars] + "\n\n...[Prompt truncated for free-tier token limit]..."
     payload = {
         "model": model,
         "messages": [
@@ -302,7 +310,7 @@ def call_openai_compatible(base_url: str, api_key: str, model: str, system_promp
             {"role": "user", "content": user_prompt}
         ],
         "temperature": 0.2,
-        "max_tokens": 4096
+        "max_tokens": int(os.environ.get("LLM_MAX_TOKENS", "1024"))
     }
     data = json.dumps(payload).encode("utf-8")
     req = urllib.request.Request(
@@ -424,7 +432,14 @@ Git Diff:
     # works by setting LLM_BASE_URL/LLM_MODEL repository variables.)
     if not review_result and llm_api_key:
         print(f"[*] Calling OpenAI-compatible API ({llm_model}) via LLM_API_KEY...")
-        review_result = call_openai_compatible(llm_base_url, llm_api_key, llm_model, system_prompt, user_prompt)
+        # Free-tier token budgets cannot carry the full checklist block;
+        # this provider gets the same rules with the checklists replaced by
+        # a pointer note. The review stays auxiliary either way.
+        system_prompt_lite = system_prompt.replace(
+            "[필요한 전문 역량 체크리스트]\n" + role_checklists,
+            "[필요한 전문 역량 체크리스트]\n(무료 티어 토큰 한도로 체크리스트 전문은 이 제공자 호출에서 생략. 심각도 체계와 역할 매핑은 위에 있음.)"
+        )
+        review_result = call_openai_compatible(llm_base_url, llm_api_key, llm_model, system_prompt_lite, user_prompt)
 
     # Priority 3: Gemini API Key (if provided in GitHub Secrets)
     if not review_result and gemini_key:
