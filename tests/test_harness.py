@@ -141,10 +141,18 @@ class HarnessTests(unittest.TestCase):
                 self.write("skills/example/SKILL.md", text)
                 self.run_harness(False)
 
-    def test_bom_crlf_and_spaces_in_skill_path(self):
+    def test_crlf_and_spaces_in_skill_path(self):
         (self.root / "skills/example/SKILL.md").unlink()
-        self.write("skills/space 한글/SKILL.md", "\ufeff" + VALID_SKILL.replace("\n", "\r\n"))
+        self.write("skills/space 한글/SKILL.md", VALID_SKILL.replace("\n", "\r\n"))
         self.run_harness(True)
+
+    def test_skill_bom_is_rejected_like_codex_loader(self):
+        self.write("skills/example/SKILL.md", "\ufeff" + VALID_SKILL)
+        self.run_harness(False)
+
+    def test_english_skill_variant_is_also_validated(self):
+        self.write("skills/example/SKILL_en.md", "\ufeff" + VALID_SKILL)
+        self.run_harness(False)
 
     def test_missing_manifest(self):
         (self.root / "plugin.json").unlink()

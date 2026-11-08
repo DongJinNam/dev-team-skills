@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-08",
+  "cli_version": "0.167.0",
+  "model_calls": 0,
+  "method": "native app-server initialize + skills/list; temporary unauthenticated home and isolated git workspace",
+  "unique_skill_count": 8,
+  "package_entry_count": 9,
+  "names": [
+    "brainstorming",
+    "code-review",
+    "engineering-squad",
+    "engineering-squad",
+    "harness-engineering",
+    "humanizer",
+    "humanizer-kr",
+    "i-have-adhd",
+    "ponytail"
+  ],
+  "errors": [],
+  "skill_sha256": {
+    "skills/brainstorming/SKILL.md": "48f3c1582cdbc2b8bab9819a629c42a222f62f1e28f77c316733453bdc45c307",
+    "skills/code-review/SKILL.md": "08f1b2e1d866f0128e084071e33bb9ff1a203a0eee982f6e9ca29e2d795bf152",
+    "skills/engineering-squad/SKILL.md": "b1d233bedeac9613eec6b1c8eb0dbe0bc93204bbc247cddd3a9fa576ef536445",
+    "skills/harness-engineering/SKILL.md": "cfa660297235a60ab7c6918821652ab71a4e3ef69d2b7d04cf6a428c0923d07e",
+    "skills/humanizer/SKILL.md": "3ac977c2c963a3b483988733b57d4087b87d4d6b80a17f5d2640489c7c2f2c90",
+    "skills/humanizer-kr/SKILL.md": "92cf810189ab1b40ece0af8909de2a72c21628463507f924abe334baf5a35676",
+    "skills/i-have-adhd/SKILL.md": "3c7d5709f1e9f211921eb641cc6af4a6183bba0525c7b220befbc06f9b7ab963",
+    "skills/ponytail/SKILL.md": "48fa0dda505db272de09f11905b9321bae56e5c47d15ff1c473bb8e7586d7769",
+    "skills/SKILL.md": "340e55b93ddc158a2c9527023da683391a3810bea91c3d5b6a6429e1d3658281"
+  }
+}

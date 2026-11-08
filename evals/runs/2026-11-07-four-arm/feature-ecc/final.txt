@@ -1,0 +1,5 @@
+Implemented `paginate` in `app.py` with strict parameter validation, correct page metadata, and ordered slices that leave the input unchanged.
+
+Added 7 tests under `tests/`. All pass; standard-library tracing measured 100% executable statement coverage in `app.py`.
+
+No dependencies or commits added. Independent acceptance tests were not available.

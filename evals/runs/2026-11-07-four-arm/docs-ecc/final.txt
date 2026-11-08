@@ -1,0 +1,3 @@
+Updated README.md only with `setup --source .`, `verify --json`, expected output, and help commands. Removed obsolete instructions and the compatibility claim. `toy_cli.py` is unchanged.
+
+Verification: all five documented commands passed locally. No cross-platform tests were performed.

@@ -1,0 +1,1 @@
+Fixed `app.py` to validate every row, skip blanks, preserve strings exactly, and count only the first occurrence of each ID—including rejecting invalid duplicates. Added 11 tests; `python -B -m unittest discover -s tests -v` passed all 11. Independent review remains pending; no dependencies or commits were added.

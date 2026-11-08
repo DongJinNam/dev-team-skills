@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "origin": "measured",
+  "sample_ids": [
+    "bugfix",
+    "feature",
+    "docs"
+  ],
+  "config": {
+    "model": "gpt-6-astra",
+    "settings": "high; 300s; one attempt; no child models; skills only",
+    "environment": "Windows; codex-cli 0.167.0; clean CODEX_HOME/git root; ChatGPT auth; workspace-write",
+    "tasks_sha256": "ad670e6dd9220b6798f6cc6009e321fa23ae0067d32fe818671160916b6098f6",
+    "rubric_sha256": "56663e4085ae289370f27b8a067f215471d3ab23ef7c37caa4a743c09d4d5ec8"
+  },
+  "baseline": {
+    "revision": "1c9cf98657421126c5171c51ac4a9c37df3bdac203ad6deb6d66a4d220cc4bf1",
+    "config": {
+      "model": "gpt-6-astra",
+      "settings": "high; 300s; one attempt; no child models; skills only",
+      "environment": "Windows; codex-cli 0.167.0; clean CODEX_HOME/git root; ChatGPT auth; workspace-write",
+      "tasks_sha256": "ad670e6dd9220b6798f6cc6009e321fa23ae0067d32fe818671160916b6098f6",
+      "rubric_sha256": "56663e4085ae289370f27b8a067f215471d3ab23ef7c37caa4a743c09d4d5ec8"
+    },
+    "samples": [
+      {
+        "id": "bugfix",
+        "installed": true,
+        "activated": true,
+        "passed": true,
+        "interventions": 0,
+        "elapsed_seconds": 118.404,
+        "total_tokens": null,
+        "evidence": "evals/runs/2026-11-07-four-arm/bugfix-ecc"
+      },
+      {
+        "id": "feature",
+        "installed": true,
+        "activated": true,
+        "passed": true,
+        "interventions": 0,
+        "elapsed_seconds": 79.625,
+        "total_tokens": null,
+        "evidence": "evals/runs/2026-11-07-four-arm/feature-ecc"
+      },
+      {
+        "id": "docs",
+        "installed": true,
+        "activated": true,
+        "passed": true,
+        "interventions": 0,
+        "elapsed_seconds": 66.433,
+        "total_tokens": null,
+        "evidence": "evals/runs/2026-11-07-four-arm/docs-ecc"
+      }
+    ]
+  },
+  "candidate": {
+    "revision": "a51008d3d15b87a5dc0d22ac5c2738625c38cc3a2a47ae2c3e556fe700aa667b",
+    "config": {
+      "model": "gpt-6-astra",
+      "settings": "high; 300s; one attempt; no child models; skills only",
+      "environment": "Windows; codex-cli 0.167.0; clean CODEX_HOME/git root; ChatGPT auth; workspace-write",
+      "tasks_sha256": "ad670e6dd9220b6798f6cc6009e321fa23ae0067d32fe818671160916b6098f6",
+      "rubric_sha256": "56663e4085ae289370f27b8a067f215471d3ab23ef7c37caa4a743c09d4d5ec8"
+    },
+    "samples": [
+      {
+        "id": "bugfix",
+        "installed": true,
+        "activated": true,
+        "passed": true,
+        "interventions": 0,
+        "elapsed_seconds": 85.566,
+        "total_tokens": null,
+        "evidence": "evals/runs/2026-11-07-four-arm/bugfix-dev_team"
+      },
+      {
+        "id": "feature",
+        "installed": true,
+        "activated": true,
+        "passed": true,
+        "interventions": 0,
+        "elapsed_seconds": 66.988,
+        "total_tokens": null,
+        "evidence": "evals/runs/2026-11-07-four-arm/feature-dev_team"
+      },
+      {
+        "id": "docs",
+        "installed": true,
+        "activated": true,
+        "passed": true,
+        "interventions": 0,
+        "elapsed_seconds": 74.013,
+        "total_tokens": null,
+        "evidence": "evals/runs/2026-11-07-four-arm/docs-dev_team"
+      }
+    ]
+  }
+}

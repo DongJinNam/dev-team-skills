@@ -8,6 +8,8 @@ description: >-
 
 6개 책임 역할로 일하고 전문 역량은 필요한 작업에만 배정한다. 역할 수는 호출 수가 아니다. 작업 분해 전에 [역할·시작/중단 계약](./references/roles.md)과 [Tier별 결정 계약](./references/decision-governance.md)을 적용한다.
 
+스킬·참조 파일은 UTF-8로 읽는다. Windows PowerShell에서는 `Get-Content -LiteralPath <경로> -Encoding UTF8`, Python에서는 `read_text(encoding='utf-8')`처럼 인코딩을 명시한다. 글자가 깨지면 해당 지침을 해석하기 전에 다시 읽고, 계속 읽을 수 없으면 필요한 단계의 제한을 기록한다. 설치 목록 등재·스킬 발견·실제 적용은 각각 확인하며 하나의 성공을 나머지 성공으로 보고하지 않는다.
+
 ## 책임 역할
 
 | 책임 역할 | 단일 책임 | 기존 역량 |

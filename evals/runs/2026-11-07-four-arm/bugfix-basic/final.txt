@@ -1,0 +1,5 @@
+Fixed `app.py` to skip blank lines, validate every row—including duplicates—and reject boolean amounts. IDs and categories remain unchanged; the first valid row for each ID wins.
+
+Added regression tests in `tests/test_app.py`. All 7 tests passed with `python -B -m unittest discover -s tests -v`.
+
+No external dependencies or commits. Hidden acceptance tests were not available.

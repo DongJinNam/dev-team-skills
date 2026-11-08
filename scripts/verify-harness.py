@@ -96,7 +96,8 @@ def main():
         check(path, lambda path=path: manifest(path))
 
     def skill(path):
-        lines = path.read_text(encoding="utf-8-sig").splitlines()
+        # Codex requires --- at byte zero; stripping a BOM masks a load failure.
+        lines = path.read_text(encoding="utf-8").splitlines()
         if not lines or lines[0] != "---":
             raise ValueError("YAML frontmatter must start at the first line")
         try:
@@ -110,7 +111,7 @@ def main():
     if not skills:
         print("FAIL skills/: no SKILL.md files found")
         failed = True
-    for path in skills:
+    for path in sorted(skills + list((root / "skills").rglob("SKILL_en.md"))):
         check(path.relative_to(root).as_posix(), lambda path=path: skill(path))
 
     def synchronized(paths):

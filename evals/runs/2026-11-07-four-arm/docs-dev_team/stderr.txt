@@ -1,0 +1,2 @@
+WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir "<USER>\\AppData\\Local\\Temp\\" (codex_home: AbsolutePathBuf("<TRIAL>\\codex-home"))
+2026-11-07T14:28:42.372428Z ERROR codex_core::session::session: failed to load skill <TRIAL>\workspace\.agents\skills\humanizer\SKILL.md: missing YAML frontmatter delimited by ---

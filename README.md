@@ -7,18 +7,22 @@
 
 ---
 
-## 🌟 Why is dev-team-skills better?
+## Features and verification status
 
-Compared to simple prompt lists or one-off agent skills, `dev-team-skills` gives you clear advantages:
+The collection provides six accountable roles, independent security review, package checks, decision evaluations and usage comparison tools. A 12-run pilot now provides matched observations; this small sample does not establish general superiority.
 
-| Feature | Typical Prompt / Rule Lists | **dev-team-skills** |
-| :--- | :--- | :--- |
-| **Team Coverage** | Only single-coder or simple pair programming | **Six accountable owners with task-specific product, engineering, quality, security and delivery capabilities** |
-| **Quality Check** | Relies on LLM hallucination ("I finished it") | **Deterministic evaluation harness (`verify-harness`) and self-healing loop** |
-| **Packaging & Ecosystem**| Manual copy-pasting of text files | **100% compliant with Antigravity, Claude Code, and OpenAI Codex marketplaces** |
-| **Engineering Mindset** | Unnecessary boilerplate and too many libraries | **Karpathy principles & Ponytail (Standard Library First, YAGNI, minimum code)** |
-| **Communication** | Long, robotic, and tiring AI explanations | **Kakao Pay style PR template, next-action-first (ADHD-friendly), natural tone** |
-| **Cross-Platform** | Fails often on Windows due to Linux-only commands | **Equal support for Windows (PowerShell) and macOS/Linux (Bash) with CI tests** |
+| Target | Evidence | Limits |
+| --- | --- | --- |
+| Codex CLI 0.167.0 / Windows | Corrected local installation: 3/3; unique skill discovery after BOM fix: 7/8→8/8 | Remote installation and other OSes untested; installation and task quality are separate |
+| Claude Code | Manifests and guidance provided | CLI unavailable; installation and invocation NOT_RUN; no guarantee of full compatibility |
+| Decision evaluations | Updated-policy 19/19 replay + 3 separate reviewed scenarios | Decision evidence, not actual tool execution or independent samples |
+| Other-skill comparison | Same gpt-6-astra/high, three tasks each for default/Superpowers/ECC/dev-team; reviewed completion 2/3, 3/3, 3/3, 3/3 | Small sample; no general superiority, noninferiority or monetary savings claim |
+
+See the [measurement and discussion record](docs/decisions/2026-11-07-codex-update.md) and [comparison protocol](evals/skill-comparison.md). NOT_RUN does not mean a 0% success rate.
+
+[Pilot results](docs/decisions/2026-11-07-four-arm-results.md): in this sample, dev-team used 7.35% less time and 15.61% fewer processed tokens than Superpowers, and 14.33% less time and 20.91% fewer tokens than ECC. Tokens include cached input. Default Codex used less time and fewer tokens; dev-team also had more uncached input than either additional skill, so this is not a monetary savings claim.
+
+This compares the local skill layer only. Some Windows policy reads had encoding errors, so the observed differences cannot be attributed solely to skill quality.
 
 ---
 
@@ -81,7 +85,7 @@ The [design and debate](docs/superpowers/specs/2026-11-06-lean-squad-design.md) 
 
 ## 🛍️ Marketplace Packaging & Deterministic Harness
 
-This repository supports the packaging standards of **Google Antigravity**, **Claude Code**, and **OpenAI Codex** as a single bundle:
+The repository provides platform-specific metadata. Local structure checks do not establish full vendor-schema compliance or successful installation and execution. Antigravity installation guidance was not tested here.
 
 | Platform | Manifest / Catalog File | Active Rule & Skill Paths |
 | :--- | :--- | :--- |
@@ -107,7 +111,7 @@ python -m pip install -r scripts/requirements-harness.txt
 ./scripts/verify-harness.sh
 ```
 
-`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. UTF-8 BOM, LF/CRLF and paths with spaces are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS. On Windows, run Bash tests from Git Bash so the subprocess uses Git Bash rather than WSL's `bash.exe`; from PowerShell select `HARNESS_LAUNCHER=pwsh`:
+`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. Skills require UTF-8 without BOM to match Codex discovery; both `SKILL.md` and `SKILL_en.md` are checked. LF/CRLF and paths with spaces or Korean characters are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS. On Windows, run Bash tests from Git Bash so the subprocess uses Git Bash rather than WSL's `bash.exe`; from PowerShell select `HARNESS_LAUNCHER=pwsh`:
 
 ```bash
 python -m unittest discover -s tests -v
@@ -123,7 +127,7 @@ This is a **local package-structure contract**, not complete vendor-schema valid
 [Fourteen pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, tiered decision ownership, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-06-lean-squad.json
+python evals/run_evals.py --replay evals/runs/2026-11-08-skill-feedback.json
 ```
 
 ### Using Superpowers alongside dev-team-skills
@@ -157,26 +161,27 @@ git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plu
 
 ### 2. Claude Code
 
-#### Option A: Add Marketplace Catalog (Recommended)
-Add this repo as a remote marketplace catalog and install with one command:
+The Claude CLI was unavailable: installation and invocation are **NOT_RUN**. Check `claude --version` and `claude plugin --help` before using these commands. Reviewing the [official manifest documentation](https://code.claude.com/docs/en/plugins-reference) does not verify this package in use.
+
+#### Option A: Add Marketplace Catalog
 
 ```bash
 # 1. Add repository as a Claude Code marketplace
 /plugin marketplace add DongJinNam/dev-team-skills
 
 # 2. Install dev-team-skills plugin
-/plugin install dev-team-skills
+/plugin install dev-team-skills@dev-team-skills-marketplace
 ```
 
 > **Via CLI directly**:
 > ```bash
 > claude plugin marketplace add DongJinNam/dev-team-skills
-> claude plugin install dev-team-skills
+> claude plugin install dev-team-skills@dev-team-skills-marketplace
 > ```
 
 #### Option B: Validate Plugin Locally
 ```bash
-claude plugin validate
+claude plugin validate .
 ```
 
 #### Option C: Project Memory Integration
@@ -186,20 +191,26 @@ claude plugin validate
 
 ### 3. OpenAI Codex
 
-#### Option A: Add to Codex CLI (Recommended)
-```bash
-# 1. Register marketplace catalog
-codex plugin marketplace add DongJinNam/dev-team-skills --ref main
+Codex CLI `0.167.0` provides `plugin add`. The previous `plugin install` fails with `unrecognized subcommand`. Check `codex plugin --help` for other versions.
 
-# 2. Install plugin
-codex plugin install dev-team-skills
+#### Option A: Install a local checkout
+
+Run from the repository root. Use the same commands in PowerShell and Bash; local testing was performed on Windows.
+
+```bash
+codex plugin marketplace add .
+codex plugin add dev-team-skills@dev-team-skills-marketplace
+codex plugin list --json
 ```
+
+For remote registration, replace the first command with `codex plugin marketplace add DongJinNam/dev-team-skills --ref main`. Only the local path was tested here. Inspect `codex plugin marketplace --help` for version-specific update commands for existing installations.
 
 #### Option B: Interactive Plugin Manager
 - In Codex CLI, type `/plugins` to open the interactive manager, search for `dev-team-skills`, and enable it.
 
 #### Option C: Project Agent Instructions
-- Place `CODEX.md` or `AGENTS.md` in your project root. The agent will automatically load the rules and links to task-relevant capabilities when starting a session.
+- Use `AGENTS.md` for project instructions. Copying `CODEX.md` alone does not establish that skills are installed. Review and merge needed rules without overwriting existing project instructions.
+- Start a new session, inspect the actual skill list and source, and explicitly select `engineering-squad` for a small task. Record the loaded `SKILL.md` path, test results and additional guidance count before calling the whole workflow successful. Model invocation was not tested here. See the [official skills guide](https://learn.chatgpt.com/docs/build-skills) and [plugin packaging guide](https://developers.openai.com/plugins/build/plugins).
 
 ---
 

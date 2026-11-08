@@ -1,0 +1,3 @@
+Updated README.md only with verified `setup --source .` and `verify --json` commands, expected output, and help commands. Removed the obsolete command and unsupported compatibility claim.
+
+All five documented commands passed locally; JSON output matched `{"status": "ok"}`. `toy_cli.py` was unchanged. No cross-platform tests were performed.

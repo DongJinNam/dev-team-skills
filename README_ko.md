@@ -7,18 +7,22 @@
 
 ---
 
-## 🌟 왜 다른 스킬들보다 압도적으로 우수한가? (Why This Is Superior)
+## 제공 기능과 검증 상태
 
-일반적인 프롬프트 모음이나 단편적인 에이전트 스킬들과 비교했을 때, `dev-team-skills`는 다음과 같은 명확한 비교 우위를 가집니다:
+6개 책임 역할, 독립 보안 검수, 패키지 검사, 판단 평가와 비용 비교 도구를 제공합니다. 같은 모델의 12회 예비 비교를 수행했으며, 작은 표본의 관찰 결과와 일반적인 우수성 주장을 구분합니다.
 
-| 비교 항목 | 일반 에이전트 프롬프트 / 룰 모음 | **dev-team-skills** |
-| :--- | :--- | :--- |
-| **조직 커버리지** | 단일 코더 또는 단순 페어 프로그래밍에 한정 | **6개 책임 역할로 기획·개발·품질·보안·운영을 연결하고 전문 역량을 선택 활성화** |
-| **품질 보증 방식** | LLM의 "완료했습니다"라는 환각에 의존 | **결정론적 평가 하네스(`verify-harness`) 및 자가 치유(Self-healing) 루프** |
-| **확장성 & 생태계** | 로컬 텍스트 복사 및 수동 설정 | **Antigravity, Claude Code, OpenAI Codex 3대 마켓플레이스 규격 100% 호환** |
-| **실용주의 철학** | 불필요한 보일러플레이트 및 라이브러리 남용 | **Andrej Karpathy 원칙 & Ponytail (Standard Library First, YAGNI, 최소 코드)** |
-| **협업 & 인지 부하** | 장황하고 피로한 AI 번역투 설명 | **카카오페이 스타일 PR 템플릿, 결론 우선(ADHD 최적화), 자연스러운 한국어(Humanizer)** |
-| **크로스 플랫폼** | 특정 OS 명령어(Linux 전용 curl/bash)로 실패 빈번 | **Windows(PowerShell) & macOS/Linux(Bash) 동등 지원 및 CI 자동 검증** |
+| 대상 | 확인한 증거 | 한계 |
+| --- | --- | --- |
+| Codex CLI 0.167.0 / Windows | 수정 명령의 로컬 설치 3/3 성공; BOM 수정 후 고유 스킬 발견 7/8→8/8 | 원격 설치·다른 OS 미검증; 설치와 작업 품질은 별도 지표 |
+| Claude Code | 매니페스트와 안내 제공 | CLI 부재로 설치·호출 NOT_RUN; 100% 호환 보장 없음 |
+| 판단 평가 | 변경 정책 19/19 재검사 + 별도 3개 상황 검토 | 판단 증거이며 실제 도구 실행·독립 표본이 아님 |
+| 타 스킬 비교 | 같은 gpt-6-astra/high에서 기본·Superpowers·ECC·dev-team 각 3과제 실행; 독립 검토 통과 2/3·3/3·3/3·3/3 | 작은 표본; 일반적 우수성·비열등성·금전 절감은 미입증 |
+
+[실측·토론 기록](docs/decisions/2026-11-07-codex-update.md)과 [공정한 비교 절차](evals/skill-comparison.md)를 참조하세요. 미실행은 성공률 0%와 다릅니다.
+
+[12회 비교 결과](docs/decisions/2026-11-07-four-arm-results.md): 이 표본에서 dev-team은 Superpowers보다 시간 7.35%·캐시 포함 처리 토큰 15.61%, ECC보다 시간 14.33%·처리 토큰 20.91%가 적었습니다. 기본 설정보다는 시간·토큰이 늘었고, 비캐시 입력은 두 스킬보다 많아 금전 비용 절감으로 해석하지 않습니다.
+
+로컬 스킬 지침 계층만 비교했습니다. 일부 Windows 정책 읽기에 인코딩 오류가 있어 관측 차이를 스킬 품질만의 효과로 단정할 수 없습니다.
 
 ---
 
@@ -81,7 +85,7 @@
 
 ## 🛍️ 3대 플랫폼 마켓플레이스 패키징 규격 및 하네스 검증
 
-본 저장소는 **Google Antigravity**, **Claude Code**, **OpenAI Codex** 3대 AI 코딩 에이전트 마켓플레이스 규격을 모두 충족하여, 단일 번들 형태로 손쉽게 검색·설치·배포할 수 있습니다:
+플랫폼별 메타데이터를 제공합니다. 파일 구조 검사만으로 공급사 규격 전체 준수나 설치·실행 성공을 보장하지 않습니다. Antigravity 설치 안내도 이 작업에서 검증하지 않았습니다.
 
 | 플랫폼 | 마켓플레이스 매니페스트 / 카탈로그 규격 | 활성화 헌법 룰 & 스킬 경로 |
 | :--- | :--- | :--- |
@@ -107,7 +111,7 @@ python -m pip install -r scripts/requirements-harness.txt
 ./scripts/verify-harness.sh
 ```
 
-`--root <경로>`로 다른 패키지 디렉터리를 선택할 수 있습니다. 종료 코드는 패키지 PASS `0`, 잘못된 패키지 `1`, 필수 실행 환경 부재·잘못된 인자 `2`입니다. UTF-8 BOM, LF/CRLF, 공백을 포함한 경로를 지원합니다. CI는 Linux·Windows·macOS에서 동일한 정상·오류 입력을 Bash·PowerShell로 각각 검사합니다. Windows의 Bash 시험은 Git Bash에서 실행해야 WSL의 `bash.exe` 대신 Git Bash를 선택합니다. PowerShell에서 실행할 때는 `HARNESS_LAUNCHER=pwsh`를 지정합니다:
+`--root <경로>`로 다른 패키지 디렉터리를 선택할 수 있습니다. 종료 코드는 패키지 PASS `0`, 잘못된 패키지 `1`, 필수 실행 환경 부재·잘못된 인자 `2`입니다. 스킬은 Codex가 읽을 수 있도록 BOM 없는 UTF-8을 요구하며 `SKILL.md`와 `SKILL_en.md`를 검사합니다. LF/CRLF와 공백·한글 경로는 지원합니다. CI는 Linux·Windows·macOS에서 동일한 정상·오류 입력을 Bash·PowerShell로 각각 검사합니다. Windows의 Bash 시험은 Git Bash에서 실행해야 WSL의 `bash.exe` 대신 Git Bash를 선택합니다. PowerShell에서 실행할 때는 `HARNESS_LAUNCHER=pwsh`를 지정합니다:
 
 ```bash
 python -m unittest discover -s tests -v
@@ -123,7 +127,7 @@ python -m unittest discover -s tests -v
 [19개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 계층별 책임 결정, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-06-lean-squad.json
+python evals/run_evals.py --replay evals/runs/2026-11-08-skill-feedback.json
 ```
 
 ### Superpowers와 함께 사용
@@ -160,26 +164,27 @@ git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plu
 
 ### 2. Claude Code
 
-#### 방법 A: Claude Code 마켓플레이스 명령어로 등록 및 설치 (공식 권장)
-Claude Code CLI 또는 대화형 프롬프트에서 원격 마켓플레이스로 등록하고 즉시 설치합니다:
+이 환경에서는 Claude CLI를 찾지 못해 실제 설치·호출은 **NOT_RUN**입니다. 아래 안내 실행 전 `claude --version`과 `claude plugin --help`로 지원 여부를 확인하세요. [공식 매니페스트 문서](https://code.claude.com/docs/en/plugins-reference) 확인은 실사용 검증이 아닙니다.
+
+#### 방법 A: 마켓플레이스 등록 및 설치
 
 ```bash
 # 1. GitHub 저장소를 Claude Code 마켓플레이스로 추가
 /plugin marketplace add DongJinNam/dev-team-skills
 
 # 2. dev-team-skills 플러그인 원클릭 설치
-/plugin install dev-team-skills
+/plugin install dev-team-skills@dev-team-skills-marketplace
 ```
 
 > **CLI 직접 실행 시**:
 > ```bash
 > claude plugin marketplace add DongJinNam/dev-team-skills
-> claude plugin install dev-team-skills
+> claude plugin install dev-team-skills@dev-team-skills-marketplace
 > ```
 
 #### 방법 B: 플러그인 유효성 로컬 검증
 ```bash
-claude plugin validate
+claude plugin validate .
 ```
 
 #### 방법 C: 로컬 프로젝트 메모리 연동
@@ -189,20 +194,26 @@ claude plugin validate
 
 ### 3. OpenAI Codex
 
-#### 방법 A: Codex CLI 마켓플레이스 추가 (권장)
-```bash
-# 1. 마켓플레이스 카탈로그 등록
-codex plugin marketplace add DongJinNam/dev-team-skills --ref main
+Codex CLI `0.167.0`은 `plugin add`를 제공합니다. 기존 `plugin install`은 `unrecognized subcommand`로 실패했습니다. 다른 버전은 `codex plugin --help`를 확인하세요.
 
-# 2. 플러그인 설치
-codex plugin install dev-team-skills
+#### 방법 A: 로컬 checkout 설치
+
+저장소 루트에서 실행합니다. Windows PowerShell과 macOS/Linux Bash에 같은 명령을 쓰며, 실제 로컬 시험은 Windows에서 수행했습니다.
+
+```bash
+codex plugin marketplace add .
+codex plugin add dev-team-skills@dev-team-skills-marketplace
+codex plugin list --json
 ```
+
+원격 등록은 첫 명령 대신 `codex plugin marketplace add DongJinNam/dev-team-skills --ref main`을 사용합니다. 이번 시험은 로컬 경로만 확인했습니다. 기존 설치 갱신 명령은 `codex plugin marketplace --help`에서 확인하세요.
 
 #### 방법 B: Codex CLI 대화형 관리자
 - Codex CLI 프롬프트에서 `/plugins`를 입력하여 인터랙티브 플러그인 매니저를 열고 `dev-team-skills`를 검색하여 활성화합니다.
 
 #### 방법 C: 프로젝트 코딩 에이전트 지침 연동
-- 프로젝트 루트에 `CODEX.md` 또는 `AGENTS.md`를 배치하면 코딩 에이전트 세션 시작 시 호스트 지원 범위에서 헌법을 읽고 필요한 전문 역량 지침을 선택합니다.
+- 프로젝트 지침은 `AGENTS.md`로 연결합니다. `CODEX.md`만 복사하면 스킬까지 자동 설치된다고 가정하지 마세요. 기존 지침을 덮어쓰지 말고 필요한 규칙을 검토해 합칩니다.
+- 설치 후 새 세션에서 실제 스킬 목록·출처를 확인하고 `engineering-squad`를 명시적으로 선택해 작은 과제를 실행합니다. 읽은 `SKILL.md` 경로·테스트 결과·추가 안내 횟수를 기록해야 전체 적용 성공으로 셉니다. 모델 호출은 이번 시험에 포함하지 않았습니다. [공식 스킬 안내](https://learn.chatgpt.com/docs/build-skills), [플러그인 패키징](https://developers.openai.com/plugins/build/plugins).
 
 ---
 

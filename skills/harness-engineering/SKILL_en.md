@@ -27,7 +27,7 @@ flowchart LR
 1. **Deterministic Oracles**:
    - Never let an LLM grade its own work. Use real compilers, linters, unit test runners, and HTTP health checks.
 2. **Standardized Tool Contracts**:
-   - Strictly define tool and MCP (Model Context Protocol) input/output schemas (JSON Schema) to eliminate tool errors.
+   - Define tool and MCP (Model Context Protocol) input/output schemas (JSON Schema) and test rejection of invalid inputs/outputs. Schema definitions alone do not guarantee zero tool errors.
 3. **Self-Healing Feedback Loops**:
    - When a test fails, feed the stack trace and input back to the agent in structured JSON or Markdown so it can fix itself.
 4. **Regression Evaluation**:
@@ -37,7 +37,7 @@ flowchart LR
 
 ## 2. 3rd-Party Agent Marketplace Specification
 
-To let other teams or users install your skills as 3rd-party plugins on Antigravity, Claude Code, and Codex, follow this layout:
+The following is this repository's bundle layout, not a universal host specification. Check the target host's current manifest requirements, CLI help and actual registration/installation results. Success on one host does not establish compatibility with another.
 
 ### 1) Plugin Directory Layout
 ```text
@@ -110,11 +110,27 @@ In the Engineering Squad pipeline, the AI Agent Engineer handles:
    - Takes the PRD and designs automated test harness criteria (Definition of Done) together with the Squad Lead.
 2. **Stage 3 (Integration Quality & Agent Harness Verification)**:
    - Verifies schema accuracy and safe tool calls for all generated code.
-   - Runs verification harness scripts (`verify-harness.ps1`, `verify-harness.sh`) to ensure 3rd-party marketplace compatibility.
+   - Runs verification scripts (`verify-harness.ps1`, `verify-harness.sh`) to check the local package contract. Validate installation, discovery and actual invocation separately on the target host.
 3. **Stage 4–5 (Deployment & Monitoring Harness)**:
    - Connects agent rule and skill sync harnesses to CI/CD pipelines (such as `verify-rules-sync.yml`).
 
 ## 5. Agent decision and report regressions
+
+### File reading and native discovery
+
+Save `SKILL.md` and `SKILL_en.md` as BOM-free UTF-8, with YAML frontmatter starting on the first line. CRLF/LF support does not imply BOM support. Specify encoding in Windows PowerShell, such as `Get-Content -LiteralPath <path> -Encoding UTF8`; do not hide read errors, corrupted text or loader warnings. Static validation PASS does not establish host loader PASS.
+
+After checking the installation listing, inspect native skill discovery. Separate unique skill names from compatibility alias entries; retain missing skills and errors. On supported Codex versions, `evals/check_skill_discovery.py` can query discovery without a model call. Use an isolated test path with reviewed project configuration. Unrun hosts, including Claude, remain NOT_RUN. If repository helpers are absent from the installed package, use available host tools and record unverified scope.
+
+### Comparisons and generated-code execution
+
+Compare task outcomes using the [use-evidence contract](../engineering-squad/references/tool-adoption_en.md#when-comparing-task-outcomes) for fixed conditions, failure denominators, posthoc checks and usage boundaries. Self-reports or frozen test passes alone do not establish all requirements; record defects found by independent review.
+
+Separate generated-code collection from execution. Before execution, remove temporary authentication copies and unnecessary secret-bearing environment variables; have a separate reviewer inspect artifacts and hashes. A subprocess or fresh directory is not a security sandbox. Verify actual filesystem/network controls; where absent, restrict execution to reviewed local code and document remaining exposure. Do not execute unreviewed code without the required controls.
+
+Publish only needed commands, exit status, artifacts, usage and version/hash evidence. Exclude authentication files and private reasoning records; exclude or mask personal paths. Unless redistribution terms are satisfied, replace third-party skill text with output hashes, size and omission reasons. State whether logs are complete originals or sanitized records.
+
+### Preserving existing decision contracts
 
 When changing rules or skills, use the nineteen pressure scenarios in [decision regressions](../../evals/README.md). `python evals/run_evals.py` returns `NOT_RUN` without input; supply actual agent responses or an explicitly selected adapter. Candidates receive policies, scenario inputs and the response contract, while expected answers remain with the scorer. Check structured decisions, actions and typed facts automatically; a separate reviewer checks summary meaning, conditions and unknowns.
 
