@@ -36,6 +36,19 @@ class HarnessTests(unittest.TestCase):
             self.write(path, "Identical rules.\n")
         self.write("skills/example/SKILL.md", VALID_SKILL)
         self.regenerate_catalog()
+        self.sync_mirror()
+
+    def sync_mirror(self):
+        shutil.rmtree(self.root / ".agents", ignore_errors=True)
+        source = self.root / "skills"
+        mirror = self.root / ".agents" / "skills"
+        for folder in sorted(source.iterdir()):
+            if folder.is_dir() and folder.name not in ("references", "scripts"):
+                for path in sorted(folder.rglob("*")):
+                    if path.is_file():
+                        target = mirror / path.relative_to(source)
+                        target.parent.mkdir(parents=True, exist_ok=True)
+                        target.write_bytes(path.read_bytes())
 
     def regenerate_catalog(self):
         result = subprocess.run(
@@ -154,7 +167,21 @@ class HarnessTests(unittest.TestCase):
         named = VALID_SKILL.replace("name: example", "name: space 한글")
         self.write("skills/space 한글/SKILL.md", "\ufeff" + named.replace("\n", "\r\n"))
         self.regenerate_catalog()
+        self.sync_mirror()
         self.run_harness(True)
+
+    def test_mirror_drift_fails(self):
+        target = self.root / ".agents/skills/example/SKILL.md"
+        target.write_bytes(target.read_bytes() + b"edited\n")
+        self.run_harness(False)
+
+    def test_mirror_missing_file_fails(self):
+        (self.root / ".agents/skills/example/SKILL.md").unlink()
+        self.run_harness(False)
+
+    def test_mirror_extra_file_fails(self):
+        self.write(".agents/skills/example/stray.md", "Stray.\n")
+        self.run_harness(False)
 
     def test_missing_catalog_fails(self):
         (self.root / "skills/catalog.json").unlink()

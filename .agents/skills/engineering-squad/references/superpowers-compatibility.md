@@ -47,6 +47,10 @@ verification: 실제 대상·명령·결과·NOT_RUN/과거 증거
 open: 누락·충돌·차단 사유, 다음 담당·재판단 조건
 ```
 
+토큰 절약을 위해 위 필드를 단일 라인 지문 태그(Compact State Fingerprint)로 축약 표기할 수 있다:  
+`[SQUAD:mode | owners | scope | artifacts | verification | open]`  
+예: `[SQUAD:COMBINED | K:DEV,P:SUPER | scope:v1 | K1,S1,P1 | DoD:PASS,Sec:NOT_RUN | open:none]`
+
 검토 기준: 하나의 단계 담당, 같은 범위의 중복 질문/계획 0회, 누락된 필수 확인 0건, 보안·중단 규칙 우회 0건을 사례별로 확인한다. 실제 토큰·소요 시간 절감은 따로 측정하기 전 수치화하지 않는다.
 
 참고한 Superpowers는 이 환경에서 읽은 7.0.1의 using-superpowers, brainstorming, writing-plans, test-driven-development, systematic-debugging, verification-before-completion 및 실행/리뷰 지침이다. [원저장소](https://github.com/obra/superpowers)를 출처로 두되 버전별 필수 절차·호스트 지원은 실행 시 다시 확인한다. 자동 호환성·설치 보장은 아니다.

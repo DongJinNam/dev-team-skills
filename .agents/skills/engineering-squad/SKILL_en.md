@@ -33,10 +33,10 @@ Record actual assignees, combined duties, activation reasons, outputs and checks
 
 ## Execution: scope stages, retain required evidence
 
-0. **Kickoff** — Quality owns the two questions and agreement on expected benefit/quantifiability and stop/report conditions under the [kickoff contract](./references/roles_en.md#mandatory-pre-project-questions-and-stop-contract). Unagreed is PENDING. Reuse answers confirmed in this kickoff; reconfirm affected changes.
+0. **Kickoff** — Quality owns the two questions and agreement on expected benefit/quantifiability and stop/report conditions under the [kickoff contract](./references/roles_en.md#mandatory-pre-project-questions-and-stop-contract). When the user request already specifies clear goals and checks, state assumptions and proceed immediately (0-turn Adaptive Kickoff); prompt and hold PENDING only when ambiguous or unagreed. Reuse confirmed kickoff answers; reconfirm affected changes.
 1. **Selection/design** — Lead assigns route and owners. Product adds evidence and AC when product decisions exist. For consequential alternatives, an active assignee other than the proposer examines one counterexample. All-role meetings and SNS research are not prerequisites for ordinary development.
 2. **Implementation** — Engineering assigns only relevant FE/BE/Data/AI capabilities with distinct scope, inputs, outputs and checks. Avoid simultaneous edits to the same file. Consider existing tools and standard libraries first.
-3. **Verification** — Quality maintains one AC→test→actual-result/gap record. Security independently records PASS/BLOCKED plus a separate compliance status. Required unrun/failed checks cannot pass. Revalidate affected checks and revision-bound security after changes.
+3. **Verification** — Quality maintains one AC→test→actual-result/gap record. Long execution logs run in ephemeral subagents with only summarized facts returned to prevent context bloat. Security independently records PASS/BLOCKED plus a separate compliance status. Required unrun/failed checks cannot pass. Revalidate affected checks and revision-bound security after changes.
 4. **Deployment** — Only when in scope, Delivery applies the [deployment gate](./references/deployment-gate_en.md). Functional QA, independent security, applicable compliance and deployment authority are prerequisites.
 5. **Operations** — Only when in scope, Delivery checks agreed SLO/SLI, health, load and recovery evidence. Do not claim operational verification for an undeployed service.
 

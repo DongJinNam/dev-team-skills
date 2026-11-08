@@ -186,12 +186,41 @@ def main():
             raise ValueError("catalog has drifted from the skill folders; "
                              "regenerate with scripts/build-catalog.py")
 
+    # MIR-001 (Phase 1 item C2): the committed .agents/skills mirror must
+    # equal what setup-antigravity materializes from skills/ — every skill
+    # folder except the shared references/ and scripts/ folders, byte for
+    # byte, with no missing or extra files. The check is a dry run: it
+    # writes nothing.
+    def mir001():
+        expected = {}
+        for folder in sorted(skills_root.iterdir()):
+            if folder.is_dir() and folder.name not in ("references", "scripts"):
+                for path in sorted(folder.rglob("*")):
+                    if path.is_file():
+                        expected[path.relative_to(skills_root).as_posix()] = path
+        mirror_root = root / ".agents" / "skills"
+        actual = {}
+        if mirror_root.exists():
+            for path in sorted(mirror_root.rglob("*")):
+                if path.is_file():
+                    actual[path.relative_to(mirror_root).as_posix()] = path
+        if set(actual) != set(expected):
+            raise ValueError(
+                f"mirror file set differs (missing: {sorted(set(expected) - set(actual))}, "
+                f"extra: {sorted(set(actual) - set(expected))})")
+        for rel, path in expected.items():
+            if path.read_bytes() != actual[rel].read_bytes():
+                raise ValueError(
+                    f".agents/skills/{rel} differs from skills/{rel}; "
+                    "refresh the mirror from the canonical skills/ tree")
+
     if skills:
         check("SKL-001 skill locations", skl001)
         check("SKL-002 skill name matches folder", skl002)
         check("SKL-003 skill relative links", skl003)
         check("CAT-001 skills/catalog.json schema", cat001)
         check("CAT-002 skills/catalog.json is current", cat002)
+        check("MIR-001 .agents/skills mirror is current", mir001)
 
     def synchronized(paths):
         hashes = [hashlib.sha256((root / path).read_bytes()).digest() for path in paths]
@@ -204,7 +233,7 @@ def main():
     if any((root / path).exists() for path in english):
         check("English constitution synchronization", lambda: synchronized(english))
 
-    print("NOT_RUN: agent behavior, product tests, installation compatibility, "
+    print("NOT_RUN: agent behavior, product tests, installer execution, "
           "independent security review.")
     print("Package structure: " + ("FAIL" if failed else "PASS"))
     return 1 if failed else 0
