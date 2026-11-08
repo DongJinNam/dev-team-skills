@@ -3,7 +3,7 @@ name: AI Code Review Bot
 on:
   pull_request:
     branches: [ main ]
-    types: [ opened, synchronize, reopened ]
+    types: [ opened, synchronize, reopened, closed ]
 
 permissions:
   contents: read
@@ -13,11 +13,18 @@ permissions:
 jobs:
   ai-squad-review:
     name: AI Squad Code Review (GitHub Models Cloud)
+    # On 'closed', run only when the PR was actually merged. The merged run
+    # reviews the merge commit on main, so every merge gets one review pass
+    # with the workflow and script exactly as merged.
+    if: github.event.action != 'closed' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          # For a merged PR, check out the merge commit itself so
+          # 'git diff HEAD~1...HEAD' in the reviewer yields the merged diff.
+          ref: ${{ github.event.action == 'closed' && github.event.pull_request.merge_commit_sha || github.sha }}
           fetch-depth: 0
 
       - name: Set up Python
