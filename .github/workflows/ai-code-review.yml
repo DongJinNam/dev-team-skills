@@ -25,8 +25,17 @@ jobs:
         with:
           python-version: "3.11"
 
+      # GitHub Models was fully retired on 2026-07-30, so the free path is now
+      # an OpenAI-compatible free-tier provider: create a free API key (e.g.
+      # Groq) and save it as the LLM_API_KEY repository secret. To use Gemini's
+      # free tier instead, also set repository variables LLM_BASE_URL=
+      # https://generativelanguage.googleapis.com/v1beta/openai and
+      # LLM_MODEL=<gemini model>. No paid subscription is required.
       - name: Run AI Code Reviewer via GitHub Models (0-Key Free Cloud)
         env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
