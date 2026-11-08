@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > A cross-platform (Windows & macOS) collection of AI coding agent skills and rules, inspired by Andrej Karpathy's engineering philosophy and practical senior engineering principles.  
-> It helps you run a task-sized engineering squad with six accountable owners across major AI environments like **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and **Cursor**, using **deterministic harness engineering** and **marketplace packaging standards** to ship reliable software.
+> It helps you run a task-sized engineering squad with six accountable owners across **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and experimental **Cursor** integration. Host-specific verification and comparison limits are recorded below.
 
 ---
 
@@ -15,7 +15,7 @@ The collection provides six accountable roles, independent security review, pack
 | --- | --- | --- |
 | Codex CLI 0.167.0 / Windows | Corrected local installation: 3/3; unique skill discovery after BOM fix: 7/8→8/8 | Remote installation and other OSes untested; installation and task quality are separate |
 | Claude Code | Manifests and guidance provided | CLI unavailable; installation and invocation NOT_RUN; no guarantee of full compatibility |
-| Decision evaluations | Updated-policy 19/19 replay + 3 separate reviewed scenarios | Decision evidence, not actual tool execution or independent samples |
+| Decision evaluations | Merged-policy 19-case replay; 3 earlier separately reviewed scenarios | Decision evidence, not actual tool execution or independent samples |
 | Other-skill comparison | Same gpt-6-astra/high, three tasks each for default/Superpowers/ECC/dev-team; reviewed completion 2/3, 3/3, 3/3, 3/3 | Small sample; no general superiority, noninferiority or monetary savings claim |
 
 See the [measurement and discussion record](docs/decisions/2026-11-07-codex-update.md) and [comparison protocol](evals/skill-comparison.md). NOT_RUN does not mean a 0% success rate.
@@ -23,6 +23,8 @@ See the [measurement and discussion record](docs/decisions/2026-11-07-codex-upda
 [Pilot results](docs/decisions/2026-11-07-four-arm-results.md): in this sample, dev-team used 7.35% less time and 15.61% fewer processed tokens than Superpowers, and 14.33% less time and 20.91% fewer tokens than ECC. Tokens include cached input. Default Codex used less time and fewer tokens; dev-team also had more uncached input than either additional skill, so this is not a monetary savings claim.
 
 This compares the local skill layer only. Some Windows policy reads had encoding errors, so the observed differences cannot be attributed solely to skill quality.
+
+The additional [benchmark calculator and input](evals/comparative-benchmark.md) from main remain available. Recomputing supplied numbers does not authenticate model executions or provider usage; this merge does not validate that dataset's performance claims. Antigravity setup and experimental Cursor guidance are retained below.
 
 ---
 
@@ -127,7 +129,7 @@ This is a **local package-structure contract**, not complete vendor-schema valid
 [Fourteen pressure scenarios and runner](evals/README.md) check test-status honesty, stale security approval, tiered decision ownership, stop conditions, summary evidence and scoped rechecks. CI runs checker self-tests and a labeled replay of recorded native-agent decisions; it does not run a fresh model or prove tool execution. Policy/scenario/scorer hashes and separate semantic reviews prevent old or incomplete records from receiving a decision PASS.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-08-skill-feedback.json
+python evals/run_evals.py --replay evals/runs/2026-11-08-main-merge.json
 ```
 
 ### Using Superpowers alongside dev-team-skills
@@ -138,9 +140,27 @@ Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/
 
 ## 💻 Installation & Usage Guide
 
-### 1. Google Antigravity
+### 1. Google Antigravity (setup guidance; host execution not verified here)
 
-#### Option A: Marketplace Catalog or UI (Recommended)
+#### Option A: One-Touch Setup Script (Recommended)
+Automatically link skills to Antigravity's discovery path (`.agents/skills/`) or machine-global path (`~/.gemini/config/skills/`):
+```powershell
+# Windows (PowerShell): Setup for current workspace
+.\scripts\setup-antigravity.ps1 -Target workspace
+
+# Or install globally for all Antigravity projects
+.\scripts\setup-antigravity.ps1 -Target global
+```
+```bash
+# macOS / Linux (Bash): Setup for current workspace
+bash scripts/setup-antigravity.sh workspace
+
+# Or install globally
+bash scripts/setup-antigravity.sh global
+```
+> 📖 Why skills aren't discovered out-of-the-box & how progressive disclosure works: [Antigravity Guide](docs/antigravity-guide.md)
+
+#### Option B: Marketplace Catalog or UI
 - Go to **Customizations** > **Marketplace** in Antigravity IDE.
 - Search for `dev-team-skills` and click **[Install]**.
 - Or use the one-click card in chat:
@@ -148,7 +168,7 @@ Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/
   <plugin-card catalog-id="dev-team-skills"></plugin-card>
   ```
 
-#### Option B: Global Plugins Directory
+#### Option C: Global Plugins Directory
 ```bash
 # Windows (PowerShell) & macOS/Linux (Bash)
 git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plugins/dev-team-skills
@@ -211,6 +231,24 @@ For remote registration, replace the first command with `codex plugin marketplac
 #### Option C: Project Agent Instructions
 - Use `AGENTS.md` for project instructions. Copying `CODEX.md` alone does not establish that skills are installed. Review and merge needed rules without overwriting existing project instructions.
 - Start a new session, inspect the actual skill list and source, and explicitly select `engineering-squad` for a small task. Record the loaded `SKILL.md` path, test results and additional guidance count before calling the whole workflow successful. Model invocation was not tested here. See the [official skills guide](https://learn.chatgpt.com/docs/build-skills) and [plugin packaging guide](https://developers.openai.com/plugins/build/plugins).
+
+---
+
+### 4. Cursor [EXPERIMENTAL]
+
+> ⚠️ **Caution**: Cursor support is currently **experimental**. Subagent coordination and full harness verification are under active development. Do not assume 100% feature parity.
+
+#### Option A: One-Touch Setup Script
+Automatically installs Cursor's MDC rule (`.cursor/rules/engineering-squad.mdc`) and legacy `.cursorrules`:
+```powershell
+# Windows (PowerShell)
+.\scripts\setup-cursor.ps1
+```
+```bash
+# macOS / Linux (Bash)
+bash scripts/setup-cursor.sh
+```
+> 📖 Cursor limitations and usage guide: [Cursor Guide](docs/cursor-guide.md)
 
 ---
 

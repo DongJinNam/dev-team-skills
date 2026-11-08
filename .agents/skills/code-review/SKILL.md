@@ -1,0 +1,72 @@
+---
+name: code-review
+description: >-
+  Use when reviewing code or engineering artifacts for high-impact correctness, risk, maintainability, and relevant specialist checks under the squad's accountable owners.
+---
+
+# High-ROI Code Review Workflow
+
+이 스킬은 **"Input 대비 Output(ROI)이 가장 큰 핵심 문제"**에 집중하여, 불필요한 사소한 트집(Nitpicking)을 배제하고 소프트웨어의 견고함과 유지보수성을 극대화하는 코드 리뷰를 수행합니다.
+
+## Superpowers와 함께 사용할 때
+
+두 패키지를 함께 사용하면 [담당 계약](../engineering-squad/references/superpowers-compatibility.md)을 먼저 읽습니다. 확인된 출처로 스킬을 선택하고 기획·검증 기록을 하나로 공유하며, 유효한 승인 자료는 재사용하고 빠진 범위만 보완합니다. 필수 kickoff 재확인, 검토별 목적, 최신 head 독립 보안 게이트는 유지합니다.
+
+---
+
+## 1. 3단계 리뷰 심각도 분류 체계 (Severity Rubric)
+
+모든 리뷰 코멘트에는 명확한 머지 기준을 위해 심각도 태그를 부여합니다:
+
+| 등급 | 레벨 | 설명 | 머지 조건 |
+| :---: | :--- | :--- | :--- |
+| 🔴 | **[필수 / Must Fix]** | 버그, 데이터 유실 위험, 출시 차단 보안 취약점, 메모리 누수, 심각한 성능 저하, 롤백 불가능한 스키마 변경 | **반드시 수정 후 머지 가능** |
+| 🟡 | **[확인 요청 / Inquire & Verify]** | 설계 의도 확인 필요, 사이드 이펙트 우려, 불명확한 에지 케이스 처리, 트레이드오프 검토 | **작성자의 확인 및 답변 필수** |
+| 🟢 | **[권장 / Suggestion]** | 가독성 개선, 사소한 리팩토링, 디자인 패턴 적용 권장, 미세 최적화 | **작성자 판단 하에 선택적 반영 (머지 블로커 아님)** |
+
+*상세한 판단 기준 및 디자인 패턴 가이드는 [review-rubric.md](./references/review-rubric.md)를 참조하십시오.*
+
+---
+
+## 2. 리뷰 핵심 원칙 (Core Philosophy)
+
+1. **High ROI First (가치 중심)**:
+   - 줄바꿈이나 띄어쓰기 같은 스타일은 린터/포매터에 맡기고, **비즈니스 로직 결함, 동시성 이슈, 경계값 오류, 장애 전파 가능성** 등 비즈니스와 시스템에 치명적인 영향을 주는 영역에 리뷰 에너지를 80% 이상 집중합니다.
+2. **Design Pattern & SOLID Grounded (설계 원칙 근거)**:
+   - "그냥 이렇게 바꾸는 게 좋아 보입니다" 식의 주관적 의견을 배제하고, **단일 책임 원칙(SRP), 개방-폐쇄 원칙(OCP), 결합도 완화, 전략/팩토리/어댑터 패턴** 등 명확한 아키텍처 원칙에 기반하여 대안을 제시합니다.
+3. **Role-Tailored Perspective (직무 맞춤형)**:
+   - 변경된 코드 영역에 따라 해당 전문 역할(Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE)의 관점에서 특화된 질문을 던집니다. ([role-checklists.md](./references/role-checklists.md) 참조)
+
+---
+
+## 3. 코드 리뷰 수행 절차
+
+```mermaid
+flowchart TD
+    A["1. PR 설명 & PR 템플릿 검토"] --> B["2. 🔴 High-Risk 핵심 변경영역 스캔"]
+    B --> C["3. 역할별 체크리스트 기반 정밀 검토"]
+    C --> D["4. 🔴 / 🟡 / 🟢 태그 분류 코멘트 작성"]
+    D --> E["5. 최종 리뷰 요약 (Summary & Action Items)"]
+```
+
+1. **맥락 파악**: PR 템플릿의 `해결하려는 문제`, `트레이드오프`, `위험도(🔴🟡🟢)`를 먼저 읽고 변경 의도를 파악합니다.
+2. **위험 영역 우선 점검**: 트랜잭션, 인증/인가, 외부 API 통신, 상태 전이 등 핵심 비즈니스 로직을 우선 검토합니다.
+3. **역할별 특화 점검**:
+   - 프론트엔드: 불필요 렌더링, 클라이언트 번들 크기, 에러 바운더리
+   - 백엔드: N+1 쿼리, 동시성 락, 예외 격리
+   - 데이터: 인덱스 활용 여부, Up/Down 마이그레이션 안전성
+   - QA: 엣지 케이스 및 실패 시나리오 테스트 여부
+   - DevOps/SRE: 환경변수 노출, 컨테이너 리소스 제한, 헬스체크 및 메트릭
+4. **대안 제시**: 문제를 지적할 때는 반드시 **"왜 문제인지"**와 **"최소 코드로 해결하는 대안(Alternative Code Snippet)"**을 함께 제공합니다.
+
+
+## 필수 보안 판정
+
+QA Stage 3에서 독립 Security Review Engineer를 활성화하고 [security-review.md](../engineering-squad/references/security-review.md)를 적용합니다. 기능 QA 통과나 ROI·비용 우선순위로 보안 게이트를 면제하지 않습니다. 출시 차단 사유는 Must Fix로 표시하고 Medium/Low 잔여 위험 수용은 해당 계약과 더 엄격한 조직 정책을 따릅니다.
+
+
+## PR 머지 필수 기준
+
+문서·설정 변경을 포함한 모든 PR의 머지 전에 최신 PR head에 대한 독립 Security Review Engineer PASS와 보고서를 필수로 확인합니다. [PR 머지 필수 게이트](../engineering-squad/references/security-review.md#pr-머지-필수-게이트)를 적용합니다. 미검수·BLOCKED·이전 리비전에 대한 검수로는 머지하지 않습니다. 새 commit 또는 머지 입력 변경 시 재검수하며 QA·일반 승인·CI 통과로 대체하지 않습니다.
+
+Security가 조정하는 Compliance Reviewer 역량은 관련 변경의 국내·미국 IT 법령 및 보안 준수 여부를 [컴플라이언스 책임](../engineering-squad/references/roles.md)에 따라 검토합니다. 출처·적용 여부·조치를 기록하고 적용되는 위반 사항이 미해결이면 머지를 차단합니다.

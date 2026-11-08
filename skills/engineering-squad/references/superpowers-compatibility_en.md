@@ -47,6 +47,10 @@ verification: actual target, commands/results, NOT_RUN/historical evidence
 open: gaps/conflicts/blockers, next owner and reassessment trigger
 ```
 
+To conserve tokens, these fields may be compressed into a single-line Compact State Fingerprint:  
+`[SQUAD:mode | owners | scope | artifacts | verification | open]`  
+e.g.: `[SQUAD:COMBINED | K:DEV,P:SUPER | scope:v1 | K1,S1,P1 | DoD:PASS,Sec:NOT_RUN | open:none]`
+
 Check one owner per phase, zero duplicate questions/plans within the same confirmed scope, zero missing mandatory confirmations and zero security/stop bypasses in scenario tests. Do not claim numeric token/time savings before measuring them.
 
 Reference baseline: locally read Superpowers 7.0.1 using-superpowers, brainstorming, writing-plans, TDD, systematic-debugging, verification-before-completion and execution/review guidance. Keep the [upstream repository](https://github.com/obra/superpowers) as provenance and recheck version-specific mandatory steps and host capabilities at runtime. This is not automatic compatibility or installation assurance.

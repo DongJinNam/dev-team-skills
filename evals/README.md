@@ -2,7 +2,7 @@
 
 For installation checks and comparison against other skills, use the separate [skill comparison protocol](skill-comparison.md). Decision-policy scores below do not establish comparative task quality or installation success.
 
-The current policy capture is `runs/2026-11-08-skill-feedback.json`. A fresh native actor answered the nineteen unchanged public prompts using the updated policy bundle; a separate reviewer checks meaning. The same actor also answered three supplemental cases in `runs/2026-11-08-skill-feedback-pressure.json`, covering encoding/discovery, comparison claims and generated-code/publication boundaries. Those three cases have separate qualitative review and are not added to the nineteen-case score or the 12-run performance pilot. Initial corrupted supplemental prompts and the actor's unreadability responses are retained as an input-preparation failure; corrected UTF-8 prompts received no answer hints. Both captures use one actor context and do not prove actual scenario operations, independent sample reliability or performance gains.
+The current policy capture is `runs/2026-11-08-main-merge.json`. A fresh native actor answered the nineteen unchanged public prompts after integrating main's policy changes; a separate reviewer checks meaning. The previous `runs/2026-11-08-skill-feedback.json` is preserved as historical/STALE under the merged policy. Its actor also answered three supplemental cases in `runs/2026-11-08-skill-feedback-pressure.json`, covering encoding/discovery, comparison claims and generated-code/publication boundaries. Those three cases retain their earlier policy scope and separate qualitative review; they are not added to the current nineteen-case score or the 12-run performance pilot. Initial corrupted supplemental prompts and the actor's unreadability responses are retained as an input-preparation failure; corrected UTF-8 prompts received no answer hints. Each capture uses one actor context and does not prove actual scenario operations, independent sample reliability or performance gains.
 
 These nineteen pressure scenarios check decisions and reports produced by an agent. They do not prove that a tool was executed, a merge was prevented by the host, or a deployment is safe. Package validation remains separate.
 
@@ -36,10 +36,10 @@ Python 3.10+ and the standard library are sufficient. No model credentials or ne
 python evals/run_evals.py
 
 # Replay the committed, separately reviewed native-agent decisions.
-python evals/run_evals.py --replay evals/runs/2026-11-08-skill-feedback.json
+python evals/run_evals.py --replay evals/runs/2026-11-08-main-merge.json
 # Equivalent shell entry points:
-bash evals/run-evals.sh --replay evals/runs/2026-11-08-skill-feedback.json
-# PowerShell: ./evals/run-evals.ps1 --replay evals/runs/2026-11-08-skill-feedback.json
+bash evals/run-evals.sh --replay evals/runs/2026-11-08-main-merge.json
+# PowerShell: ./evals/run-evals.ps1 --replay evals/runs/2026-11-08-main-merge.json
 
 # Export nineteen candidate requests; expected answers stay with the scorer.
 python evals/run_evals.py --export-prompts /path/to/private/requests

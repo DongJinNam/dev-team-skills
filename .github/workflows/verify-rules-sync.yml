@@ -63,9 +63,9 @@ jobs:
       - name: Replay recorded agent decisions through Bash (not a fresh model run)
         if: matrix.launcher == 'bash'
         shell: bash
-        run: bash evals/run-evals.sh --replay evals/runs/2026-11-08-skill-feedback.json
+        run: bash evals/run-evals.sh --replay evals/runs/2026-11-08-main-merge.json
 
       - name: Replay recorded agent decisions through PowerShell (not a fresh model run)
         if: matrix.launcher == 'pwsh'
         shell: pwsh
-        run: ./evals/run-evals.ps1 --replay evals/runs/2026-11-08-skill-feedback.json
+        run: ./evals/run-evals.ps1 --replay evals/runs/2026-11-08-main-merge.json

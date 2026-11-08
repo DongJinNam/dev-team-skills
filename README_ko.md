@@ -3,7 +3,7 @@
 [English](README.md) | [한국어](README_ko.md)
 
 > Andrej Karpathy의 엔지니어링 철학과 실용주의 시니어 개발 원칙을 기반으로 구축된 크로스 플랫폼(Windows/macOS) AI 코딩 에이전트 스킬 & 룰 모음 저장소입니다.  
-> **Google Antigravity**, **Claude Code**, **OpenAI Codex**, **Cursor** 등 다양한 AI 코딩 환경에서 6개 책임 역할과 필요한 전문 역량으로 에이전트 조직을 꾸리고, **결정론적 하네스(Harness Engineering)**와 **3대 플랫폼 마켓플레이스 규격**을 통해 고품질 소프트웨어를 배포할 수 있도록 지원합니다.
+> **Google Antigravity**, **Claude Code**, **OpenAI Codex** 및 실험적 **Cursor** 연동을 위한 6개 책임 역할과 작업별 전문 역량을 제공합니다. 호스트별 검증 상태와 비교 결과의 한계는 아래에 구분해 기록합니다.
 
 ---
 
@@ -15,7 +15,7 @@
 | --- | --- | --- |
 | Codex CLI 0.167.0 / Windows | 수정 명령의 로컬 설치 3/3 성공; BOM 수정 후 고유 스킬 발견 7/8→8/8 | 원격 설치·다른 OS 미검증; 설치와 작업 품질은 별도 지표 |
 | Claude Code | 매니페스트와 안내 제공 | CLI 부재로 설치·호출 NOT_RUN; 100% 호환 보장 없음 |
-| 판단 평가 | 변경 정책 19/19 재검사 + 별도 3개 상황 검토 | 판단 증거이며 실제 도구 실행·독립 표본이 아님 |
+| 판단 평가 | 병합 정책 19개 재검사; 이전 정책의 별도 3개 상황 검토 | 판단 증거이며 실제 도구 실행·독립 표본이 아님 |
 | 타 스킬 비교 | 같은 gpt-6-astra/high에서 기본·Superpowers·ECC·dev-team 각 3과제 실행; 독립 검토 통과 2/3·3/3·3/3·3/3 | 작은 표본; 일반적 우수성·비열등성·금전 절감은 미입증 |
 
 [실측·토론 기록](docs/decisions/2026-11-07-codex-update.md)과 [공정한 비교 절차](evals/skill-comparison.md)를 참조하세요. 미실행은 성공률 0%와 다릅니다.
@@ -23,6 +23,8 @@
 [12회 비교 결과](docs/decisions/2026-11-07-four-arm-results.md): 이 표본에서 dev-team은 Superpowers보다 시간 7.35%·캐시 포함 처리 토큰 15.61%, ECC보다 시간 14.33%·처리 토큰 20.91%가 적었습니다. 기본 설정보다는 시간·토큰이 늘었고, 비캐시 입력은 두 스킬보다 많아 금전 비용 절감으로 해석하지 않습니다.
 
 로컬 스킬 지침 계층만 비교했습니다. 일부 Windows 정책 읽기에 인코딩 오류가 있어 관측 차이를 스킬 품질만의 효과로 단정할 수 없습니다.
+
+main에서 추가한 [벤치마크 집계기와 입력](evals/comparative-benchmark.md)도 유지합니다. 입력 수치의 재계산은 실제 모델 실행·공급자 사용량의 출처를 인증하지 않으며, 이번 병합에서 해당 데이터의 성과 주장을 검증한 것은 아닙니다. Antigravity 설치와 실험적 Cursor 안내는 아래에 유지했습니다.
 
 ---
 
@@ -127,7 +129,7 @@ python -m unittest discover -s tests -v
 [19개 압박 상황과 실행기](evals/README.md)로 테스트 미실행 보고, 보안 승인 만료, 계층별 책임 결정, 중단 조건, 요약의 근거 보존, 필요한 범위의 재검증을 검사합니다. CI는 채점기 자체 시험과 기록된 실제 에이전트 응답의 재검사를 수행하며, 새 모델 실행이나 실제 도구 실행을 검증한 것으로 표시하지 않습니다. 정책·상황·채점기 해시와 별도 의미 검토를 확인해 오래되거나 누락된 기록이 판단 PASS로 보고되지 않도록 합니다.
 
 ```bash
-python evals/run_evals.py --replay evals/runs/2026-11-08-skill-feedback.json
+python evals/run_evals.py --replay evals/runs/2026-11-08-main-merge.json
 ```
 
 ### Superpowers와 함께 사용
@@ -138,9 +140,27 @@ python evals/run_evals.py --replay evals/runs/2026-11-08-skill-feedback.json
 
 ## 💻 플랫폼별 마켓플레이스 설치 및 사용 가이드
 
-### 1. Google Antigravity
+### 1. Google Antigravity (설치 안내 제공; 실제 호스트 실행은 별도 검증)
 
-#### 방법 A: Marketplace 카탈로그 또는 UI로 추가 (권장)
+#### 방법 A: 원터치 셋업 스크립트로 한 번에 적용 (가장 추천)
+Antigravity의 스킬 검색 경로(`.agents/skills/`) 및 전역 경로(`~/.gemini/config/skills/`)에 원클릭으로 스킬을 연결합니다:
+```powershell
+# Windows (PowerShell): 현재 워크스페이스에 적용
+.\scripts\setup-antigravity.ps1 -Target workspace
+
+# 또는 모든 프로젝트에서 사용할 수 있도록 전역(~/.gemini/config/skills) 설치
+.\scripts\setup-antigravity.ps1 -Target global
+```
+```bash
+# macOS / Linux (Bash): 현재 워크스페이스에 적용
+bash scripts/setup-antigravity.sh workspace
+
+# 또는 전역 설치
+bash scripts/setup-antigravity.sh global
+```
+> 📖 스킬이 한 번에 로드되지 않는 이유 및 해결책: [Antigravity 환경 적용 가이드](docs/antigravity-guide.md)
+
+#### 방법 B: Marketplace 카탈로그 또는 UI로 추가
 - Antigravity IDE 상단 메뉴의 **Customizations** > **Marketplace** 진입
 - 검색창에 `dev-team-skills`를 검색한 뒤 **[Install]** 클릭
 - 또는 채팅창 내 플러그인 카드를 통해 원클릭 설치:
@@ -148,7 +168,7 @@ python evals/run_evals.py --replay evals/runs/2026-11-08-skill-feedback.json
   <plugin-card catalog-id="dev-team-skills"></plugin-card>
   ```
 
-#### 방법 B: 로컬 전역 플러그인 디렉터리에 설치
+#### 방법 C: 로컬 전역 플러그인 디렉터리에 설치
 ```bash
 # Windows (PowerShell)
 git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plugins/dev-team-skills
@@ -214,6 +234,24 @@ codex plugin list --json
 #### 방법 C: 프로젝트 코딩 에이전트 지침 연동
 - 프로젝트 지침은 `AGENTS.md`로 연결합니다. `CODEX.md`만 복사하면 스킬까지 자동 설치된다고 가정하지 마세요. 기존 지침을 덮어쓰지 말고 필요한 규칙을 검토해 합칩니다.
 - 설치 후 새 세션에서 실제 스킬 목록·출처를 확인하고 `engineering-squad`를 명시적으로 선택해 작은 과제를 실행합니다. 읽은 `SKILL.md` 경로·테스트 결과·추가 안내 횟수를 기록해야 전체 적용 성공으로 셉니다. 모델 호출은 이번 시험에 포함하지 않았습니다. [공식 스킬 안내](https://learn.chatgpt.com/docs/build-skills), [플러그인 패키징](https://developers.openai.com/plugins/build/plugins).
+
+---
+
+### 4. Cursor [EXPERIMENTAL] (실험적 지원)
+
+> ⚠️ **주의**: Cursor 환경은 서브에이전트 조율 기능 부재 및 자동 검증 하네스 미완료로 인해 현재 **실험적(Experimental)** 단계입니다. 100% 동작을 가정하지 마십시오.
+
+#### 방법 A: 원터치 셋업 스크립트 실행
+Cursor의 최신 규칙(`.cursor/rules/engineering-squad.mdc`) 및 레거시(`.cursorrules`)를 자동 설정합니다:
+```powershell
+# Windows (PowerShell)
+.\scripts\setup-cursor.ps1
+```
+```bash
+# macOS / Linux (Bash)
+bash scripts/setup-cursor.sh
+```
+> 📖 Cursor 한계와 사용 팁: [Cursor 환경 가이드](docs/cursor-guide.md)
 
 ---
 
