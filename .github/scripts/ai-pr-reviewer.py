@@ -410,7 +410,7 @@ Git Diff:
     # and os.environ.get's default only applies when the key is absent.
     # Use `or` so an empty value falls back to the documented defaults.
     llm_base_url = os.environ.get("LLM_BASE_URL") or "https://api.groq.com/openai/v1"
-    llm_model = os.environ.get("LLM_MODEL") or "llama-3.3-70b-versatile"
+    llm_model = os.environ.get("LLM_MODEL") or "openai/gpt-oss-120b"
 
     review_result = ""
 
@@ -420,7 +420,7 @@ Git Diff:
         review_result = call_github_models(gh_token, system_prompt, user_prompt)
 
     # Priority 2: OpenAI-compatible free-tier provider (LLM_API_KEY secret;
-    # defaults to Groq free tier. Gemini's OpenAI-compatible endpoint also
+    # defaults to Groq free tier (openai/gpt-oss-120b; llama-3.3-70b-versatile was retired for free tiers on 2026-08-16). Gemini's OpenAI-compatible endpoint also
     # works by setting LLM_BASE_URL/LLM_MODEL repository variables.)
     if not review_result and llm_api_key:
         print(f"[*] Calling OpenAI-compatible API ({llm_model}) via LLM_API_KEY...")
