@@ -1,5 +1,15 @@
 <!-- Based on Kakao Pay Tech Blog: 'Slow PR, Fast Dev' (https://tech.kakaopay.com/post/kakaopayins-slow-pr-fast-dev/) -->
 
+## Mandate — Work Authorization (immutable fields)
+<!-- Record what authorized this PR. Do not edit these fields after the fact. If the scope must grow, open a new PR instead of widening this one. -->
+- Source: <!-- direct user instruction / issue / schedule or automation -->
+- Requester: <!-- name or account -->
+- Strength: <!-- explicit / inferred. A bot's or automation's inference can never be explicit -->
+- Matched rules: <!-- the rule or contract that authorizes this work, with its location -->
+- Policy version: <!-- decision record or policy document applied, with date or revision -->
+- Origin: <!-- originating issue or PR link -->
+- Scope: <!-- one line: what this Mandate covers -->
+
 # What problem does this PR solve?
 <!-- Clearly describe the current situation, the bug, or the feature request. -->
 
