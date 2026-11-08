@@ -35,6 +35,14 @@ class HarnessTests(unittest.TestCase):
         for path in RULES:
             self.write(path, "Identical rules.\n")
         self.write("skills/example/SKILL.md", VALID_SKILL)
+        self.regenerate_catalog()
+
+    def regenerate_catalog(self):
+        result = subprocess.run(
+            [sys.executable, str(REPO / "scripts" / "build-catalog.py"),
+             "--root", str(self.root)],
+            capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def write(self, path, value):
         target = self.root / path
@@ -143,8 +151,43 @@ class HarnessTests(unittest.TestCase):
 
     def test_bom_crlf_and_spaces_in_skill_path(self):
         (self.root / "skills/example/SKILL.md").unlink()
-        self.write("skills/space 한글/SKILL.md", "\ufeff" + VALID_SKILL.replace("\n", "\r\n"))
+        named = VALID_SKILL.replace("name: example", "name: space 한글")
+        self.write("skills/space 한글/SKILL.md", "\ufeff" + named.replace("\n", "\r\n"))
+        self.regenerate_catalog()
         self.run_harness(True)
+
+    def test_missing_catalog_fails(self):
+        (self.root / "skills/catalog.json").unlink()
+        self.run_harness(False)
+
+    def test_catalog_drift_fails(self):
+        catalog = self.root / "skills/catalog.json"
+        data = json.loads(catalog.read_text())
+        data["skills"][0]["description"] = "Edited by hand."
+        catalog.write_text(json.dumps(data), encoding="utf-8")
+        self.run_harness(False)
+
+    def test_catalog_skill_count_mismatch_fails(self):
+        catalog = self.root / "skills/catalog.json"
+        data = json.loads(catalog.read_text())
+        data["skill_count"] = 99
+        catalog.write_text(json.dumps(data), encoding="utf-8")
+        self.run_harness(False)
+
+    def test_skill_name_must_match_folder(self):
+        self.write("skills/example/SKILL.md",
+                   VALID_SKILL.replace("name: example", "name: other"))
+        self.regenerate_catalog()
+        self.run_harness(False)
+
+    def test_broken_relative_link_fails(self):
+        self.write("skills/example/SKILL.md",
+                   VALID_SKILL + "\n[missing](./no-such-file.md)\n")
+        self.run_harness(False)
+
+    def test_nested_skill_file_fails(self):
+        self.write("skills/example/nested/SKILL.md", VALID_SKILL)
+        self.run_harness(False)
 
     def test_missing_manifest(self):
         (self.root / "plugin.json").unlink()
