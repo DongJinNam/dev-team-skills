@@ -310,7 +310,10 @@ def call_openai_compatible(base_url: str, api_key: str, model: str, system_promp
         data=data,
         headers={
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}"
+            "Authorization": f"Bearer {api_key}",
+            # Groq (Cloudflare) rejects the default Python-urllib signature
+            # with HTTP 403 error 1010; send an explicit User-Agent.
+            "User-Agent": "dev-team-skills-review-bot/1.0"
         },
         method="POST"
     )
