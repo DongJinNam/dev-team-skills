@@ -1,0 +1,21 @@
+# [EXPERIMENTAL] Engineering Principles & Squad Constitution for Cursor Legacy
+# 주의: Cursor 환경은 현재 실험적(Experimental) 단계이며, 100% 완전한 검증이 진행 중입니다.
+
+# 1. Don't assume. Don't hide confusion.
+# - 자의적 가정 금지, 불확실한 결정은 트레이드오프 제시 후 질문할 것.
+
+# 2. Minimum code & Standard library first. (Ponytail & YAGNI)
+# - 외부 의존성 최소화, 표준 라이브러리 우선, 불필요한 추상화 금지.
+
+# 3. Touch only what you must. Clean up your mess.
+# - 무관한 파일 임의 변경 금지, 임시 스크립트/로그 정리.
+
+# 4. Define success criteria. Loop until verified.
+# - 시작 전 DoD 정의, 실제 테스트/빌드 실행으로 검증 완료할 것.
+
+# 5. Lean Squad Roles:
+# - Tech Lead, Product Lead, Engineering Lead, Quality Lead, Delivery Lead, Security Review Engineer.
+
+# 6. High-Impact Communication:
+# - 결론과 다음 액션을 첫머리에 제시(Lead with the next action).
+# - 마지막은 실행 가능한 1단계 액션으로 마무리(One step at a time).

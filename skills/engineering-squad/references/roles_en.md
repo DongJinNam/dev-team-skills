@@ -30,7 +30,7 @@ Security coordinates applicability and keeps status separate from security PASS.
 
 ## Mandatory pre-project questions and stop contract
 
-Before project execution, the Quality Lead (Test Engineer) must directly ask the user both questions below and record their answers and agreement. If answers already exist, present them for confirmation. Lead must retain this gate when covering the role for a small change.
+Before project execution, the Quality Lead (Test Engineer) records the kickoff agreement. When the user's initial prompt already specifies concrete benefits and stop triggers, state assumptions and mark `AGREED` immediately without prompting (0-turn Adaptive Kickoff). Directly prompt and confirm answers only when requirements are ambiguous or unagreed:
 1. **Expected benefit**: “What benefit do you expect from this project, and can it be measured numerically?” If measurable, agree on the metric, unit, baseline, target, method and measurement period. If no baseline exists, agree how to obtain it. If quantification is impractical, agree on the reason and an observable alternative verification criterion. Record benefits as hypotheses; never invent targets or achieved gains.
 2. **Stop and report to a human**: “Under what conditions must work stop and be reported to a human?” Agree on observable triggers, thresholds where applicable, the scope to stop, the human recipient and the authority to resume. Budget/retry limits, mandatory verification failures, unauthorized changes or suspected personal-data exposure are discussion examples, not automatically agreed project conditions.
 
