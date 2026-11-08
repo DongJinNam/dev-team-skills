@@ -105,7 +105,7 @@
 
 ### 🔍 결정론적 하네스 무결성 검증 (Cross-Platform)
 
-Bash와 PowerShell이 같은 Python 검증기를 호출합니다. JSON 매니페스트 4개의 문법과 비어 있지 않은 문자열 `name`·`description`, 마켓플레이스 `plugins`의 객체 배열 여부를 검사합니다. 각 스킬은 파일 첫머리에 닫힌 YAML Frontmatter가 있어야 하며, 안전한 파서로 `name`·`description`을 확인하고 중복 키를 거부합니다. 헌법 5개 파일은 SHA-256으로 바이트 단위 동기화를 검사하고, 영문 파일이 하나라도 있으면 영문 5개도 모두 존재하고 일치해야 합니다.
+Bash와 PowerShell이 같은 Python 검증기를 호출합니다. JSON 매니페스트 4개의 문법과 비어 있지 않은 문자열 `name`·`description`, 마켓플레이스 `plugins`의 객체 배열 여부를 검사합니다. 각 스킬은 파일 첫머리에 닫힌 YAML Frontmatter가 있어야 하며, 안전한 파서로 `name`·`description`을 확인하고 중복 키를 거부합니다. 헌법 5개 파일은 SHA-256으로 바이트 단위 동기화를 검사하고, 영문 파일이 하나라도 있으면 영문 5개도 모두 존재하고 일치해야 합니다. 코드가 붙은 스킬 불변 규칙도 검사합니다. SKL-001은 스킬 파일 위치, SKL-002는 frontmatter 이름과 폴더 이름의 일치, SKL-003은 상대 링크 무결성입니다. `scripts/build-catalog.py`가 스킬 폴더에서 생성하는 `skills/catalog.json`은 스키마(CAT-001)와 폴더와의 drift 여부(CAT-002)를 검사합니다.
 
 **Python 3.10 이상과 PyYAML이 필요합니다.** JSON·해시는 표준 라이브러리로 처리하고, YAML은 직접 파서를 구현하는 대신 안전한 파서를 사용합니다. 실행기가 선택하는 인터프리터(`python3`, `python`, Windows의 `py -3` 순서)와 같은 Python으로 고정 버전 의존성을 설치합니다:
 

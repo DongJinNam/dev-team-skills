@@ -105,7 +105,7 @@ This repository supports the packaging standards of **Google Antigravity**, **Cl
 
 ### 🔍 Deterministic Harness Verification (Cross-Platform)
 
-Both shell entry points call the same Python validator. It parses all four JSON manifests (nonblank string `name`/`description`, and an object array `plugins` for the marketplace), safely parses each skill's leading and closed YAML frontmatter, rejects duplicate keys, and checks SHA-256 byte synchronization across the five constitution files. If any English constitution file is present, all five English files must exist and match too.
+Both shell entry points call the same Python validator. It parses all four JSON manifests (nonblank string `name`/`description`, and an object array `plugins` for the marketplace), safely parses each skill's leading and closed YAML frontmatter, rejects duplicate keys, and checks SHA-256 byte synchronization across the five constitution files. If any English constitution file is present, all five English files must exist and match too. It also enforces coded skill invariants — SKL-001 skill file locations, SKL-002 frontmatter name matching the folder, SKL-003 relative links resolving — and verifies that `skills/catalog.json`, generated from the skill folders by `scripts/build-catalog.py`, matches its schema (CAT-001) and has not drifted from the folders (CAT-002).
 
 Requires **Python 3.10+** and **PyYAML**. JSON and hashing use the standard library; YAML uses a safe parser rather than a handwritten YAML implementation. Install the pinned dependency with the same interpreter the launcher uses (`python3`, then `python`, then Windows `py -3`):
 

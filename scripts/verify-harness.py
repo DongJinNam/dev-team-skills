@@ -3,8 +3,10 @@
 
 import argparse
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
+import re
 import sys
 
 
@@ -105,13 +107,91 @@ def main():
             raise ValueError("YAML frontmatter is missing its closing ---") from error
         data = yaml.load("\n".join(lines[1:closing]), Loader=UniqueSafeLoader)
         require_text_fields(data, ("name", "description"))
+        return data
 
     skills = sorted((root / "skills").rglob("SKILL.md"))
     if not skills:
         print("FAIL skills/: no SKILL.md files found")
         failed = True
+    parsed = {}
     for path in skills:
-        check(path.relative_to(root).as_posix(), lambda path=path: skill(path))
+        def capture(path=path):
+            parsed[path] = skill(path)
+        check(path.relative_to(root).as_posix(), capture)
+
+    # Coded skill invariants (decision 2026-11-08, Phase 1 item A1).
+    # SKL-001: a SKILL.md lives only at skills/SKILL.md (compatibility
+    # entry) or skills/<folder>/SKILL.md, never nested deeper.
+    # SKL-002: a skill folder's frontmatter name equals the folder name.
+    # SKL-003: relative links in a SKILL.md resolve to existing files.
+    # CAT-001: skills/catalog.json exists and matches the catalog schema.
+    # CAT-002: the committed catalog equals a fresh filesystem derivation;
+    # regenerate with scripts/build-catalog.py instead of editing it.
+    skills_root = root / "skills"
+    link_pattern = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+
+    def skl001():
+        for path in skills:
+            if len(path.relative_to(skills_root).parts) > 2:
+                raise ValueError(
+                    f"{path.relative_to(root).as_posix()} is nested below a skill folder")
+
+    def skl002():
+        for path in skills:
+            parts = path.relative_to(skills_root).parts
+            data = parsed.get(path)
+            if len(parts) == 2 and data is not None and data.get("name") != parts[0]:
+                raise ValueError(
+                    f"{path.relative_to(root).as_posix()}: frontmatter name "
+                    f"{data.get('name')!r} does not match folder {parts[0]!r}")
+
+    def skl003():
+        for path in skills:
+            text = path.read_text(encoding="utf-8-sig")
+            for target in link_pattern.findall(text):
+                target = target.strip().strip("<>").split("#", 1)[0]
+                if not target or "://" in target or target.startswith("mailto:"):
+                    continue
+                if not (path.parent / target).exists():
+                    raise ValueError(
+                        f"{path.relative_to(root).as_posix()}: broken relative link {target!r}")
+
+    def catalog_data():
+        data = json.loads((skills_root / "catalog.json").read_text(encoding="utf-8-sig"),
+                          object_pairs_hook=unique_json_object,
+                          parse_constant=reject_json_constant)
+        if not isinstance(data, dict):
+            raise ValueError("catalog must be an object")
+        return data
+
+    def cat001():
+        data = catalog_data()
+        if data.get("catalog_version") != 1:
+            raise ValueError("catalog_version must be 1")
+        entries = data.get("skills")
+        if not isinstance(entries, list) or not all(isinstance(e, dict) for e in entries):
+            raise ValueError("skills must be an array of objects")
+        for entry in entries:
+            require_text_fields(entry, ("name", "description", "path"))
+        if data.get("skill_count") != len(entries):
+            raise ValueError("skill_count must equal the number of skill entries")
+
+    def cat002():
+        spec = importlib.util.spec_from_file_location(
+            "build_catalog", root / "scripts" / "build-catalog.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        committed = (skills_root / "catalog.json").read_text(encoding="utf-8-sig")
+        if committed != module.catalog_text(root):
+            raise ValueError("catalog has drifted from the skill folders; "
+                             "regenerate with scripts/build-catalog.py")
+
+    if skills:
+        check("SKL-001 skill locations", skl001)
+        check("SKL-002 skill name matches folder", skl002)
+        check("SKL-003 skill relative links", skl003)
+        check("CAT-001 skills/catalog.json schema", cat001)
+        check("CAT-002 skills/catalog.json is current", cat002)
 
     def synchronized(paths):
         hashes = [hashlib.sha256((root / path).read_bytes()).digest() for path in paths]
