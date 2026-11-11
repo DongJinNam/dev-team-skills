@@ -53,6 +53,6 @@ When Superpowers is actually available, keep one design/plan owner through the [
 
 ## Cost and final explanation
 
-Lead records each added call's distinct output/value and measured/estimated/unknown cost. Compare repeated tasks using matching scope, model and quality gates. Document length and owner-count reductions are not actual token savings. Handoff decisions, evidence, open issues and necessary file paths instead of complete conversations. Keep that handoff as the [work minutes](./references/work-minutes_en.md).
+Assign model tiers by task type under the [model routing contract](./references/model-routing_en.md): DEEP for judgments, design, analysis and their summaries; STANDARD for settled implementation and tests. Lead records each added call's distinct output/value and measured/estimated/unknown cost. Compare repeated tasks using matching scope, model and quality gates. Document length and owner-count reductions are not actual token savings. Handoff decisions, evidence, open issues and necessary file paths instead of complete conversations. Keep that handoff as the [work minutes](./references/work-minutes_en.md).
 
 Humanizer Editor is Lead's final editing duty. Apply `humanizer-kr` for Korean or `humanizer` for English and compare facts, risks and unverified status. Preserve the [three-sentence What/How/Why report contract](./references/report-summary_en.md). Ordinary explanations need no separate editor agent.

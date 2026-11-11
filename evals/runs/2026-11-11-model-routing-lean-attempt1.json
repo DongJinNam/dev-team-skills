@@ -1,0 +1,25 @@
+{
+  "case_id": "lean-doc-routing",
+  "response": {
+    "decision": "BLOCKED",
+    "actions": [
+      "record_workflow_owners",
+      "check_diff",
+      "request_security_review",
+      "report_to_user"
+    ],
+    "facts": {
+      "route": "LOCAL",
+      "minimum_actors": 2,
+      "security": "NOT_RUN",
+      "token_savings": "UNMEASURED"
+    },
+    "summary": [
+      "The README spelling fix takes the LOCAL route with a minimum of two actors, the Lead covering implementation, quality, and explanation while an independent Security Review Engineer stays separate, and the merge is BLOCKED because the new PR head has no security review yet.",
+      "The Lead records the actual owners and 겸임 arrangement and checks that the diff is spelling-only, and an independent reviewer performs the scoped security review against the current head, whose PASS is the only thing that can unblock the merge.",
+      "The policies permit omitting separate specialist calls for a documentation-only change with an unchanged trust boundary, but they never permit skipping the independent security review for a PR of any size, and token savings remain UNMEASURED because no same-scope usage was measured and a smaller role count is not a savings rate."
+    ]
+  },
+  "actor": "native-actor-model-routing-percase",
+  "note": "First attempt for this case in the 2026-11-11 model-routing capture. Structural check failed: required action missing. Preserved for transparency; not part of the capture score."
+}
