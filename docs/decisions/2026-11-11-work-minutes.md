@@ -10,7 +10,8 @@
 
 - 신규 참조: `skills/engineering-squad/references/work-minutes.md`와 영문판 `work-minutes_en.md`
 - `.agents/skills` 미러를 같은 내용으로 갱신한다 (MIR-001)
-- SKILL.md 실행 단계 연결(6단계 "기록" 추가와 비용 절 인계 연결)은 이 PR에서 분리한다. SKILL.md가 eval 캡처 snapshot에 묶여 있어, SKILL.md를 바꾸면 기존 캡처가 STALE이 되어 CI 재생이 실패하는 것을 PR #30에서 확인했다. 연결은 캡처 갱신과 함께 후속 PR로 미룬다
+- SKILL.md/SKILL_en.md 실행 단계에 6단계 "기록"을 추가하고, 비용 절의 인계를 회의록으로 연결한다
+- SKILL.md가 eval 캡처 snapshot에 묶여 있어 바꾸면 기존 캡처가 STALE이 되는 것을 PR #30에서 확인했다. 사용자 지시로 분리를 철회하고 캡처 갱신을 이 PR에 통합했다. 새 캡처 `evals/runs/2026-11-11-work-minutes.json`은 케이스별 독립 세션 actor 19개와 별도 의미 검수로 만들었고 재생 PASS다. 단일 세션 시도 5회(구조 10·12·15·18·18/19)는 initial 기록으로 함께 보존한다. 워크플로와 evals README의 현재 캡처 참조를 새 파일로 교체한다
 - 효과 검증은 기존 19개 압력 시나리오에 넣지 않고, 실제 작업 3건 파일럿으로 분리해 보충 기록으로 남긴다. 보충 사례를 본점수에 넣지 않는 기존 관행을 따른다
 
 ## 왜
