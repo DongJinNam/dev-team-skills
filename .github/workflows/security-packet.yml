@@ -1,0 +1,59 @@
+name: Security Packet Draft (observe)
+
+# Observe-stage automation (docs/automation-promotion.md): posts or updates a
+# security-review packet draft comment on pull requests. It never judges,
+# submits a review, or merges.
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [ opened, synchronize, reopened ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  packet-draft:
+    name: Security packet draft
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate packet draft
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: >
+          python3 scripts/security_packet.py
+          --base "$BASE_SHA"
+          --head "$HEAD_SHA"
+          --pr "$PR_NUMBER"
+          --title "$PR_TITLE"
+          --out packet-draft.md
+
+      - name: Post or update the draft comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          existing=$(gh api "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" --paginate \
+            --jq '[.[] | select(.body | startswith("<!-- security-packet-draft -->")) | .id] | first // empty')
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/${{ github.repository }}/issues/comments/${existing}" -F body=@packet-draft.md > /dev/null
+            echo "Updated packet draft comment ${existing}."
+          else
+            gh pr comment "${PR_NUMBER}" --body-file packet-draft.md
+            echo "Posted new packet draft comment."
+          fi
