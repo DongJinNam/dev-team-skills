@@ -41,6 +41,7 @@ Record actual assignees, combined duties, activation reasons, outputs and checks
 3. **Verification** — Quality maintains one AC→test→actual-result/gap record. Long execution logs run in ephemeral subagents with only summarized facts returned to prevent context bloat. Security independently records PASS/BLOCKED plus a separate compliance status. Required unrun/failed checks cannot pass. Revalidate affected checks and revision-bound security after changes.
 4. **Deployment** — Only when in scope, Delivery applies the [deployment gate](./references/deployment-gate_en.md). Functional QA, independent security, applicable compliance and deployment authority are prerequisites.
 5. **Operations** — Only when in scope, Delivery checks agreed SLO/SLI, health, load and recovery evidence. Do not claim operational verification for an undeployed service.
+6. **Record** — When a task ends or stops, Lead leaves one set of minutes under the [work minutes contract](./references/work-minutes_en.md). Record per activated role what was done, why, and the evidence path; link decision, verification and cost records instead of copying them. Do not create rows for inactive roles.
 
 Every PR requires independent current-head/base security PASS before merge, regardless of size. Missing independent review is BLOCKED, even under budget pressure. Decision and execution authority are separate. Preserve user appeals and mandatory stops under [governance](./references/decision-governance_en.md).
 
@@ -52,6 +53,6 @@ When Superpowers is actually available, keep one design/plan owner through the [
 
 ## Cost and final explanation
 
-Lead records each added call's distinct output/value and measured/estimated/unknown cost. Compare repeated tasks using matching scope, model and quality gates. Document length and owner-count reductions are not actual token savings. Handoff decisions, evidence, open issues and necessary file paths instead of complete conversations.
+Lead records each added call's distinct output/value and measured/estimated/unknown cost. Compare repeated tasks using matching scope, model and quality gates. Document length and owner-count reductions are not actual token savings. Handoff decisions, evidence, open issues and necessary file paths instead of complete conversations. Keep that handoff as the [work minutes](./references/work-minutes_en.md).
 
 Humanizer Editor is Lead's final editing duty. Apply `humanizer-kr` for Korean or `humanizer` for English and compare facts, risks and unverified status. Preserve the [three-sentence What/How/Why report contract](./references/report-summary_en.md). Ordinary explanations need no separate editor agent.
