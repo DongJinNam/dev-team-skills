@@ -35,11 +35,45 @@ class ClassifyTest(unittest.TestCase):
 
 
 class CaptureNameTest(unittest.TestCase):
+    def _fixture_repo(self, tmp):
+        # Two commits: the first references capture-a, the second capture-b.
+        # The test must not depend on this repo's own history depth, because
+        # CI checks out shallowly and old commits are not available there.
+        import subprocess
+
+        def run(*args):
+            subprocess.run(["git", *args], cwd=tmp, check=True, capture_output=True, text=True)
+
+        run("init", "-q")
+        run("config", "user.email", "test@example.com")
+        run("config", "user.name", "test")
+        workflow = tmp / ".github" / "workflows"
+        workflow.mkdir(parents=True)
+        (workflow / "verify-rules-sync.yml").write_text("run: bash evals/run-evals.sh --replay evals/runs/capture-a.json\n", encoding="utf-8")
+        run("add", ".")
+        run("commit", "-q", "-m", "first")
+        first = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp, check=True, capture_output=True, text=True).stdout.strip()
+        (workflow / "verify-rules-sync.yml").write_text("run: bash evals/run-evals.sh --replay evals/runs/capture-b.json\n", encoding="utf-8")
+        run("add", ".")
+        run("commit", "-q", "-m", "second")
+        second = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp, check=True, capture_output=True, text=True).stdout.strip()
+        return first, second
+
     def test_capture_reference_comes_from_base(self):
-        # Before PR #31 the workflow referenced the work-minutes capture;
-        # at its head it referenced the model-routing capture.
-        self.assertEqual(cp.current_capture_name("8f890bfa9a67e282a172b54c50485fb186fb72a2"), "2026-11-11-work-minutes.json")
-        self.assertEqual(cp.current_capture_name("c76c05c9fc35054a5bec04d3ddb53e1cc711c4c9"), "2026-11-11-model-routing.json")
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            first, second = self._fixture_repo(Path(tmp))
+            self.assertEqual(cp.current_capture_name(first, repo_root=Path(tmp)), "capture-a.json")
+            self.assertEqual(cp.current_capture_name(second, repo_root=Path(tmp)), "capture-b.json")
+
+    def test_missing_base_commit_fails_loudly(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            self._fixture_repo(Path(tmp))
+            with self.assertRaises(RuntimeError):
+                cp.current_capture_name("0" * 40, repo_root=Path(tmp))
 
 
 class RenderTest(unittest.TestCase):
