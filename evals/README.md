@@ -1,5 +1,7 @@
 # Agent decision regressions
 
+To renew this capture after a policy change, follow the [capture runbook](capture-runbook.md). `scripts/capture_plan.py` generates the per-change execution plan.
+
 For installation checks and comparison against other skills, use the separate [skill comparison protocol](skill-comparison.md). Decision-policy scores below do not establish comparative task quality or installation success.
 
 The current policy capture is `runs/2026-11-11-model-routing.json`. Fresh native actors in per-case isolated sessions answered the nineteen unchanged public prompts after the model-routing policy change; a separate reviewer checks meaning. The previous `runs/2026-11-08-main-merge.json` is preserved as historical/STALE under the new policy. Its actor also answered three supplemental cases in `runs/2026-11-08-skill-feedback-pressure.json`, covering encoding/discovery, comparison claims and generated-code/publication boundaries. Those three cases retain their earlier policy scope and separate qualitative review; they are not added to the current nineteen-case score or the 12-run performance pilot. Initial corrupted supplemental prompts and the actor's unreadability responses are retained as an input-preparation failure; corrected UTF-8 prompts received no answer hints. Each capture does not prove actual scenario operations, independent sample reliability or performance gains.
