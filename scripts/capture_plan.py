@@ -35,23 +35,30 @@ def load_case_ids():
     return [c["id"] for c in scenarios["cases"]]
 
 
-def current_capture_name(base):
+def current_capture_name(base, repo_root=ROOT):
     """The capture referenced at base, not in the working tree.
 
     A renewal plan is generated before the renewal happens, so the working
     tree may already point at the new capture. The base commit is the
     reference that the plan replaces.
+
+    Fails loudly when the base commit is not available locally (for
+    example a shallow clone) instead of silently answering from the
+    working tree, which would be the wrong capture.
     """
     try:
-        workflow = git("show", f"{base}:.github/workflows/verify-rules-sync.yml")
-    except subprocess.CalledProcessError:
-        workflow = (ROOT / ".github" / "workflows" / "verify-rules-sync.yml").read_text(encoding="utf-8")
+        workflow = git("show", f"{base}:.github/workflows/verify-rules-sync.yml", cwd=repo_root)
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(
+            f"cannot read the workflow at base {base}: the commit is not "
+            "available locally. Use a full clone (fetch-depth 0)."
+        ) from exc
     match = re.search(r"evals/runs/([A-Za-z0-9._-]+\.json)", workflow)
     return match.group(1) if match else None
 
 
-def git(*args):
-    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True).stdout
+def git(*args, cwd=ROOT):
+    return subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True, check=True).stdout
 
 
 def changed_paths(base, head):
