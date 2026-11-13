@@ -26,6 +26,21 @@ the current capture reference, the case list, and the expected output paths.
   the prompts and the policies. The reviewer never sees `scenarios.json`
   expected values and never sees the rubric.
 
+### 역할별 최소 읽기 번들 (P3, 고정)
+
+역할마다 필요한 파일만 읽는다. SKILL 전문과 references 전부를 매번 읽으면
+토큰이 배로 든다. 번들 밖 파일은 읽지 않는다.
+
+| 역할 | 읽는 것 | 읽지 않는 것 |
+| --- | --- | --- |
+| Operator | runbook, 계획서 출력, 바뀐 정책 파일(계획서가 가리킨 것만), 모델 라우팅 계약(등급 확인용), 회의록 | SKILL 전문, 바뀌지 않은 정책 파일 |
+| Per-case actor | 자기 케이스의 request 파일, POLICIES 9개 파일 | POLICIES 밖 references, 다른 케이스의 request·응답 |
+| Reviewer | 프롬프트, 응답 객체, 응답이 인용한 정책 구절 | `scenarios.json`, 루브릭, 계획서 출력, 회의록 |
+
+인계는 요약만 한다. 브리핑에는 케이스 id·request 경로·등급만 싣는다.
+actor는 응답 객체만 반환한다. reviewer는 케이스별 pass/fail과 근거 한 줄만
+반환한다. 추론 과정과 전체 컨텍스트를 인계하지 않는다.
+
 ## 3. Integrity boundary (fixed)
 
 Anyone who has read the expected values in `scenarios.json` must not write
@@ -71,3 +86,13 @@ It does not run the actors itself. Execution is still agent work; this
 runbook only fixes the steps, the roles, and the integrity boundary so the
 next renewal does not rediscover them. Full automation of execution is
 Phase 3, decided separately after the Phase 2 pilot.
+
+## 7. 검수 범위 (P6)
+
+독립 검수는 diff로 한정한다. 검수 대상은 바뀐 파일과 게이트 관련 부분이다.
+바뀌지 않은 부분은 이전 PASS를 인용한다. 인용할 때는 head SHA와 보고서
+경로를 적고, 해당 검사 항목은 N/A 근거로 남긴다. 문서·설정만 바꾼 PR은
+범위를 줄여 검수한다(정책에 이미 있는 규칙이다).
+
+새 head마다 새 판정을 발행한다. 이전 PASS를 재사용하지 않는다. 등급
+T1/T2 구분은 유지한다.

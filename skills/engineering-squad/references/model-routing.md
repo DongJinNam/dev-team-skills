@@ -16,18 +16,18 @@
 - 승격: STANDARD·LIGHT 작업이 반복 실패하거나 실패 원인이 모호하면 DEEP로 올려 다시 한다. 결과가 보안·결정 게이트의 입력이 되면 그 판단 단계는 DEEP로 수행한다.
 - 같은 작업을 등급만 바꿔 중복 실행하지 않는다. 승격 시 이전 시도의 실패 근거를 인계한다.
 
-## 2. 호스트별 적용 (확인일: 2026-11-11)
+## 2. 호스트별 적용 (확인일: 2026-11-13)
 
 모델명은 확인일 기준 예시다. 계약의 본체는 등급이며 모델 은퇴·개명에 맞춰 이 표만 갱신한다. 별칭의 해석은 제공자마다 다를 수 있어 실행 환경에서 실제 모델을 확인한다.
 
-| 호스트 | DEEP | STANDARD | LIGHT | 고정 수단과 강제 수준 |
-| --- | --- | --- | --- | --- |
-| Claude Code | `opus` (Opus 5.5; 최난도는 `fable`) | `sonnet` (Sonnet 5.5) | `haiku` (Haiku 5.5) | SKILL·서브에이전트 frontmatter의 `model`·`effort`로 강제 가능. 계획은 Opus, 실행은 Sonnet으로 나누는 `opusplan`이 같은 구조의 내장 패턴이다 |
-| Codex | `gpt-6.1-sol`, effort high (최난도는 `gpt-6-astra`) | `gpt-6-luna` (문서·요약 중심이면 `gpt-6.1-terra`) | `gpt-6-luna` | 스킬 본문은 요청 수준이다. 고정은 `.codex/agents/*.toml`의 `model`·`model_reasoning_effort`와 `config.toml`의 `[agents]` 기본값으로 한다 |
-| Cursor | 모델 ID 지정 (예: `claude-opus-5-5[effort=high]`) | `composer-2.5` 또는 Sonnet 5.5 | Haiku 5.5·Luna 계열 | `.cursor/agents/*.md` frontmatter `model`로 ID 고정 가능. 관리자 차단·플랜 외 모델은 조용히 대체되므로 실제 모델을 확인한다 |
-| Antigravity | `pro` 등급 서브에이전트 (메인은 Gemini 4 Argon/Carbon 또는 Opus 5.5를 사용자가 선택) | `flash` (Gemini 3.8 Flash) | `flash` | 서브에이전트 `model`은 `flash`/`pro` 등급만 지정할 수 있고 서드파티 모델은 지정할 수 없다. 메인 모델은 수동 선택만 가능하다. 개인 계정에서 `pro` 지정의 실효성은 미확인 보고가 있어 실제 모델을 확인한다 |
+| 호스트 | DEEP | STANDARD | LIGHT | 폴백 | 고정 수단과 강제 수준 |
+| --- | --- | --- | --- | --- | --- |
+| Claude Code | `opus` (Opus 5.5; 최난도는 `fable`) | `sonnet` (Sonnet 5.5) | `haiku` (Haiku 5.5) | 없음. opus를 쓸 수 없으면 판정 작업은 하향하지 않고 제한으로 보고한다 | SKILL·서브에이전트 frontmatter의 `model`·`effort`로 강제 가능. 계획은 Opus, 실행은 Sonnet으로 나누는 `opusplan`이 같은 구조의 내장 패턴이다 |
+| Codex | `gpt-6.1-sol`, effort high (최난도는 `gpt-6-astra`) | `gpt-6-luna` (문서·요약 중심이면 `gpt-6.1-terra`) | `gpt-6-luna` | DEEP: `gpt-6.1-sol` → `gpt-6.1-terra`. STANDARD·LIGHT: `gpt-6-luna` → `gpt-6.1-terra` | 스킬 본문은 요청 수준이다. 고정은 `.codex/agents/*.toml`의 `model`·`model_reasoning_effort`와 `config.toml`의 `[agents]` 기본값으로 한다 |
+| Cursor | 모델 ID 지정 (예: `claude-opus-5-5[effort=high]`) | `composer-2.5` 또는 Sonnet 5.5 | Haiku 5.5·Luna 계열 | 조용히 대체되면 실제 모델을 확인하고 기록한다. 대체 모델이 등급을 못 맞추면 제한으로 보고한다 | `.cursor/agents/*.md` frontmatter `model`로 ID 고정 가능. 관리자 차단·플랜 외 모델은 조용히 대체되므로 실제 모델을 확인한다 |
+| Antigravity | `pro` 등급 서브에이전트 (메인은 Gemini 4 Argon/Carbon 또는 Opus 5.5를 사용자가 선택) | `flash` (Gemini 3.8 Flash) | `flash` | `pro` 지정이 안 먹히면 `flash`로 떨어진다. 판정 작업은 `pro`를 확인하고, 확인이 안 되면 제한으로 보고한다 | 서브에이전트 `model`은 `flash`/`pro` 등급만 지정할 수 있고 서드파티 모델은 지정할 수 없다. 메인 모델은 수동 선택만 가능하다. 개인 계정에서 `pro` 지정의 실효성은 미확인 보고가 있어 실제 모델을 확인한다 |
 
-출처: Claude Code 모델 구성·스킬·서브에이전트 공식 문서, Codex 모델·서브에이전트 공식 문서, Cursor 모델·서브에이전트 공식 문서, Antigravity 모델·서브에이전트 공식 문서 (전부 2026-11-11 확인).
+출처: Claude Code 모델 구성·스킬·서브에이전트 공식 문서, Codex 모델·서브에이전트 공식 문서, Cursor 모델·서브에이전트 공식 문서, Antigravity 모델·서브에이전트 공식 문서 (모델표 2026-11-11 확인, 폴백 체인 2026-11-13 확인).
 
 ## 3. 기록과 검증
 
@@ -35,4 +35,20 @@
 - 등급 배정을 했다는 사실은 토큰 절감의 증거가 아니다. 비용 효과는 기존 비용 계약대로 같은 범위·품질 조건의 실측으로만 주장한다.
 - 호스트가 라우팅을 지원하지 않거나 사용자가 모델을 직접 지정했으면 그 사실을 기록한다. 필수 단계의 등급을 보장할 수 없으면 해당 단계를 제한으로 보고하고, 보장되지 않은 라우팅을 적용했다고 쓰지 않는다.
 
-검토 기준: 판정 작업의 DEEP 배정 누락 0건, 실제 모델 미확인을 적용으로 보고한 사례 0건, 등급 변경 시 사유 기록 누락 0건을 사례별로 확인한다.
+검토 기준: 판정 작업의 DEEP 배정 누락 0건, 실제 모델 미확인을 적용으로 보고한 사례 0건, 등급 변경 시 사유 기록 누락 0건, 폴백 사용 시 기록 누락 0건을 사례별로 확인한다.
+
+## 4. 폴백 체인 (모델 은퇴·부재)
+
+- 등급이 본체고 모델은 예시다. 모델이 은퇴하거나 플랜에서 빠지면 위 표의 폴백대로 진행한다. 폴백은 모델을 바꾸는 것이지 등급을 바꾸는 것이 아니다. Codex DEEP를 Terra로 폴백해도 effort high와 DEEP 등급은 유지한다.
+- 폴백을 쓰면 작업 기록(회의록)에 원래 모델·폴백 모델·사유를 남긴다. 캡처 갱신이면 계획서에도 남긴다.
+- 판정 작업은 STANDARD 이하로 하향하는 폴백을 쓰지 않는다. 폴백 모델이 판정 등급을 못 맞추면 해당 단계를 제한으로 보고하고 기다린다.
+- 모델표 확인일은 최소 분기 1회 갱신한다. 은퇴 공지가 나오면 공지 즉시 갱신한다. Codex는 2026년에만 2개 모델이 은퇴했다(GPT-5.3-Codex-Spark 9/14, GPT-5.5 10/14).
+
+## 5. 공유 쿼터 운용 규칙
+
+쿼터는 호스트 안에서 공유된다. 다른 용도가 개발 쿼터를 갉아먹는다.
+
+- Claude: 채팅과 Claude Code가 세션·주간 상한을 공유한다. Opus 상한은 별도다. 큰 작업 전 `/usage`로 잔량을 확인한다. 큰 작업은 5시간 창 시작 직후에 시작한다. 일상 채팅은 Sonnet으로 하고 Opus는 판정·설계에만 쓴다.
+- Codex: 로컬과 클라우드가 같은 쿼터를 쓴다. 클라우드 작업은 가급적 Luna로 한다. 큰 작업 전 `/status`로 잔량을 확인한다. Fast 모드는 2.5배 빨리 소진하니 Plus에서는 꼭 필요할 때만 쓴다.
+- 한쪽 호스트의 쿼터가 막히면 다른 쪽 호스트로 이어간다. 쿼터는 구독별로 따로 돌기 때문이다. 등급은 유지한다.
+- 쿼터가 막히면 기다리는 것이 원칙이다. 판정 작업은 등급을 낮춰서 우회하지 않는다.
