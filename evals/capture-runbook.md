@@ -56,10 +56,14 @@ the expected answer.
    --head <head> --date <YYYY-MM-DD> --slug <slug>`.
 2. For each case, run one isolated actor session and collect its response
    object. Record the model used for each response (see the model-routing
-   contract: judgement steps are DEEP).
+   contract: judgement steps are DEEP). Record the per-model call count
+   and elapsed time for the renewal in the work-minutes record (P1).
+   Run cases in batches of at most 5; if interrupted, resume by batch
+   and record batch progress in the work-minutes record (P4).
 3. Run the independent reviewer session. All 19 cases must pass meaning
    review; a failed case gets a fresh actor session, not a repair of the
-   old response.
+   old response. Retry only a failed case, one grade higher, in a fresh
+   session; do not raise the whole run. Keep the reviewer at DEEP (P2).
 4. Assemble `evals/runs/<YYYY-MM-DD>-<slug>.json` with `review.response_sha256`
    and `snapshot_sha256` included.
 5. Point the workflow (`verify-rules-sync.yml`) and `evals/README.md` at the
