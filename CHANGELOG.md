@@ -16,21 +16,27 @@ titles are the PR titles verbatim. The current packaged version is
 - No code or policy change. The v1.2.0 tag and GitHub Release are planned
   after this change merges; they are not part of this entry.
 
+## 2026-11-13
+
+- #34 (2026-11-13) — docs: Pro/Plus subagent improvements P3·P5·P6·P7 (runbook + model routing)
+
 ## 2026-11-14
 
 - #36 (2026-11-14) — docs(promotion): register codex-security diff-scan as observe
 - #35 (2026-11-14) — docs(runbook): Pro/Plus P1, P2, P4 rules
-- #34 (2026-11-13) — docs: Pro/Plus subagent improvements P3·P5·P6·P7 (runbook + model routing)
 
 ## 2026-11-12
 
 - #33 (2026-11-12) — feat(automation): capture renewal runbook and plan generator (Phase 2)
-- #32 (2026-11-11) — feat(automation): security packet draft at observe stage (Phase 1)
 
 ## 2026-11-11
 
+- #32 (2026-11-11) — feat(automation): security packet draft at observe stage (Phase 1)
 - #31 (2026-11-11) — feat(engineering-squad): add model routing contract
 - #30 (2026-11-11) — feat(engineering-squad): add work minutes contract
+
+## 2026-11-10
+
 - #29 (2026-11-10) — docs: record adoption decisions for reposted Korean posts (2026-11-09)
 
 ## 2026-11-08
