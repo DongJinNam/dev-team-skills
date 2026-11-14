@@ -184,117 +184,22 @@ Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/
 
 ## 💻 Installation & Usage Guide
 
-### 1. Google Antigravity (setup guidance; host execution not verified here)
-
-#### Option A: One-Touch Setup Script (Recommended)
-Automatically link skills to Antigravity's discovery path (`.agents/skills/`) or machine-global path (`~/.gemini/config/skills/`):
-```powershell
-# Windows (PowerShell): Setup for current workspace
-.\scripts\setup-antigravity.ps1 -Target workspace
-
-# Or install globally for all Antigravity projects
-.\scripts\setup-antigravity.ps1 -Target global
-```
-```bash
-# macOS / Linux (Bash): Setup for current workspace
-bash scripts/setup-antigravity.sh workspace
-
-# Or install globally
-bash scripts/setup-antigravity.sh global
-```
-> 📖 Why skills aren't discovered out-of-the-box & how progressive disclosure works: [Antigravity Guide](docs/antigravity-guide.md)
-
-#### Option B: Marketplace Catalog or UI
-- Go to **Customizations** > **Marketplace** in Antigravity IDE.
-- Search for `dev-team-skills` and click **[Install]**.
-- Or use the one-click card in chat:
-  ```markdown
-  <plugin-card catalog-id="dev-team-skills"></plugin-card>
-  ```
-
-#### Option C: Global Plugins Directory
-```bash
-# Windows (PowerShell) & macOS/Linux (Bash)
-git clone https://github.com/DongJinNam/dev-team-skills.git ~/.gemini/config/plugins/dev-team-skills
-```
-
-#### Option C: Workspace Plugin
-- Clone into `.agents/plugins/dev-team-skills` in your project root, or declare it in `.agents/plugins.json` to share with your team via Git.
-
----
-
-### 2. Claude Code
-
-The Claude CLI was unavailable: installation and invocation are **NOT_RUN**. Check `claude --version` and `claude plugin --help` before using these commands. Reviewing the [official manifest documentation](https://code.claude.com/docs/en/plugins-reference) does not verify this package in use.
-
-#### Option A: Add Marketplace Catalog
+Any agent (79 supported by the `skills` CLI):
 
 ```bash
-# 1. Add repository as a Claude Code marketplace
-/plugin marketplace add DongJinNam/dev-team-skills
-
-# 2. Install dev-team-skills plugin
-/plugin install dev-team-skills@dev-team-skills-marketplace
+npx skills add DongJinNam/dev-team-skills
 ```
 
-> **Via CLI directly**:
-> ```bash
-> claude plugin marketplace add DongJinNam/dev-team-skills
-> claude plugin install dev-team-skills@dev-team-skills-marketplace
-> ```
+Single skill only: `npx skills add DongJinNam/dev-team-skills --skill engineering-squad` — see [Single-skill install](docs/single-skill-install.md). Known defect: `--skill engineering-squad` currently resolves to the compatibility entry and installs the whole `skills/` tree; read that document before relying on single-skill install.
 
-#### Option B: Validate Plugin Locally
-```bash
-claude plugin validate .
-```
+| Host | One line | Details |
+| --- | --- | --- |
+| Google Antigravity | `bash scripts/setup-antigravity.sh workspace` | [docs/hosts/antigravity.md](docs/hosts/antigravity.md) |
+| Claude Code | `claude plugin marketplace add DongJinNam/dev-team-skills` | [docs/hosts/claude.md](docs/hosts/claude.md) |
+| OpenAI Codex | `codex plugin marketplace add DongJinNam/dev-team-skills --ref main` | [docs/hosts/codex.md](docs/hosts/codex.md) |
+| Cursor [EXPERIMENTAL] | `bash scripts/setup-cursor.sh` | [docs/hosts/cursor.md](docs/hosts/cursor.md) |
 
-#### Option C: Project Memory Integration
-- Place `CLAUDE.md` in your project root to load the constitution, and call skills from `skills/`.
-
----
-
-### 3. OpenAI Codex
-
-Codex CLI `0.167.0` provides `plugin add`. The previous `plugin install` fails with `unrecognized subcommand`. Check `codex plugin --help` for other versions.
-
-#### Option A: Install a local checkout
-
-Run from the repository root. Use the same commands in PowerShell and Bash; local testing was performed on Windows.
-
-```bash
-codex plugin marketplace add .
-codex plugin add dev-team-skills@dev-team-skills-marketplace
-codex plugin list --json
-```
-
-For remote registration, replace the first command with `codex plugin marketplace add DongJinNam/dev-team-skills --ref main`. Only the local path was tested here. Inspect `codex plugin marketplace --help` for version-specific update commands for existing installations.
-
-#### Option B: Interactive Plugin Manager
-- In Codex CLI, type `/plugins` to open the interactive manager, search for `dev-team-skills`, and enable it.
-
-#### Option C: Project Agent Instructions
-- Use `AGENTS.md` for project instructions. Copying `CODEX.md` alone does not establish that skills are installed. Review and merge needed rules without overwriting existing project instructions.
-- Start a new session, inspect the actual skill list and source, and explicitly select `engineering-squad` for a small task. Record the loaded `SKILL.md` path, test results and additional guidance count before calling the whole workflow successful. Model invocation was not tested here. See the [official skills guide](https://learn.chatgpt.com/docs/build-skills) and [plugin packaging guide](https://developers.openai.com/plugins/build/plugins).
-
----
-
-### 4. Cursor [EXPERIMENTAL]
-
-> ⚠️ **Caution**: Cursor support is currently **experimental**. Subagent coordination and full harness verification are under active development. Do not assume 100% feature parity.
-
-#### Option A: One-Touch Setup Script
-Automatically installs Cursor's MDC rule (`.cursor/rules/engineering-squad.mdc`) and legacy `.cursorrules`:
-```powershell
-# Windows (PowerShell)
-.\scripts\setup-cursor.ps1
-```
-```bash
-# macOS / Linux (Bash)
-bash scripts/setup-cursor.sh
-```
-> 📖 Cursor limitations and usage guide: [Cursor Guide](docs/cursor-guide.md)
-
----
+skills.sh has no submission form: repositories appear automatically from install telemetry. As of 2026-11-14 the skills.sh search API returns 0 hits for this repository.
 
 ## 📝 Pull Request Template (Kakao Pay Style)
 
