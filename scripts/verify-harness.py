@@ -124,9 +124,12 @@ def main():
         check(path.relative_to(root).as_posix(), lambda path=path: skill(path))
 
     # Coded skill invariants (decision 2026-11-08, Phase 1 item A1).
-    # SKL-001: a SKILL.md lives only at skills/SKILL.md (compatibility
-    # entry) or skills/<folder>/SKILL.md, never nested deeper.
-    # SKL-002: a skill folder's frontmatter name equals the folder name.
+    # SKL-001: a SKILL.md lives only at skills/<folder>/SKILL.md, never
+    # nested deeper; the legacy compatibility entry lives outside skills/
+    # at .compat/skills/SKILL.md and is not a skill.
+    # SKL-002: every SKILL.md under skills/ has frontmatter name equal to
+    # its folder name (skills/<folder>/SKILL.md); a top-level
+    # skills/SKILL.md fails because its name would have to equal "SKILL.md".
     # SKL-003: relative links in a SKILL.md resolve to existing files.
     # CAT-001: skills/catalog.json exists and matches the catalog schema.
     # CAT-002: the committed catalog equals a fresh filesystem derivation;
@@ -144,7 +147,7 @@ def main():
         for path in skills:
             parts = path.relative_to(skills_root).parts
             data = parsed.get(path)
-            if len(parts) == 2 and data is not None and data.get("name") != parts[0]:
+            if data is not None and data.get("name") != parts[0]:
                 raise ValueError(
                     f"{path.relative_to(root).as_posix()}: frontmatter name "
                     f"{data.get('name')!r} does not match folder {parts[0]!r}")

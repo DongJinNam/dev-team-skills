@@ -3,8 +3,8 @@
 
 The catalog is derived, never hand-edited: one entry per skills/<name>/
 folder that contains a SKILL.md, keyed by that file's frontmatter. The
-compatibility entry at skills/SKILL.md is not a separate skill and is
-excluded. verify-harness.py regenerates the catalog in memory (rules
+compatibility entry at .compat/skills/SKILL.md is not a separate skill and
+is excluded. verify-harness.py regenerates the catalog in memory (rules
 CAT-001/CAT-002) and fails when the committed file has drifted.
 """
 
