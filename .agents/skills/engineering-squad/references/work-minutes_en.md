@@ -58,7 +58,7 @@ Verdict: complete | stopped | incomplete
 | Documentation/local edit without external behavior or trust-boundary changes | Short form: three-sentence summary + verdict + per-role table only, within 10 lines |
 | User feature, API or agent-behavior change; product or deployment change | Full format |
 
-The tier boundary matches the task-size activation table in SKILL_en.md. If writing the minutes grows larger than the work, drop to the short form.
+The tier boundary matches the task-size activation table in SKILL.md. If writing the minutes grows larger than the work, drop to the short form.
 
 ## 5. Pilot and revisit
 
