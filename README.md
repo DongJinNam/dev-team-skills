@@ -2,10 +2,49 @@
 
 [English](README.md) | [한국어](README_ko.md)
 
-> A cross-platform (Windows & macOS) collection of AI coding agent skills and rules, inspired by Andrej Karpathy's engineering philosophy and practical senior engineering principles.  
-> It helps you run a task-sized engineering squad with six accountable owners across **Google Antigravity**, **Claude Code**, **OpenAI Codex**, and experimental **Cursor** integration. Host-specific verification and comparison limits are recorded below.
+**A six-owner engineering squad for your coding agent — with a deterministic harness that
+proves the package is intact before your agent runs it.**
+
+Tell your agent "build this feature". It plans, implements, tests, gets an independent
+security review, and hands back one page of evidence — the same six owners every time.
+
+```
+$ claude   # or codex / antigravity / cursor
+> engineering-squad로 이 기능 구현해줘
+  Tech Lead      → scope, plan, cost tier
+  Engineering    → implement (1 file, stdlib first)
+  Quality        → AC → test → actual result
+  Security       → independent PASS on current head
+  Result         → 3 tests added, 0 new deps, evidence in docs/
+```
+
+**Install (one line, pick your host)**
+
+| Host | Command |
+|---|---|
+| Claude Code | `claude plugin marketplace add DongJinNam/dev-team-skills` then `claude plugin install dev-team-skills@dev-team-skills-marketplace` |
+| Codex CLI | `codex plugin marketplace add DongJinNam/dev-team-skills --ref main` then `codex plugin add dev-team-skills@dev-team-skills-marketplace` |
+| Any agent (79) | `npx skills add DongJinNam/dev-team-skills` |
+| Antigravity / Cursor | `bash scripts/setup-antigravity.sh workspace` / `bash scripts/setup-cursor.sh` |
+
+**Evidence, not promises** — matched 4-arm pilot on the same model (3 tasks each):
+vs Superpowers −15.6% tokens / −7.4% time; vs ECC −20.9% / −14.3%. Small sample, local skill
+layer only, defaults were cheaper. [Protocol](evals/skill-comparison.md) · [Results](docs/decisions/2026-11-07-four-arm-results.md)
+
+**Why not Superpowers / BMAD / Spec-Kit** — this repo is not a process owner. It assigns six
+accountable owners to the work you already do, and each owner hands back evidence instead of
+a ceremony. Superpowers and Spec-Kit define how you plan and build; dev-team-skills defines
+who is accountable for scope, implementation, tests, security, and delivery on each task.
+If you already have a workflow, the squad slots into it; if you don't, six owners are the
+smallest team that still covers planning, code, tests, and an independent security check.
+
+![Demo: engineering-squad runs a feature through six owners](assets/demo.gif)
+<!-- Social preview: assets/social.png (arrives with P0-5; set as the repo social preview in Settings) -->
 
 ---
+
+<details>
+<summary>Verification status, limits, and pilot results</summary>
 
 ## Features and verification status
 
@@ -27,6 +66,11 @@ This compares the local skill layer only. Some Windows policy reads had encoding
 The additional [benchmark calculator and input](evals/comparative-benchmark.md) from main remain available. Recomputing supplied numbers does not authenticate model executions or provider usage; this merge does not validate that dataset's performance claims. Antigravity setup and experimental Cursor guidance are retained below.
 
 ---
+
+</details>
+
+<details>
+<summary>Full guide: constitution, skills, squad, harness, installation, PR template</summary>
 
 ## 🏛️ Constitution & Principles
 
@@ -273,3 +317,5 @@ Organize the six owners and delegated capabilities as **Tier 1 Tech Lead → Tie
 
 ## 📜 License
 MIT License
+
+</details>
