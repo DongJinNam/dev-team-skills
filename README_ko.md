@@ -2,10 +2,48 @@
 
 [English](README.md) | [한국어](README_ko.md)
 
-> Andrej Karpathy의 엔지니어링 철학과 실용주의 시니어 개발 원칙을 기반으로 구축된 크로스 플랫폼(Windows/macOS) AI 코딩 에이전트 스킬 & 룰 모음 저장소입니다.  
-> **Google Antigravity**, **Claude Code**, **OpenAI Codex** 및 실험적 **Cursor** 연동을 위한 6개 책임 역할과 작업별 전문 역량을 제공합니다. 호스트별 검증 상태와 비교 결과의 한계는 아래에 구분해 기록합니다.
+**코딩 에이전트용 6인 책임자 엔지니어링 스쿼드 — 에이전트가 실행하기 전에 패키지가
+온전한지 증명하는 결정론적 하네스 포함.**
+
+에이전트에게 "이 기능 만들어줘"라고 말해라. 기획하고, 구현하고, 테스트하고, 독립 보안
+검수를 받고, 증거 한 페이지를 돌려준다 — 매번 같은 6명의 책임자가.
+
+```
+$ claude   # 또는 codex / antigravity / cursor
+> engineering-squad로 이 기능 구현해줘
+  Tech Lead      → 범위, 계획, 비용 등급
+  Engineering    → 구현 (1개 파일, 표준 라이브러리 우선)
+  Quality        → 완료 기준 → 테스트 → 실제 결과
+  Security       → 최신 head 독립 PASS
+  Result         → 테스트 3개 추가, 신규 의존성 0개, 증거는 docs/에
+```
+
+**설치 (한 줄, 호스트 선택)**
+
+| 호스트 | 명령 |
+|---|---|
+| Claude Code | `claude plugin marketplace add DongJinNam/dev-team-skills` 후 `claude plugin install dev-team-skills@dev-team-skills-marketplace` |
+| Codex CLI | `codex plugin marketplace add DongJinNam/dev-team-skills --ref main` 후 `codex plugin add dev-team-skills@dev-team-skills-marketplace` |
+| 모든 에이전트 (79종) | `npx skills add DongJinNam/dev-team-skills` |
+| Antigravity / Cursor | `bash scripts/setup-antigravity.sh workspace` / `bash scripts/setup-cursor.sh` |
+
+**약속이 아니라 증거** — 같은 모델의 4-arm 예비 비교(과제당 3개):
+Superpowers 대비 토큰 −15.6% / 시간 −7.4%, ECC 대비 −20.9% / −14.3%. 작은 표본, 로컬 스킬
+계층만 비교, 기본 설정이 더 쌌다. [절차](evals/skill-comparison.md) · [결과](docs/decisions/2026-11-07-four-arm-results.md)
+
+**Superpowers / BMAD / Spec-Kit과 뭐가 다른가** — 이 저장소는 프로세스를 소유하지 않는다.
+이미 하는 일에 6명의 책임자를 붙이고, 각 책임자는 의식이 아니라 증거를 돌려준다.
+Superpowers와 Spec-Kit이 계획하고 만드는 방법을 정한다면, dev-team-skills는 과제마다 범위·
+구현·테스트·보안·배포의 책임자가 누구인지 정한다. 이미 갖춘 워크플로가 있으면 스쿼드가
+그 안에 들어가고, 없으면 6명의 책임자가 기획·코드·테스트·독립 보안 검수를 가리는 가장 작은 팀이다.
+
+![데모: engineering-squad가 6명의 책임자로 기능을 실행한다](assets/demo.gif)
+<!-- 소셜 미리보기: assets/social.png (P0-5에서 들어온다. 저장소 Settings의 소셜 미리보기로 설정) -->
 
 ---
+
+<details>
+<summary>검증 상태, 한계, 예비 비교 결과</summary>
 
 ## 제공 기능과 검증 상태
 
@@ -27,6 +65,11 @@
 main에서 추가한 [벤치마크 집계기와 입력](evals/comparative-benchmark.md)도 유지합니다. 입력 수치의 재계산은 실제 모델 실행·공급자 사용량의 출처를 인증하지 않으며, 이번 병합에서 해당 데이터의 성과 주장을 검증한 것은 아닙니다. Antigravity 설치와 실험적 Cursor 안내는 아래에 유지했습니다.
 
 ---
+
+</details>
+
+<details>
+<summary>전체 안내: 헌법, 스킬, 스쿼드, 하네스, 설치, PR 템플릿</summary>
 
 ## 🏛️ Constitution & Principles (기본 행동 헌법)
 
@@ -276,3 +319,5 @@ bash scripts/setup-cursor.sh
 
 ## 📜 License
 MIT License
+
+</details>
