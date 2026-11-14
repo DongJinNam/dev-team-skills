@@ -1,0 +1,53 @@
+name: Skill proposal
+description: Propose a new skill or a substantial change to an existing one.
+title: "[skill] "
+labels: ["skill-proposal"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this skill solve?
+      description: The recurring task or failure this skill would handle, and who hits it.
+      placeholder: Every feature PR needs the same...
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Proposed scope
+      description: What the skill does, what it explicitly does not do, and when an agent should invoke it.
+      placeholder: |
+        Does: ...
+        Does not: ...
+        Invoke when: ...
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source and license
+      description: Is this original work, or adapted from an external skill? Name the source, its license, and what changes. See the adoption contract in skills/engineering-squad/references/tool-adoption.md.
+      placeholder: Original / adapted from <source> (<license>)
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence it works
+      description: A worked example, a test case, or measured results. Untested proposals stay proposals.
+      placeholder: Example input, expected output, or test plan.
+    validations:
+      required: false
+  - type: dropdown
+    id: host
+    attributes:
+      label: Hosts it must work on
+      multiple: true
+      options:
+        - Claude Code
+        - Codex
+        - Antigravity
+        - Cursor
+        - Host-independent
+    validations:
+      required: true

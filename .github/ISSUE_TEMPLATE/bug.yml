@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a problem with a skill, the harness, or the documentation.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What went wrong?
+      description: What happened, and what did you expect instead?
+      placeholder: The harness fails on Windows when...
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Commands run, files involved, and the smallest input that shows the problem.
+      placeholder: |
+        1. python -m pip install -r scripts/requirements-harness.txt
+        2. ./scripts/verify-harness.sh
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, host (Claude Code / Codex / Antigravity / Cursor), and the commit you tested.
+      placeholder: |
+        OS: macOS 15 / Windows 11
+        Python: 3.12
+        Host: Claude Code
+        Commit: 40e0195
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Actual output, log excerpt, or error message. Paste the text, not a screenshot alone.
+      placeholder: Paste the failing output here.
+    validations:
+      required: false
+  - type: checkboxes
+    id: security
+    attributes:
+      label: Security check
+      options:
+        - label: This is not a vulnerability report. (If it is, report it privately per SECURITY.md instead of opening this issue.)
+          required: true
