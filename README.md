@@ -8,6 +8,8 @@ proves the package is intact before your agent runs it.**
 Tell your agent "build this feature". It plans, implements, tests, gets an independent
 security review, and hands back one page of evidence — the same six owners every time.
 
+![Demo: real terminal run — verify-harness PASS, skill discovery (14 skills, 0 errors), mirror check](assets/demo.gif)
+
 ```
 $ claude   # or codex / antigravity / cursor
 > engineering-squad로 이 기능 구현해줘
@@ -18,6 +20,8 @@ $ claude   # or codex / antigravity / cursor
   Result         → 3 tests added, 0 new deps, evidence in docs/
 ```
 
+*Example (not a real run).*
+
 **Install (one line, pick your host)**
 
 | Host | Command |
@@ -26,6 +30,8 @@ $ claude   # or codex / antigravity / cursor
 | Codex CLI | `codex plugin marketplace add DongJinNam/dev-team-skills --ref main` then `codex plugin add dev-team-skills@dev-team-skills-marketplace` |
 | Any agent (79) | `npx skills add DongJinNam/dev-team-skills` |
 | Antigravity / Cursor | `bash scripts/setup-antigravity.sh workspace` / `bash scripts/setup-cursor.sh` |
+
+**Hooks & commands (Claude Code only)** — SessionStart injects the entry rules; Stop blocks the turn when `verify-harness` fails. Slash commands: `/dev-team-skills:squad`, `/review`, `/verify`, `/ship`. Other hosts ignore the hooks. Disable by deleting `hooks/hooks.json` from the installed plugin copy.
 
 **Evidence, not promises** — matched 4-arm pilot on the same model (3 tasks each):
 vs Superpowers −15.6% tokens / −7.4% time; vs ECC −20.9% / −14.3%. Small sample, local skill
@@ -38,7 +44,6 @@ who is accountable for scope, implementation, tests, security, and delivery on e
 If you already have a workflow, the squad slots into it; if you don't, six owners are the
 smallest team that still covers planning, code, tests, and an independent security check.
 
-![Demo: engineering-squad runs a feature through six owners](assets/demo.gif)
 <!-- Social preview: assets/social.png (arrives with P0-5; set as the repo social preview in Settings) -->
 
 ---
@@ -121,7 +126,7 @@ Fifteen former role names (fourteen specialists plus Lead) map to six owners. Th
 
 A documentation edit defaults to Lead combining duties plus independent Security; a feature activates Engineering/Quality; product or operational changes add the relevant owner. Assign narrow specialists only for distinct outputs or expertise. Required checks remain even when roles are combined.
 
-Read the [canonical workflow](skills/engineering-squad/SKILL_en.md), [capability and legacy-name mapping](skills/engineering-squad/references/roles_en.md), and [decision governance](skills/engineering-squad/references/decision-governance_en.md). Every PR still needs current-head/base independent security PASS before merge; unresolved applicable compliance violations remain blocking. Keep kickoff/stop rules and user appeals.
+Read the [canonical workflow](skills/engineering-squad/SKILL.md), [capability and legacy-name mapping](skills/engineering-squad/references/roles_en.md), and [decision governance](skills/engineering-squad/references/decision-governance_en.md). Every PR still needs current-head/base independent security PASS before merge; unresolved applicable compliance violations remain blocking. Keep kickoff/stop rules and user appeals.
 
 External references are candidates, not proof of use. The [adoption contract](skills/engineering-squad/references/tool-adoption_en.md) separates DISCOVERED / INSPECTED / AVAILABLE / APPLIED / VERIFIED and actual PASS/FAIL/NOT_RUN evidence. The [dated shortlist](skills/engineering-squad/references/external-skill-references_en.md) covers Superpowers, skill-creator, Playwright CLI and the Agent Skills specification. Read only what the task needs.
 
@@ -141,7 +146,7 @@ The repository provides platform-specific metadata. Local structure checks do no
 
 ### 🔍 Deterministic Harness Verification (Cross-Platform)
 
-Both shell entry points call the same Python validator. It parses all four JSON manifests (nonblank string `name`/`description`, and an object array `plugins` for the marketplace), safely parses each skill's leading and closed YAML frontmatter, rejects duplicate keys, and checks SHA-256 byte synchronization across the five constitution files. If any English constitution file is present, all five English files must exist and match too. It also enforces coded skill invariants — SKL-001 skill file locations, SKL-002 frontmatter name matching the folder, SKL-003 relative links resolving — and verifies that `skills/catalog.json`, generated from the skill folders by `scripts/build-catalog.py`, matches its schema (CAT-001) and has not drifted from the folders (CAT-002). A dry-run materialize diff (MIR-001) also checks that the committed `.agents/skills` mirror equals what the setup script would produce from `skills/`, byte for byte, without writing anything.
+Both shell entry points call the same Python validator. It parses all four JSON manifests (nonblank string `name`/`description`, and an object array `plugins` for the marketplace), safely parses each skill's leading and closed YAML frontmatter, rejects duplicate keys, and checks SHA-256 byte synchronization across the five constitution files. If any English constitution file is present, all five English files must exist and match too. It also enforces coded skill invariants — SKL-001 skill file locations, SKL-002 frontmatter name matching the folder, SKL-003 relative links resolving, SKL-004 relative anchors resolving to headings — and verifies that `skills/catalog.json`, generated from the skill folders by `scripts/build-catalog.py`, matches its schema (CAT-001) and has not drifted from the folders (CAT-002). A dry-run materialize diff (MIR-001) also checks that the committed `.agents/skills` mirror equals what the setup script would produce from `skills/`, byte for byte, without writing anything.
 
 Requires **Python 3.10+** and **PyYAML**. JSON and hashing use the standard library; YAML uses a safe parser rather than a handwritten YAML implementation. Install the pinned dependency with the same interpreter the launcher uses (`python3`, then `python`, then Windows `py -3`):
 
@@ -157,7 +162,7 @@ python -m pip install -r scripts/requirements-harness.txt
 ./scripts/verify-harness.sh
 ```
 
-`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. Skills require UTF-8 without BOM to match Codex discovery; both `SKILL.md` and `SKILL_en.md` are checked. LF/CRLF and paths with spaces or Korean characters are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS. On Windows, run Bash tests from Git Bash so the subprocess uses Git Bash rather than WSL's `bash.exe`; from PowerShell select `HARNESS_LAUNCHER=pwsh`:
+`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. Skills require UTF-8 without BOM to match Codex discovery; both `SKILL.md` and `SKILL_ko.md` are checked. LF/CRLF and paths with spaces or Korean characters are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS. On Windows, run Bash tests from Git Bash so the subprocess uses Git Bash rather than WSL's `bash.exe`; from PowerShell select `HARNESS_LAUNCHER=pwsh`:
 
 ```bash
 python -m unittest discover -s tests -v

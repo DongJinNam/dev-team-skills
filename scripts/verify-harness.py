@@ -120,37 +120,80 @@ def main():
             parsed[path] = skill(path)
         check(path.relative_to(root).as_posix(), capture)
 
-    for path in sorted((root / "skills").rglob("SKILL_en.md")):
-        check(path.relative_to(root).as_posix(), lambda path=path: skill(path))
+    # SKILL_ko.md is the Korean translation of the same skill, not a
+    # separate skill: same folder, same frontmatter name, same link and
+    # anchor rules. SKILL_en.md no longer exists (English is the
+    # canonical SKILL.md), so there is no English-variant check.
+    skills_ko = sorted((root / "skills").rglob("SKILL_ko.md"))
+    for path in skills_ko:
+        def capture_ko(path=path):
+            parsed[path] = skill(path)
+        check(path.relative_to(root).as_posix(), capture_ko)
+
+    skill_files = skills + skills_ko
 
     # Coded skill invariants (decision 2026-11-08, Phase 1 item A1).
-    # SKL-001: a SKILL.md lives only at skills/SKILL.md (compatibility
-    # entry) or skills/<folder>/SKILL.md, never nested deeper.
-    # SKL-002: a skill folder's frontmatter name equals the folder name.
+    # SKL-001: a SKILL.md lives only at skills/<folder>/SKILL.md, never
+    # nested deeper; the legacy compatibility entry lives outside skills/
+    # at .compat/skills/SKILL.md and is not a skill. The same location
+    # rule applies to SKILL_ko.md.
+    # SKL-002: every SKILL.md under skills/ has frontmatter name equal to
+    # its folder name (skills/<folder>/SKILL.md); a top-level
+    # skills/SKILL.md fails because its name would have to equal "SKILL.md".
+    # The same name rule applies to SKILL_ko.md.
     # SKL-003: relative links in a SKILL.md resolve to existing files.
+    # The same link rule applies to SKILL_ko.md.
+    # SKL-004: relative anchors (#...) in a SKILL.md or SKILL_ko.md
+    # resolve to a heading in the target file, using GitHub anchor
+    # rules (lowercase, punctuation stripped, spaces become hyphens;
+    # repeated headings get -1, -2 suffixes).
     # CAT-001: skills/catalog.json exists and matches the catalog schema.
     # CAT-002: the committed catalog equals a fresh filesystem derivation;
     # regenerate with scripts/build-catalog.py instead of editing it.
     skills_root = root / "skills"
     link_pattern = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+    anchor_punct = re.compile(
+        r"[\u2000-\u206f\u2e00-\u2e7f'!\"#$%&()*+,./:;<=>?@\[\\\]^`{|}~]")
+    heading_pattern = re.compile(r"#{1,6}\s+(.*)")
+
+    def github_anchor(heading):
+        text = re.sub(r"<[^>]+>", "", heading).strip().lower()
+        text = anchor_punct.sub("", text)
+        return re.sub(r"\s+", "-", text)
+
+    def heading_anchors(path):
+        seen = {}
+        anchors = set()
+        for line in path.read_text(encoding="utf-8-sig").splitlines():
+            match = heading_pattern.match(line)
+            if not match:
+                continue
+            slug = github_anchor(match.group(1))
+            if slug in seen:
+                seen[slug] += 1
+                slug = f"{slug}-{seen[slug]}"
+            else:
+                seen[slug] = 0
+            anchors.add(slug)
+        return anchors
 
     def skl001():
-        for path in skills:
+        for path in skill_files:
             if len(path.relative_to(skills_root).parts) > 2:
                 raise ValueError(
                     f"{path.relative_to(root).as_posix()} is nested below a skill folder")
 
     def skl002():
-        for path in skills:
+        for path in skill_files:
             parts = path.relative_to(skills_root).parts
             data = parsed.get(path)
-            if len(parts) == 2 and data is not None and data.get("name") != parts[0]:
+            if data is not None and data.get("name") != parts[0]:
                 raise ValueError(
                     f"{path.relative_to(root).as_posix()}: frontmatter name "
                     f"{data.get('name')!r} does not match folder {parts[0]!r}")
 
     def skl003():
-        for path in skills:
+        for path in skill_files:
             text = path.read_text(encoding="utf-8-sig")
             for target in link_pattern.findall(text):
                 target = target.strip().strip("<>").split("#", 1)[0]
@@ -159,6 +202,25 @@ def main():
                 if not (path.parent / target).exists():
                     raise ValueError(
                         f"{path.relative_to(root).as_posix()}: broken relative link {target!r}")
+
+    def skl004():
+        for path in skill_files:
+            text = path.read_text(encoding="utf-8-sig")
+            for target in link_pattern.findall(text):
+                target = target.strip().strip("<>")
+                if "#" not in target:
+                    continue
+                file_part, fragment = target.split("#", 1)
+                if not fragment or "://" in target or target.startswith("mailto:"):
+                    continue
+                resolved = (path.parent / file_part) if file_part else path
+                if not resolved.exists() or resolved.suffix != ".md":
+                    continue  # SKL-003 reports a missing file; anchors
+                    # only apply to Markdown targets.
+                if fragment not in heading_anchors(resolved):
+                    raise ValueError(
+                        f"{path.relative_to(root).as_posix()}: broken relative anchor "
+                        f"{target!r}")
 
     def catalog_data():
         data = json.loads((skills_root / "catalog.json").read_text(encoding="utf-8-sig"),
@@ -222,6 +284,7 @@ def main():
         check("SKL-001 skill locations", skl001)
         check("SKL-002 skill name matches folder", skl002)
         check("SKL-003 skill relative links", skl003)
+        check("SKL-004 skill relative anchors", skl004)
         check("CAT-001 skills/catalog.json schema", cat001)
         check("CAT-002 skills/catalog.json is current", cat002)
         check("MIR-001 .agents/skills mirror is current", mir001)

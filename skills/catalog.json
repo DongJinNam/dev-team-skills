@@ -1,7 +1,7 @@
 {
   "catalog_version": 1,
   "generated_by": "scripts/build-catalog.py - do not edit by hand",
-  "skill_count": 8,
+  "skill_count": 9,
   "skills": [
     {
       "description": "Use this skill for product planning, ideation, requirement refinement, problem discovery, and market/technical research using structured brainstorming frameworks and research subagents.",
@@ -42,6 +42,11 @@
       "description": "Use this skill to adopt the mindset of the laziest, pragmatically brilliant senior dev: \"The best code is the code you never wrote.\" Also use when compressing report conclusions or executive summaries without losing verdicts, actions, evidence, or uncertainty.",
       "name": "ponytail",
       "path": "skills/ponytail/SKILL.md"
+    },
+    {
+      "description": "Use when the user asks in plain language to build, fix, review, verify, or ship something (\"fix this bug\", \"build this feature\", \"이 버그 고쳐줘\", \"이 기능 만들어줘\") without naming a skill. Entry point for the six-owner engineering squad.",
+      "name": "using-dev-team-skills",
+      "path": "skills/using-dev-team-skills/SKILL.md"
     }
   ]
 }

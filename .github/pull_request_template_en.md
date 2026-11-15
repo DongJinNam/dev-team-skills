@@ -50,6 +50,7 @@
 - [ ] Ran local health check script (`verify-health.ps1` or `verify-health.sh`) and it passed.
 - [ ] Cleaned up temporary files and debug logs.
 - [ ] Checked `git diff` to make sure there are no unintended changes.
+- [ ] Added a `.changelog/` fragment for user-visible changes (skip for docs-only or test-only PRs).
 
 
 ## Required Security Review — Merge Gate

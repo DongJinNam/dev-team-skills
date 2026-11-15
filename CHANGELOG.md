@@ -5,7 +5,7 @@ merge dates (UTC) of each pull request, taken from the GitHub PR list;
 titles are the PR titles verbatim. The current packaged version is
 1.1.0 (`plugin.json`).
 
-## Unreleased
+## [Unreleased]
 
 - Governance files: `CONTRIBUTING.md`, `SECURITY.md`,
   `CODE_OF_CONDUCT.md`, this changelog, and issue templates for bugs,
@@ -15,6 +15,12 @@ titles are the PR titles verbatim. The current packaged version is
   `.github/ISSUE_TEMPLATE/adoption.yml`).
 - No code or policy change. The v1.2.0 tag and GitHub Release are planned
   after this change merges; they are not part of this entry.
+
+### Added
+- Entry layer: `using-dev-team-skills` skill, `/squad` `/review` `/verify` `/ship` commands, SessionStart bootstrap hook and Stop verify-harness gate (Claude Code only)
+- English-first SKILL.md with `SKILL_ko.md` (P0-3), `scripts/adapt.py` single-source mirror generation
+- Real `assets/demo.gif` (measured verification run) and `docs/benchmark.md` reproduction guide
+- Release automation: `.changelog/` fragments, aggregate and release workflows
 
 ## 2026-11-13
 

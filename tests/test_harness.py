@@ -174,9 +174,38 @@ class HarnessTests(unittest.TestCase):
         self.write("skills/example/SKILL.md", "\ufeff" + VALID_SKILL)
         self.run_harness(False)
 
-    def test_english_skill_variant_is_also_validated(self):
-        self.write("skills/example/SKILL_en.md", "\ufeff" + VALID_SKILL)
+    def test_korean_skill_variant_is_also_validated(self):
+        self.write("skills/example/SKILL_ko.md", "\ufeff" + VALID_SKILL)
         self.run_harness(False)
+
+    def test_korean_skill_name_must_match_folder(self):
+        self.write("skills/example/SKILL_ko.md",
+                   VALID_SKILL.replace("name: example", "name: other"))
+        self.run_harness(False)
+
+    def test_korean_skill_broken_link_fails(self):
+        self.write("skills/example/SKILL_ko.md",
+                   VALID_SKILL + "\n[missing](./no-such-file.md)\n")
+        self.run_harness(False)
+
+    def test_broken_anchor_fails(self):
+        self.write("skills/example/references/roles.md",
+                   "# 책임 역할과 전문 역량\n\n"
+                   "## 프로젝트 시작 전 필수 질문 및 중단 계약\n")
+        self.write("skills/example/SKILL.md",
+                   VALID_SKILL + "\n[contract](./references/roles.md"
+                   "#mandatory-pre-project-questions-and-stop-contract)\n")
+        self.run_harness(False)
+
+    def test_valid_anchor_passes(self):
+        self.write("skills/example/references/roles.md",
+                   "# 책임 역할과 전문 역량\n\n"
+                   "## 프로젝트 시작 전 필수 질문 및 중단 계약\n")
+        self.write("skills/example/SKILL.md",
+                   VALID_SKILL + "\n[contract](./references/roles.md"
+                   "#프로젝트-시작-전-필수-질문-및-중단-계약)\n")
+        self.sync_mirror()
+        self.run_harness(True)
 
     def test_mirror_drift_fails(self):
         target = self.root / ".agents/skills/example/SKILL.md"

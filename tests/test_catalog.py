@@ -54,6 +54,18 @@ class CatalogTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             CATALOG.build_catalog(self.root)
 
+    def test_korean_variant_name_must_match(self):
+        self.write("skills/one/SKILL.md", SKILL.format(name="one", description="1."))
+        self.write("skills/one/SKILL_ko.md", SKILL.format(name="other", description="1."))
+        with self.assertRaises(ValueError):
+            CATALOG.build_catalog(self.root)
+
+    def test_matching_korean_variant_is_accepted(self):
+        self.write("skills/one/SKILL.md", SKILL.format(name="one", description="1."))
+        self.write("skills/one/SKILL_ko.md", SKILL.format(name="one", description="1."))
+        catalog = CATALOG.build_catalog(self.root)
+        self.assertEqual([e["name"] for e in catalog["skills"]], ["one"])
+
     def test_blank_description_is_rejected(self):
         self.write("skills/bad/SKILL.md", SKILL.format(name="bad", description=""))
         with self.assertRaises(ValueError):

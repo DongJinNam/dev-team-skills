@@ -8,6 +8,8 @@
 에이전트에게 "이 기능 만들어줘"라고 말해라. 기획하고, 구현하고, 테스트하고, 독립 보안
 검수를 받고, 증거 한 페이지를 돌려준다 — 매번 같은 6명의 책임자가.
 
+![데모: 실제 터미널 실행 — verify-harness PASS, 스킬 발견(14개, 오류 0개), 미러 검사](assets/demo.gif)
+
 ```
 $ claude   # 또는 codex / antigravity / cursor
 > engineering-squad로 이 기능 구현해줘
@@ -18,6 +20,8 @@ $ claude   # 또는 codex / antigravity / cursor
   Result         → 테스트 3개 추가, 신규 의존성 0개, 증거는 docs/에
 ```
 
+*예시(실행 아님).*
+
 **설치 (한 줄, 호스트 선택)**
 
 | 호스트 | 명령 |
@@ -26,6 +30,8 @@ $ claude   # 또는 codex / antigravity / cursor
 | Codex CLI | `codex plugin marketplace add DongJinNam/dev-team-skills --ref main` 후 `codex plugin add dev-team-skills@dev-team-skills-marketplace` |
 | 모든 에이전트 (79종) | `npx skills add DongJinNam/dev-team-skills` |
 | Antigravity / Cursor | `bash scripts/setup-antigravity.sh workspace` / `bash scripts/setup-cursor.sh` |
+
+**훅·커맨드 (Claude Code만)** — SessionStart가 진입 규칙을 주입하고, Stop은 `verify-harness` 실패 시 종료를 막는다. 슬래시 커맨드: `/dev-team-skills:squad`, `/review`, `/verify`, `/ship`. 다른 호스트는 훅을 무시한다. 끄려면 설치된 플러그인 복사본에서 `hooks/hooks.json`을 지운다.
 
 **약속이 아니라 증거** — 같은 모델의 4-arm 예비 비교(과제당 3개):
 Superpowers 대비 토큰 −15.6% / 시간 −7.4%, ECC 대비 −20.9% / −14.3%. 작은 표본, 로컬 스킬
@@ -37,7 +43,6 @@ Superpowers와 Spec-Kit이 계획하고 만드는 방법을 정한다면, dev-te
 구현·테스트·보안·배포의 책임자가 누구인지 정한다. 이미 갖춘 워크플로가 있으면 스쿼드가
 그 안에 들어가고, 없으면 6명의 책임자가 기획·코드·테스트·독립 보안 검수를 가리는 가장 작은 팀이다.
 
-![데모: engineering-squad가 6명의 책임자로 기능을 실행한다](assets/demo.gif)
 <!-- 소셜 미리보기: assets/social.png (P0-5에서 들어온다. 저장소 Settings의 소셜 미리보기로 설정) -->
 
 ---
@@ -140,7 +145,7 @@ main에서 추가한 [벤치마크 집계기와 입력](evals/comparative-benchm
 
 ### 🔍 결정론적 하네스 무결성 검증 (Cross-Platform)
 
-Bash와 PowerShell이 같은 Python 검증기를 호출합니다. JSON 매니페스트 4개의 문법과 비어 있지 않은 문자열 `name`·`description`, 마켓플레이스 `plugins`의 객체 배열 여부를 검사합니다. 각 스킬은 파일 첫머리에 닫힌 YAML Frontmatter가 있어야 하며, 안전한 파서로 `name`·`description`을 확인하고 중복 키를 거부합니다. 헌법 5개 파일은 SHA-256으로 바이트 단위 동기화를 검사하고, 영문 파일이 하나라도 있으면 영문 5개도 모두 존재하고 일치해야 합니다. 코드가 붙은 스킬 불변 규칙도 검사합니다. SKL-001은 스킬 파일 위치, SKL-002는 frontmatter 이름과 폴더 이름의 일치, SKL-003은 상대 링크 무결성입니다. `scripts/build-catalog.py`가 스킬 폴더에서 생성하는 `skills/catalog.json`은 스키마(CAT-001)와 폴더와의 drift 여부(CAT-002)를 검사합니다. dry-run materialize diff(MIR-001)는 아무것도 쓰지 않고, 커밋된 `.agents/skills` 미러가 setup 스크립트가 `skills/`에서 만들 결과와 바이트 단위로 같은지 검사합니다.
+Bash와 PowerShell이 같은 Python 검증기를 호출합니다. JSON 매니페스트 4개의 문법과 비어 있지 않은 문자열 `name`·`description`, 마켓플레이스 `plugins`의 객체 배열 여부를 검사합니다. 각 스킬은 파일 첫머리에 닫힌 YAML Frontmatter가 있어야 하며, 안전한 파서로 `name`·`description`을 확인하고 중복 키를 거부합니다. 헌법 5개 파일은 SHA-256으로 바이트 단위 동기화를 검사하고, 영문 파일이 하나라도 있으면 영문 5개도 모두 존재하고 일치해야 합니다. 코드가 붙은 스킬 불변 규칙도 검사합니다. SKL-001은 스킬 파일 위치, SKL-002는 frontmatter 이름과 폴더 이름의 일치, SKL-003은 상대 링크 무결성, SKL-004는 상대 앵커가 대상 파일의 제목과 일치하는지입니다. `scripts/build-catalog.py`가 스킬 폴더에서 생성하는 `skills/catalog.json`은 스키마(CAT-001)와 폴더와의 drift 여부(CAT-002)를 검사합니다. dry-run materialize diff(MIR-001)는 아무것도 쓰지 않고, 커밋된 `.agents/skills` 미러가 setup 스크립트가 `skills/`에서 만들 결과와 바이트 단위로 같은지 검사합니다.
 
 **Python 3.10 이상과 PyYAML이 필요합니다.** JSON·해시는 표준 라이브러리로 처리하고, YAML은 직접 파서를 구현하는 대신 안전한 파서를 사용합니다. 실행기가 선택하는 인터프리터(`python3`, `python`, Windows의 `py -3` 순서)와 같은 Python으로 고정 버전 의존성을 설치합니다:
 
@@ -156,7 +161,7 @@ python -m pip install -r scripts/requirements-harness.txt
 ./scripts/verify-harness.sh
 ```
 
-`--root <경로>`로 다른 패키지 디렉터리를 선택할 수 있습니다. 종료 코드는 패키지 PASS `0`, 잘못된 패키지 `1`, 필수 실행 환경 부재·잘못된 인자 `2`입니다. 스킬은 Codex가 읽을 수 있도록 BOM 없는 UTF-8을 요구하며 `SKILL.md`와 `SKILL_en.md`를 검사합니다. LF/CRLF와 공백·한글 경로는 지원합니다. CI는 Linux·Windows·macOS에서 동일한 정상·오류 입력을 Bash·PowerShell로 각각 검사합니다. Windows의 Bash 시험은 Git Bash에서 실행해야 WSL의 `bash.exe` 대신 Git Bash를 선택합니다. PowerShell에서 실행할 때는 `HARNESS_LAUNCHER=pwsh`를 지정합니다:
+`--root <경로>`로 다른 패키지 디렉터리를 선택할 수 있습니다. 종료 코드는 패키지 PASS `0`, 잘못된 패키지 `1`, 필수 실행 환경 부재·잘못된 인자 `2`입니다. 스킬은 Codex가 읽을 수 있도록 BOM 없는 UTF-8을 요구하며 `SKILL.md`와 `SKILL_ko.md`를 검사합니다. LF/CRLF와 공백·한글 경로는 지원합니다. CI는 Linux·Windows·macOS에서 동일한 정상·오류 입력을 Bash·PowerShell로 각각 검사합니다. Windows의 Bash 시험은 Git Bash에서 실행해야 WSL의 `bash.exe` 대신 Git Bash를 선택합니다. PowerShell에서 실행할 때는 `HARNESS_LAUNCHER=pwsh`를 지정합니다:
 
 ```bash
 python -m unittest discover -s tests -v

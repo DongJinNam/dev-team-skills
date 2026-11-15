@@ -3,9 +3,11 @@
 
 The catalog is derived, never hand-edited: one entry per skills/<name>/
 folder that contains a SKILL.md, keyed by that file's frontmatter. The
-compatibility entry at skills/SKILL.md is not a separate skill and is
-excluded. verify-harness.py regenerates the catalog in memory (rules
-CAT-001/CAT-002) and fails when the committed file has drifted.
+compatibility entry at .compat/skills/SKILL.md is not a separate skill and
+is excluded. verify-harness.py regenerates the catalog in memory (rules
+CAT-001/CAT-002) and fails when the committed file has drifted. When a
+folder also has a SKILL_ko.md, its frontmatter name must match the
+SKILL.md name; a mismatch fails the build.
 """
 
 import argparse
@@ -65,6 +67,13 @@ def build_catalog(root):
         if not folder.is_dir() or not skill_file.exists():
             continue
         data = parse_frontmatter(skill_file)
+        ko_file = folder / "SKILL_ko.md"
+        if ko_file.exists():
+            ko_data = parse_frontmatter(ko_file)
+            if ko_data["name"] != data["name"]:
+                raise ValueError(
+                    f"{ko_file}: frontmatter name {ko_data['name']!r} does not match "
+                    f"{skill_file} name {data['name']!r}")
         entries.append({
             "name": data["name"],
             "description": data["description"],
