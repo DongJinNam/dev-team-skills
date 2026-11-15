@@ -55,7 +55,7 @@ python3 evals/check_skill_discovery.py --cwd . --output /tmp/discovery.json
 python3 -m unittest tests.test_entry_layer
 ```
 
-Measured 2026-11-15 at head `6df7d15`: 14 skills found, 0 errors.
+Measured 2026-11-15 at head `f237305`: 14 skills found, 0 errors.
 The entry-layer tests assert the trigger phrases
 ("fix this bug", "build this feature", "이 버그 고쳐줘",
 "이 기능 만들어줘") route to `using-dev-team-skills`, and that the

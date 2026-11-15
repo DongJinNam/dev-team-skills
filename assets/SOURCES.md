@@ -10,7 +10,9 @@ staged or synthesized. README.md and README_ko.md reference
 
 - `demo.gif` (1071x664, 7 frames, 11.6s playback) — real pty recording
   of three commands run 2026-11-15T09:30:56Z in a worktree at
-  6df7d15: `bash scripts/verify-harness.sh` (31 PASS lines),
+  f237305 (the rebased equivalent of the pre-rebase head 6df7d15,
+  identical tree and timestamp; 6df7d15 is not on any branch, so the
+  reachable commit is recorded here): `bash scripts/verify-harness.sh` (21 PASS lines),
   `python3 evals/check_skill_discovery.py --cwd . --output /tmp/discovery.json`
   (`[{"skills": 14, "errors": []}]`),
   `python3 scripts/adapt.py --check` (`mirror matches skills/`).
