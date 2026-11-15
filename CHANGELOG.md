@@ -16,6 +16,12 @@ titles are the PR titles verbatim. The current packaged version is
 - No code or policy change. The v1.2.0 tag and GitHub Release are planned
   after this change merges; they are not part of this entry.
 
+### Added
+- Entry layer: `using-dev-team-skills` skill, `/squad` `/review` `/verify` `/ship` commands, SessionStart bootstrap hook and Stop verify-harness gate (Claude Code only)
+- English-first SKILL.md with `SKILL_ko.md` (P0-3), `scripts/adapt.py` single-source mirror generation
+- Real `assets/demo.gif` (measured verification run) and `docs/benchmark.md` reproduction guide
+- Release automation: `.changelog/` fragments, aggregate and release workflows
+
 ## 2026-11-13
 
 - #34 (2026-11-13) — docs: Pro/Plus subagent improvements P3·P5·P6·P7 (runbook + model routing)
