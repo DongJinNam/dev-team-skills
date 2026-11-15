@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "name": "dev-team-skills-marketplace",
   "description": "Pragmatic AI engineering squad, code review, and harness engineering skills catalog for Claude Code",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "owner": {
     "name": "DongJinNam",
     "url": "https://github.com/DongJinNam"
@@ -11,7 +11,7 @@
     {
       "name": "dev-team-skills",
       "description": "Task-sized engineering with six accountable owners, conditional specialist capabilities, tiered decisions, mandatory independent security, and evidence-based external skill adoption.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "source": "./",
       "author": {
         "name": "DongJinNam"

@@ -1,6 +1,6 @@
 {
   "name": "dev-team-skills",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Task-sized engineering with six accountable owners, conditional specialist capabilities, tiered decisions, mandatory independent security, and evidence-based external skill adoption.",
   "hooks": "./hooks/hooks.json",
   "author": {
