@@ -1,0 +1,44 @@
+name: Release
+
+# Manual only. The maintainer runs it after the changelog fragments
+# for the version are merged into [Unreleased]. It promotes
+# [Unreleased] to a version section, bumps the four manifest
+# versions, commits, tags v<version>, and publishes the GitHub
+# Release with that section as the notes.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version, e.g. 1.2.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Capture release notes, then promote and bump versions
+        run: |
+          python3 scripts/release.py "${{ inputs.version }}" --print-notes > /tmp/release-notes.txt
+          python3 scripts/release.py "${{ inputs.version }}"
+      - name: Commit, tag, and publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="${{ inputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json .codex-plugin/plugin.json
+          git commit -m "chore(release): v${version}"
+          git tag "v${version}"
+          git push origin main "v${version}"
+          gh release create "v${version}" --title "v${version}" --notes-file /tmp/release-notes.txt

@@ -1,0 +1,55 @@
+name: Changelog fragments
+
+on:
+  pull_request:
+    paths:
+      - ".changelog/**"
+      - "scripts/aggregate_changelog.py"
+  push:
+    branches: [main]
+    paths:
+      - ".changelog/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate fragment format
+        run: python3 scripts/aggregate_changelog.py --check
+      - name: Warn when a PR has no fragment
+        run: |
+          count=$(find .changelog -maxdepth 1 -name '*.md' ! -name 'README.md' ! -name '_*' | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "::warning::No changelog fragment in this PR. Add one to .changelog/ when the change is user-visible."
+          fi
+
+  aggregate:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: changelog-main
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Merge fragments into CHANGELOG.md
+        run: python3 scripts/aggregate_changelog.py
+      - name: Commit the merge
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md .changelog/
+          git diff --cached --quiet || git commit -m "chore(changelog): merge fragments into [Unreleased]"
+          git push
