@@ -37,7 +37,7 @@ not more options.
 6. If the change affects behavior the harness is supposed to catch, add or
    update a test under `tests/`.
 
-The compatibility entry at `skills/SKILL.md` is not a separate skill and
+The compatibility entry at `.compat/skills/SKILL.md` is not a separate skill and
 is excluded from the catalog. Do not add a second skill with an existing
 name.
 
