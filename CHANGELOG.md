@@ -5,7 +5,7 @@ merge dates (UTC) of each pull request, taken from the GitHub PR list;
 titles are the PR titles verbatim. The current packaged version is
 1.1.0 (`plugin.json`).
 
-## Unreleased
+## [Unreleased]
 
 - Governance files: `CONTRIBUTING.md`, `SECURITY.md`,
   `CODE_OF_CONDUCT.md`, this changelog, and issue templates for bugs,
