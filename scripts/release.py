@@ -12,9 +12,9 @@
 - Prints the release notes (the version section body) on stdout.
 
 The GitHub workflow (.github/workflows/release.yml) captures the
-notes first with --print-notes, then promotes, commits, tags
-v<version>, and publishes the GitHub Release. This script never
-touches git or the network.
+notes first with --print-notes, then promotes and opens a release PR;
+the tag and the GitHub Release are created only after that PR is
+reviewed and merged. This script never touches git or the network.
 """
 
 import argparse
