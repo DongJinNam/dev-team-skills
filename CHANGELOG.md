@@ -7,6 +7,8 @@ titles are the PR titles verbatim. The current packaged version is
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-15
+
 - Governance files: `CONTRIBUTING.md`, `SECURITY.md`,
   `CODE_OF_CONDUCT.md`, this changelog, and issue templates for bugs,
   skill proposals, and adoption reports
