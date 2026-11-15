@@ -3,7 +3,7 @@
 All notable changes to this project are documented here. Dates are the
 merge dates (UTC) of each pull request, taken from the GitHub PR list;
 titles are the PR titles verbatim. The current packaged version is
-1.1.0 (`plugin.json`).
+1.2.0 (`plugin.json`).
 
 ## [Unreleased]
 
@@ -15,8 +15,8 @@ titles are the PR titles verbatim. The current packaged version is
   (`.github/ISSUE_TEMPLATE/bug.yml`,
   `.github/ISSUE_TEMPLATE/skill-proposal.yml`,
   `.github/ISSUE_TEMPLATE/adoption.yml`).
-- No code or policy change. The v1.2.0 tag and GitHub Release are planned
-  after this change merges; they are not part of this entry.
+- No code or policy change. The v1.2.0 tag and GitHub Release were
+  published when this change merged.
 
 ### Added
 - Entry layer: `using-dev-team-skills` skill, `/squad` `/review` `/verify` `/ship` commands, SessionStart bootstrap hook and Stop verify-harness gate (Claude Code only)

@@ -23,6 +23,8 @@ RELEASE = load_module("release", ROOT / "scripts" / "release.py")
 
 CHANGELOG = """# Changelog
 
+The current packaged version is 1.1.0 (`plugin.json`).
+
 ## [Unreleased]
 
 - Governance files: `CONTRIBUTING.md`,
@@ -137,6 +139,21 @@ class ReleaseTests(unittest.TestCase):
         path.write_text(json.dumps(data), encoding="utf-8")
         with self.assertRaises(ValueError):
             RELEASE.bump_manifests(self.root, "1.2.0")
+
+    def test_promote_updates_header_version(self):
+        promoted, _notes = RELEASE.promote(
+            (self.root / "CHANGELOG.md").read_text(encoding="utf-8"),
+            "1.2.0", "2026-11-15")
+        self.assertIn("The current packaged version is 1.2.0 (`plugin.json`).",
+                      promoted)
+        self.assertNotIn("The current packaged version is 1.1.0",
+                         promoted)
+
+    def test_promote_without_header_sentence_leaves_preamble_alone(self):
+        text = "# Changelog\n\n## [Unreleased]\n\n- Entry.\n\n## [1.1.0] - 2026-11-01\n\n- Old.\n"
+        promoted, _notes = RELEASE.promote(text, "1.2.0", "2026-11-15")
+        self.assertIn("## [1.2.0] - 2026-11-15", promoted)
+        self.assertNotIn("current packaged version", promoted)
 
     def test_empty_unreleased_refuses_to_release(self):
         (self.root / "CHANGELOG.md").write_text(

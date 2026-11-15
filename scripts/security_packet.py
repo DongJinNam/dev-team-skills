@@ -20,6 +20,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 MARKER = "<!-- security-packet-draft -->"
 
+SHA_RE = re.compile(r"^[0-9a-f]{4,40}$")
+
+
+def validate_sha(value, name):
+    """Reject anything that is not a hex commit SHA (4-40 lowercase hex).
+
+    --base/--head flow into git as arguments; a value starting with "-"
+    could be read as a git option, so only real SHAs are accepted.
+    """
+    if not SHA_RE.match(value):
+        raise ValueError(
+            f"{name} must be a hex commit SHA (4-40 lowercase hex chars), "
+            f"got {value!r}")
+
 
 def load_policies():
     spec = importlib.util.spec_from_file_location("run_evals", ROOT / "evals" / "run_evals.py")
@@ -126,6 +140,13 @@ def main(argv=None):
     parser.add_argument("--title", default="")
     parser.add_argument("--out", default=None)
     args = parser.parse_args(argv)
+
+    try:
+        validate_sha(args.base, "--base")
+        validate_sha(args.head, "--head")
+    except ValueError as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
 
     changes, shortstat = collect_changes(args.base, args.head)
     info = classify(changes, load_policies(), current_capture_name())

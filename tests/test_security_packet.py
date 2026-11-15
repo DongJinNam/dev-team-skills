@@ -38,6 +38,20 @@ class ClassifyTest(unittest.TestCase):
         self.assertEqual(info["tier"], "T2")
 
 
+class ValidateShaTest(unittest.TestCase):
+    def test_accepts_short_and_full_hex(self):
+        sp.validate_sha("abc1234", "--base")
+        sp.validate_sha("0" * 40, "--head")
+
+    def test_rejects_non_hex_short_uppercase_and_ref_names(self):
+        for bad in ("main", "HEAD", "abc", "ABCDEF1234", "ab cd", "--upload-pack=x"):
+            with self.assertRaises(ValueError, msg=bad):
+                sp.validate_sha(bad, "--base")
+
+    def test_main_rejects_bad_base_without_touching_git(self):
+        self.assertEqual(sp.main(["--base", "main", "--head", "abc1234"]), 2)
+
+
 class RenderTest(unittest.TestCase):
     def test_render_includes_marker_head_and_manual_notice(self):
         changes = [change("docs/example.md", status="A")]
