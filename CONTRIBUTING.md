@@ -68,8 +68,9 @@ python3 -m unittest discover -s tests
 frontmatter (including duplicate-key rejection), SHA-256 synchronization
 across the five constitution files, the coded invariants SKL-001/002/003,
 CAT-001/002, and the `.agents/skills` mirror (MIR-001, a dry-run check
-that the committed mirror equals what the setup script materializes from
-`skills/`). Exit codes: `0` package PASS, `1` invalid package,
+that the committed mirror equals what `scripts/adapt.py` generates from
+`skills/`; regenerate with `python3 scripts/adapt.py`, verify drift with
+`python3 scripts/adapt.py --check`). Exit codes: `0` package PASS, `1` invalid package,
 `2` missing prerequisites or invalid arguments.
 
 The harness validates local package structure only. It does not run a
