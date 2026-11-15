@@ -1,18 +1,31 @@
 # assets/ — provenance
 
-Demo assets for P0-5 (top10-improvement-study-20261114.md §7). Every image is
-rendered from a real output produced on 2026-11-14 in a worktree at main
-40e0195. Nothing here is staged or synthesized. README.md does not reference
-these files yet; P0-2 adds the hero references (`assets/demo.gif`,
-`assets/social.png`), so merge P0-5 first, P0-2 after.
+Demo assets for P0-5 (top10-improvement-study-20261114.md §7), plus the
+15-second demo GIF recorded 2026-11-15 (Vooy #1). Every image is
+rendered from a real output produced in a worktree. Nothing here is
+staged or synthesized. README.md and README_ko.md reference
+`assets/demo.gif` as the hero image right after the intro.
 
 ## Files
 
+- `demo.gif` (1071x664, 7 frames, 11.6s playback) — real pty recording
+  of three commands run 2026-11-15T09:30:56Z in a worktree at
+  6df7d15: `bash scripts/verify-harness.sh` (31 PASS lines),
+  `python3 evals/check_skill_discovery.py --cwd . --output /tmp/discovery.json`
+  (`[{"skills": 14, "errors": []}]`),
+  `python3 scripts/adapt.py --check` (`mirror matches skills/`).
+  Pauses between commands are pacing so the output stays readable;
+  no output is synthesized. Codex CLI could not run in this VM (no
+  auth; `codex exec` loops on reconnect), so the GIF shows the package
+  verification run instead of an agent session, and the alt text says
+  so. Reproduce with `python3 /tmp/record_demo.py` (script is
+  ephemeral).
 - `skill-trigger.png` (1120x702) — Codex native skill discovery
   (`python3 evals/check_skill_discovery.py --cwd .`), 13 skills found, 0 errors.
   `dev-team-skills:engineering-squad` is enabled, repo scope, with its real
   trigger description. This is the discovery listing, not a staged trigger
-  event: no SessionStart hook exists yet (that is P1-1).
+  event. The SessionStart hook now exists (`hooks/hooks.json`); at the
+  time this image was made it did not.
 - `verify-harness.png` (1120x988) — verbatim output of
   `bash scripts/verify-harness.sh` (exit 0, 31 PASS lines). The NOT_RUN line
   is part of the real output.
@@ -27,18 +40,10 @@ these files yet; P0-2 adds the hero references (`assets/demo.gif`,
   Settings (Social preview) in a browser — the API token has no
   Administration scope, so this cannot be done via API (403).
 
-## Missing: `demo.gif`
-
-No 15-second GIF is included, deliberately. This VM is headless: no display
-or window system to capture, and no screen/terminal recorder installed (no
-asciinema, terminalizer, or X server). An engineering-squad session is an
-interactive agent conversation, not a CLI command, so there is no real
-session to record here. A scripted terminal animation would be synthetic,
-and this task forbids fake/synthetic GIFs. Revisit when a real recorded
-session exists (e.g. a screen capture from a desktop run).
-
 ## Rendering
 
 Rendered locally with Python PIL (DejaVu Sans Mono + Noto Sans CJK KR).
-Reproduce with: `python3 /tmp/render-p05.py` (script is ephemeral; inputs are
-the outputs listed above).
+Reproduce PNGs with: `python3 /tmp/render-p05.py` (script is ephemeral;
+inputs are the outputs listed above). Reproduce the GIF with:
+`python3 /tmp/record_demo.py` (records the three commands in a pty and
+renders the exact terminal bytes; script is ephemeral).

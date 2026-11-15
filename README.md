@@ -8,6 +8,8 @@ proves the package is intact before your agent runs it.**
 Tell your agent "build this feature". It plans, implements, tests, gets an independent
 security review, and hands back one page of evidence — the same six owners every time.
 
+![Demo: real terminal run — verify-harness PASS, skill discovery (14 skills, 0 errors), mirror check](assets/demo.gif)
+
 ```
 $ claude   # or codex / antigravity / cursor
 > engineering-squad로 이 기능 구현해줘
@@ -17,6 +19,8 @@ $ claude   # or codex / antigravity / cursor
   Security       → independent PASS on current head
   Result         → 3 tests added, 0 new deps, evidence in docs/
 ```
+
+*Example (not a real run).*
 
 **Install (one line, pick your host)**
 
@@ -40,7 +44,6 @@ who is accountable for scope, implementation, tests, security, and delivery on e
 If you already have a workflow, the squad slots into it; if you don't, six owners are the
 smallest team that still covers planning, code, tests, and an independent security check.
 
-![Demo: engineering-squad runs a feature through six owners](assets/demo.gif)
 <!-- Social preview: assets/social.png (arrives with P0-5; set as the repo social preview in Settings) -->
 
 ---

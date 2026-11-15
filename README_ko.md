@@ -8,6 +8,8 @@
 에이전트에게 "이 기능 만들어줘"라고 말해라. 기획하고, 구현하고, 테스트하고, 독립 보안
 검수를 받고, 증거 한 페이지를 돌려준다 — 매번 같은 6명의 책임자가.
 
+![데모: 실제 터미널 실행 — verify-harness PASS, 스킬 발견(14개, 오류 0개), 미러 검사](assets/demo.gif)
+
 ```
 $ claude   # 또는 codex / antigravity / cursor
 > engineering-squad로 이 기능 구현해줘
@@ -17,6 +19,8 @@ $ claude   # 또는 codex / antigravity / cursor
   Security       → 최신 head 독립 PASS
   Result         → 테스트 3개 추가, 신규 의존성 0개, 증거는 docs/에
 ```
+
+*예시(실행 아님).*
 
 **설치 (한 줄, 호스트 선택)**
 
@@ -39,7 +43,6 @@ Superpowers와 Spec-Kit이 계획하고 만드는 방법을 정한다면, dev-te
 구현·테스트·보안·배포의 책임자가 누구인지 정한다. 이미 갖춘 워크플로가 있으면 스쿼드가
 그 안에 들어가고, 없으면 6명의 책임자가 기획·코드·테스트·독립 보안 검수를 가리는 가장 작은 팀이다.
 
-![데모: engineering-squad가 6명의 책임자로 기능을 실행한다](assets/demo.gif)
 <!-- 소셜 미리보기: assets/social.png (P0-5에서 들어온다. 저장소 Settings의 소셜 미리보기로 설정) -->
 
 ---
