@@ -27,6 +27,8 @@ $ claude   # or codex / antigravity / cursor
 | Any agent (79) | `npx skills add DongJinNam/dev-team-skills` |
 | Antigravity / Cursor | `bash scripts/setup-antigravity.sh workspace` / `bash scripts/setup-cursor.sh` |
 
+**Hooks & commands (Claude Code only)** — SessionStart injects the entry rules; Stop blocks the turn when `verify-harness` fails. Slash commands: `/dev-team-skills:squad`, `/review`, `/verify`, `/ship`. Other hosts ignore the hooks. Disable by deleting `hooks/hooks.json` from the installed plugin copy.
+
 **Evidence, not promises** — matched 4-arm pilot on the same model (3 tasks each):
 vs Superpowers −15.6% tokens / −7.4% time; vs ECC −20.9% / −14.3%. Small sample, local skill
 layer only, defaults were cheaper. [Protocol](evals/skill-comparison.md) · [Results](docs/decisions/2026-11-07-four-arm-results.md)

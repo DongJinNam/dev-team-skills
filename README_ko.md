@@ -27,6 +27,8 @@ $ claude   # 또는 codex / antigravity / cursor
 | 모든 에이전트 (79종) | `npx skills add DongJinNam/dev-team-skills` |
 | Antigravity / Cursor | `bash scripts/setup-antigravity.sh workspace` / `bash scripts/setup-cursor.sh` |
 
+**훅·커맨드 (Claude Code만)** — SessionStart가 진입 규칙을 주입하고, Stop은 `verify-harness` 실패 시 종료를 막는다. 슬래시 커맨드: `/dev-team-skills:squad`, `/review`, `/verify`, `/ship`. 다른 호스트는 훅을 무시한다. 끄려면 설치된 플러그인 복사본에서 `hooks/hooks.json`을 지운다.
+
 **약속이 아니라 증거** — 같은 모델의 4-arm 예비 비교(과제당 3개):
 Superpowers 대비 토큰 −15.6% / 시간 −7.4%, ECC 대비 −20.9% / −14.3%. 작은 표본, 로컬 스킬
 계층만 비교, 기본 설정이 더 쌌다. [절차](evals/skill-comparison.md) · [결과](docs/decisions/2026-11-07-four-arm-results.md)
