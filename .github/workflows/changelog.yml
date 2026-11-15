@@ -1,21 +1,22 @@
 name: Changelog fragments
 
+# Fragments are merged into CHANGELOG.md [Unreleased] inside the PR
+# that carries them, never by a direct push to main. The aggregate job
+# checks out the PR head, merges, and pushes the result back to the
+# PR branch, so the merged CHANGELOG.md still passes the PR gate.
+# The second run after that push finds no fragments left and commits
+# nothing, so the job terminates instead of looping.
 on:
   pull_request:
     paths:
       - ".changelog/**"
       - "scripts/aggregate_changelog.py"
-  push:
-    branches: [main]
-    paths:
-      - ".changelog/**"
 
 permissions:
   contents: read
 
 jobs:
   validate:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,24 +33,24 @@ jobs:
           fi
 
   aggregate:
-    if: github.event_name == 'push'
+    # Same-repo PRs only: the default token cannot push to a fork's branch.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    concurrency:
-      group: changelog-main
-      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Merge fragments into CHANGELOG.md
         run: python3 scripts/aggregate_changelog.py
-      - name: Commit the merge
+      - name: Commit the merge to the PR branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add CHANGELOG.md .changelog/
           git diff --cached --quiet || git commit -m "chore(changelog): merge fragments into [Unreleased]"
-          git push
+          git push origin "HEAD:${{ github.head_ref }}"

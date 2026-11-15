@@ -1,10 +1,11 @@
 name: Release
 
 # Manual only. The maintainer runs it after the changelog fragments
-# for the version are merged into [Unreleased]. It promotes
-# [Unreleased] to a version section, bumps the four manifest
-# versions, commits, tags v<version>, and publishes the GitHub
-# Release with that section as the notes.
+# for the version are merged into [Unreleased]. It opens a release PR;
+# the tag and the GitHub Release are created only after that PR is
+# reviewed and merged, so a release never bypasses the PR gate
+# (independent security PASS on the release head). Nothing in this
+# workflow pushes to main directly.
 on:
   workflow_dispatch:
     inputs:
@@ -12,13 +13,21 @@ on:
         description: "Release version, e.g. 1.2.0"
         required: true
         type: string
+  pull_request:
+    types: [closed]
+    branches: [main]
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  release:
+  prepare:
+    # Runs only from main: the release branch must start from main.
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,15 +39,63 @@ jobs:
         run: |
           python3 scripts/release.py "${{ inputs.version }}" --print-notes > /tmp/release-notes.txt
           python3 scripts/release.py "${{ inputs.version }}"
-      - name: Commit, tag, and publish
+      - name: Open the release PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version="${{ inputs.version }}"
+          branch="release/v${version}"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
           git add CHANGELOG.md plugin.json .claude-plugin/plugin.json .claude-plugin/marketplace.json .codex-plugin/plugin.json
           git commit -m "chore(release): v${version}"
+          git push -u origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "chore(release): v${version}" \
+            --body "Release PR for v${version}. The tag and the GitHub Release are created only after this PR is merged, so merge it only after the independent security PASS for this head. Notes are in CHANGELOG.md under \`## [${version}]\`."
+
+  publish:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && startsWith(github.event.pull_request.head.ref, 'release/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Tag and publish the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ref="${{ github.event.pull_request.head.ref }}"
+          version="${ref#release/v}"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "ERROR: release branch name is not release/vX.Y.Z: $ref" >&2
+            exit 1
+          fi
+          if git rev-parse "v${version}" >/dev/null 2>&1; then
+            echo "ERROR: tag v${version} already exists" >&2
+            exit 1
+          fi
+          python3 - "$version" <<'PY'
+          import sys
+          version = sys.argv[1]
+          lines = open("CHANGELOG.md", encoding="utf-8").read().splitlines()
+          start = next((i for i, line in enumerate(lines)
+                        if line.startswith(f"## [{version}] ")), None)
+          if start is None:
+              print(f"ERROR: CHANGELOG.md has no ## [{version}] section", file=sys.stderr)
+              raise SystemExit(1)
+          end = next((i for i in range(start + 1, len(lines))
+                      if lines[i].startswith("## ")), len(lines))
+          notes = "\n".join(lines[start + 1:end]).strip() + "\n"
+          if not notes.strip():
+              print(f"ERROR: ## [{version}] section is empty", file=sys.stderr)
+              raise SystemExit(1)
+          open("/tmp/release-notes.txt", "w", encoding="utf-8").write(notes)
+          PY
           git tag "v${version}"
-          git push origin main "v${version}"
+          git push origin "v${version}"
           gh release create "v${version}" --title "v${version}" --notes-file /tmp/release-notes.txt
