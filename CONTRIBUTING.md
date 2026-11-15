@@ -22,7 +22,7 @@ not more options.
 1. Create `skills/<name>/SKILL.md`. The frontmatter `name` must match the
    folder name (invariant SKL-002), and `description` must be a nonblank
    string. Keep the file UTF-8 without BOM.
-2. Add `skills/<name>/SKILL_en.md` with the English version. Both files
+2. Add `skills/<name>/SKILL_ko.md` with the Korean version. Both files
    are checked by the harness.
 3. Keep relative links resolvable (SKL-003). Supporting material goes in
    `skills/<name>/references/`; shared references live in
@@ -66,7 +66,7 @@ python3 -m unittest discover -s tests
 `verify-harness.sh` (Windows: `.\scripts\verify-harness.ps1`) runs
 `scripts/verify-harness.py`. It checks the JSON manifests, skill
 frontmatter (including duplicate-key rejection), SHA-256 synchronization
-across the five constitution files, the coded invariants SKL-001/002/003,
+across the five constitution files, the coded invariants SKL-001/002/003/004,
 CAT-001/002, and the `.agents/skills` mirror (MIR-001, a dry-run check
 that the committed mirror equals what `scripts/adapt.py` generates from
 `skills/`; regenerate with `python3 scripts/adapt.py`, verify drift with
