@@ -16,6 +16,9 @@ permissions:
 jobs:
   packet-draft:
     name: Security packet draft
+    # Same-repo PRs only: this job runs with pull-requests: write and
+    # posts a comment, so fork PRs must not trigger it.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
