@@ -76,6 +76,21 @@ class CaptureNameTest(unittest.TestCase):
                 cp.current_capture_name("0" * 40, repo_root=Path(tmp))
 
 
+class ValidateShaTest(unittest.TestCase):
+    def test_accepts_short_and_full_hex(self):
+        cp.validate_sha("abc1234", "--base")
+        cp.validate_sha("0" * 40, "--head")
+
+    def test_rejects_non_hex_short_uppercase_and_ref_names(self):
+        for bad in ("main", "HEAD", "abc", "ABCDEF1234", "ab cd", "--upload-pack=x"):
+            with self.assertRaises(ValueError, msg=bad):
+                cp.validate_sha(bad, "--base")
+
+    def test_main_rejects_bad_base_without_touching_git(self):
+        self.assertEqual(cp.main(["--base", "main", "--head", "abc1234",
+                                  "--date", "2026-11-16", "--slug", "x"]), 2)
+
+
 class RenderTest(unittest.TestCase):
     def test_plan_lists_cases_and_output_path(self):
         info = cp.classify(["skills/engineering-squad/SKILL.md"], POLICIES, CAPTURE)

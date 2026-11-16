@@ -5,10 +5,11 @@
 
 - Requires a non-empty ## [Unreleased] section.
 - Rewrites it as ## [<version>] - <today UTC> and inserts a fresh
-  empty ## [Unreleased] above it.
+  empty ## [Unreleased] above it. Also rewrites the preamble's
+  "current packaged version" sentence to the new version when present.
 - Bumps the version in plugin.json, .claude-plugin/plugin.json,
-  .claude-plugin/marketplace.json (top level and plugins[0]), and
-  .codex-plugin/plugin.json. All four must agree before the bump.
+  .claude-plugin/marketplace.json (top level and every entry in plugins),
+  and .codex-plugin/plugin.json. All four must agree before the bump.
 - Prints the release notes (the version section body) on stdout.
 
 The GitHub workflow (.github/workflows/release.yml) captures the
@@ -28,6 +29,12 @@ VERSION_RE = re.compile(r"^\d+\.\d+\.\d+$")
 UNRELEASED_RE = re.compile(r"^##\s+\[Unreleased\]\s*$")
 HEADING_RE = re.compile(r"^##\s+")
 BULLET_RE = re.compile(r"^\s*[-*]\s+\S")
+# "The current packaged version is X.Y.Z (`plugin.json`)." in the
+# CHANGELOG preamble. promote() rewrites it to the new version; if the
+# sentence is absent the changelog is left as-is.
+HEADER_VERSION_RE = re.compile(
+    r"^(The current packaged version is )\d+\.\d+\.\d+( \(`plugin\.json`\)\.)$")
+
 MANIFESTS = (
     "plugin.json",
     ".claude-plugin/plugin.json",
@@ -53,7 +60,9 @@ def promote(changelog_text, version, today):
     while body and not body[-1].strip():
         body.pop()
     versioned = [f"## [{version}] - {today}", ""] + body
-    new_lines = (lines[:start] + ["## [Unreleased]", ""]
+    preamble = [HEADER_VERSION_RE.sub(rf"\g<1>{version}\g<2>", line)
+                for line in lines[:start]]
+    new_lines = (preamble + ["## [Unreleased]", ""]
                  + versioned + [""] + lines[end:])
     notes = "\n".join(body).strip() + "\n"
     return "\n".join(new_lines).rstrip() + "\n", notes

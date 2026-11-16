@@ -58,6 +58,9 @@ the expected answer.
    object. Record the model used for each response (see the model-routing
    contract: judgement steps are DEEP). Record the per-model call count
    and elapsed time for the renewal in the work-minutes record (P1).
+   The renewal Lead records it: one table row per model in the
+   work-minutes record (model, call count, elapsed time), filled in per
+   batch and totalled when the renewal finishes.
    Run cases in batches of at most 5; if interrupted, resume by batch
    and record batch progress in the work-minutes record (P4).
 3. Run the independent reviewer session. All 19 cases must pass meaning
