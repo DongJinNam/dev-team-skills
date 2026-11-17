@@ -5,7 +5,7 @@ description: >-
 compatibility: Claude Code, Codex, Antigravity, Cursor
 version: "1.2.0"
 metadata:
-  author: DongJinNam <ehdwls6856@gmail.com>
+  author: DongJinNam
   version: "1.2.0"
   tags: ["engineering", "coordination", "review"]
 ---

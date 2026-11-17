@@ -3,7 +3,7 @@ name: using-dev-team-skills
 description: 스킬 이름을 지정하지 않고 평이한 말로 만들고 고치고 검토하고 검증하고 배포해달라고 할 때 쓴다 ("fix this bug", "build this feature", "이 버그 고쳐줘", "이 기능 만들어줘"). 6인 책임자 엔지니어링 스쿼드의 진입점이다.
 version: "1.2.0"
 metadata:
-  author: DongJinNam <ehdwls6856@gmail.com>
+  author: DongJinNam
   version: "1.2.0"
   tags: ["entry-point", "routing"]
 ---
