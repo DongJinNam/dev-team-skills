@@ -5,11 +5,11 @@ Checked: 2026-10-31 (KST). Candidates discovered in Threads reposts were compare
 
 ## Execution and verification shortlist (2026-11-06 KST)
 
-Select through the [use-evidence contract](./tool-adoption_en.md). These primary-source inspections are not an inventory of installations or successful executions. Prove actual use per task. Displayed stars are rounded interest snapshots, not active-user counts or recent growth.
+Select through the use-evidence contract. These primary-source inspections are not an inventory of installations or successful executions. Prove actual use per task. Displayed stars are rounded interest snapshots, not active-user counts or recent growth.
 
 | Candidate / official source | Observed interest | Trigger, owner and application | State and limits |
 | --- | --- | --- | --- |
-| [Superpowers](https://github.com/obra/superpowers) | ~313.1k stars | Engineering/Quality: design, TDD, debugging and completion verification; keep one planning owner through [compatibility](./superpowers-compatibility_en.md) | Official README INSPECTED; 7.0.1 instructions AVAILABLE/read in this authoring environment, not installed everywhere. Recheck MIT and selected files |
+| [Superpowers](https://github.com/obra/superpowers) | ~313.1k stars | Engineering/Quality: design, TDD, debugging and completion verification; keep one planning owner through compatibility contract | Official README INSPECTED; 7.0.1 instructions AVAILABLE/read in this authoring environment, not installed everywhere. Recheck MIT and selected files |
 | [Anthropic skill-creator](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md) | skills repository ~187.8k stars | Quality: example requests, outputs and regression evaluation for skill changes | INSPECTED; upstream scripts NOT_RUN. Check repository/file-specific licenses and host evaluation requirements |
 | [Playwright CLI + skills](https://github.com/microsoft/playwright-cli), [official guide](https://playwright.dev/docs/getting-started-cli) | ~15.0k stars | Engineering/Quality: compare with existing tools for browser tasks; consider CLI for context cost and MCP for persistent exploratory state | INSPECTED, execution NOT_RUN. Apache-2.0 label; recheck Node/browser/OS requirements. Official efficiency claims are not our measured savings |
 | [Agent Skills specification](https://agentskills.io/specification), [repository](https://github.com/agentskills/agentskills) | ~27.0k stars | Engineering: frontmatter, on-demand references, package checks | INSPECTED; specification checks do not prove installation/host compatibility. A specification is not an executable tool |

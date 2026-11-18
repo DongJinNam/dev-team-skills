@@ -14,7 +14,7 @@ This contract replaces automatic majority selection. Record scope, reversibility
 | 2 | **Security Review Engineer**: independent security, compliance applicability/actions | Direct blocker report; expert review for uncertain legal interpretation |
 | 3 | Narrowly delegated executors in the relevant domain | Assigned Tier 2; direct to Tech Lead for safety/authority concerns |
 
-Consolidate 15 role names (14 specialists plus Lead) into six accountable owners. The previous Tier 1/2 decision-owner count was eight; it is now six. Neither comparison measures agent calls or cost savings. Apply the [legacy-name and capability mapping](./roles_en.md); Tier 3 adds no standing titles. Record Lead's combined duties on small tasks. Independent Security cannot be combined with implementation/Lead. Budget-limit changes stay with the user; unresolved applicable compliance violations retain a separate blocking status. Humanizer/Ponytail are editing duties without extra decision rights. Never invent inactive-role assent.
+Consolidate 15 role names (14 specialists plus Lead) into six accountable owners. The previous Tier 1/2 decision-owner count was eight; it is now six. Neither comparison measures agent calls or cost savings. Apply the legacy-name and capability mapping (roles); Tier 3 adds no standing titles. Record Lead's combined duties on small tasks. Independent Security cannot be combined with implementation/Lead. Budget-limit changes stay with the user; unresolved applicable compliance violations retain a separate blocking status. Humanizer/Ponytail are editing duties without extra decision rights. Never invent inactive-role assent.
 
 ## 2. Decision routing
 

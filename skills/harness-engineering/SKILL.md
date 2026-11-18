@@ -3,16 +3,24 @@ name: harness-engineering
 description: >-
   Use this skill to design AI agent test harnesses, deterministic evaluation loops, MCP tool schemas, and package customizations for the 3rd-party Agent Marketplace.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
-  author: DongJinNam
-  version: "1.1.0"
+  author: DongJinNam <ehdwls6856@gmail.com>
+  version: "1.2.0"
+  tags: ["harness", "testing", "evals"]
 ---
 
 # AI Agent Harness Engineering & Marketplace Packaging
 
-This skill is the standard execution guide for the **AI Agent Engineer**. It explains how to build **evaluation harnesses** so AI coding agents can build, test, and self-heal code reliably, and how to package agent skills to meet **3rd-Party Marketplace standards**.
+## Purpose
 
----
+Execution guide for the AI Agent Engineer to design deterministic evaluation loops, verify MCP tool schemas, and package customizations for 3rd-party agent marketplaces.
+[한국어 안내: SKILL_ko.md](SKILL_ko.md)
+
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: Python 3.10+, PyYAML, pytest or unittest runner.
 
 ## 1. What is Agent Harness Engineering?
 
@@ -139,3 +147,33 @@ Publish only needed commands, exit status, artifacts, usage and version/hash evi
 When changing rules or skills, use the nineteen pressure scenarios in [decision regressions](../../evals/README.md). `python evals/run_evals.py` returns `NOT_RUN` without input; supply actual agent responses or an explicitly selected adapter. Candidates receive policies, scenario inputs and the response contract, while expected answers remain with the scorer. Check structured decisions, actions and typed facts automatically; a separate reviewer checks summary meaning, conditions and unknowns.
 
 Distinguish recorded-response replay (`REPLAY`), synthetic harness self-tests and fresh agent execution. Policy/scenario/scorer hash mismatch, missing cases or absent independent semantic review cannot produce a decision PASS. Passing decision outputs does not prove tool execution, operational safety or independent security approval. Preserve tiered accountable decisions, advisory ballots and security gates.
+
+## Examples
+
+```bash
+# Verify repository harness integrity:
+python scripts/verify-harness.py
+
+# Run deterministic unit tests across harnesses:
+python -m unittest discover -s tests -v
+
+# Run 19-scenario decision regression replay:
+python evals/run_evals.py --replay evals/runs/2026-11-18-tier1-quality-upgrade.json
+```
+
+## Limitations
+
+- A passing static harness check does not replace an independent security review on production deployments.
+- Replay verification proves policy decision regression consistency, not live tool network operations.
+
+## Troubleshooting
+
+- **Error**: `CatalogDriftError` (CAT-002 FAIL)
+  - **Cause**: Skill descriptions or metadata were edited without regenerating `skills/catalog.json`.
+  - **Solution**: Run `python scripts/build-catalog.py` to regenerate the catalog and re-verify.
+- **Error**: `MirrorDriftError` (MIR-001 FAIL)
+  - **Cause**: Files in `skills/` diverge from `.agents/skills/`.
+  - **Solution**: Copy modified files to `.agents/skills/` to restore dual-tree synchronization.
+- **Error**: `DecisionRegressionFailed`
+  - **Cause**: Policy text modification changed the canonical policy digest without updating the evaluation capture.
+  - **Solution**: Follow `evals/capture-runbook.md` to run renewal capture and update the replay pointer.

@@ -3,12 +3,24 @@ name: engineering-squad
 description: >-
   Use when a software change, service delivery, or decision report needs coordinated ownership, task-sized specialist work, independent verification, or evidence-based selection of external skills.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
-  author: DongJinNam
-  version: "1.1.0"
+  author: DongJinNam <ehdwls6856@gmail.com>
+  version: "1.2.0"
+  tags: ["engineering", "coordination", "review"]
 ---
 
 # Engineering Squad
+
+## Purpose
+
+Coordinate engineering changes across six accountable owners (Tech Lead, Product Lead, Engineering Lead, Quality Lead, Delivery Lead, Security Review Engineer) to deliver verified, high-quality software with clear contracts.
+[한국어 안내: SKILL_ko.md](SKILL_ko.md)
+
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: Python 3.10+, PyYAML, git
 
 Work through six accountable owners; assign specialist capabilities only to relevant tasks. Role count is not agent count. Apply [roles and kickoff/stop rules](./references/roles.md) and [tiered decisions](./references/decision-governance.md) before decomposition.
 
@@ -60,3 +72,44 @@ When Superpowers is actually available, keep one design/plan owner through the [
 Assign model tiers by task type under the [model routing contract](./references/model-routing.md): DEEP for judgments, design, analysis and their summaries; STANDARD for settled implementation and tests. Lead records each added call's distinct output/value and measured/estimated/unknown cost. Compare repeated tasks using matching scope, model and quality gates. Document length and owner-count reductions are not actual token savings. Handoff decisions, evidence, open issues and necessary file paths instead of complete conversations. Keep that handoff as the [work minutes](./references/work-minutes.md).
 
 Humanizer Editor is Lead's final editing duty. Apply `humanizer-kr` for Korean or `humanizer` for English and compare facts, risks and unverified status. Preserve the [three-sentence What/How/Why report contract](./references/report-summary.md). Ordinary explanations need no separate editor agent.
+
+## Available Scripts
+
+| Script | Purpose | Arguments |
+| :--- | :--- | :--- |
+| `scripts/verify-harness.py` | Verify package contract, catalog drift, and constitution sync | `[--root <path>]` |
+| `scripts/build-catalog.py` | Rebuild skills catalog index from skill markdown files | `[--root <path>]` |
+| `scripts/capture_plan.py` | Generate capture execution plan for policy change renewals | `--base <sha> --head <sha> --date <date> --slug <slug>` |
+
+To execute verification scripts, call `run_script` with Python:
+`run_script: python scripts/verify-harness.py`
+
+## Examples
+
+```bash
+# Kick off the full engineering squad workflow:
+/dev-team-skills:squad
+
+# Run package contract verification:
+python scripts/verify-harness.py
+
+# Replay decision regression suite:
+python evals/run_evals.py --replay evals/runs/2026-11-18-tier1-quality-upgrade.json
+```
+
+## Limitations
+
+- Does not bypass the independent security review gate under any circumstances.
+- A passing unit test suite does not waive user acceptance criteria or unrun production load checks.
+
+## Troubleshooting
+
+- **Error**: `KickoffAmbiguityBlocked` (PENDING)
+  - **Cause**: User request lacked clear quantifiable benefit or agreed stop conditions.
+  - **Solution**: Pause execution and present Step 0 kickoff questions; proceed only after user answers.
+- **Error**: `SecurityReviewGateBlocked`
+  - **Cause**: A security vulnerability or missing independent review prevents merge.
+  - **Solution**: Escalate to the Security Review Engineer, resolve the finding, and re-review on the current head commit.
+- **Error**: `ScriptExecutionFailure`
+  - **Cause**: Script execution via `run_script` failed due to missing Python dependencies.
+  - **Solution**: Verify Python 3.10+ and install requirements (PyYAML) before re-running the script.

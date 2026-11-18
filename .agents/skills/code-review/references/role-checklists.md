@@ -1,6 +1,6 @@
 # Role-Tailored Review Checklists
 
-아래는 독립 상설 역할이 아닌 전문 역량 체크리스트다. [6개 책임 역할 매핑](../../engineering-squad/references/roles.md)에 따라 영향받은 항목만 선택한다.
+아래는 독립 상설 역할이 아닌 전문 역량 체크리스트다. 6개 책임 역할 매핑에 따라 영향받은 항목만 선택한다.
 
 각 직무별 전문성을 반영하여 코드 리뷰 및 변경 사항 검토 시 집중 점검해야 하는 체크리스트입니다.
 
@@ -78,7 +78,7 @@
 - [ ] 인가/테넌트 경계, 개인정보, 시크릿, 입력, 공급망, AI/도구 위험에 증거 또는 검사별 N/A 근거가 있는가?
 - [ ] 미실행·노출 의심·Critical/High 미해결은 출시를 차단하고 QA 통과로 대체하지 않는가?
 - [ ] 수정 후 재검수하고 잔여 위험에 담당자·기한·책임자/사용자 수용 기록이 있는가?
-- [ ] [security-review.md](../../engineering-squad/references/security-review.md) 보고서 계약을 따르고 공개 증거를 마스킹했는가?
+- [ ] security-review 보고서 계약을 따르고 공개 증거를 마스킹했는가?
 
 
 ## 12. Compliance Reviewer Checklist

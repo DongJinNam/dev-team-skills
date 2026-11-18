@@ -1,13 +1,25 @@
 ---
 name: using-dev-team-skills
-description: Use when the user asks in plain language to build, fix, review, verify, or ship something ("fix this bug", "build this feature", "이 버그 고쳐줘", "이 기능 만들어줘") without naming a skill. Entry point for the six-owner engineering squad.
+description: >-
+  Use when the user requests building, fixing, reviewing, verifying, or shipping code without naming a skill. Routes plain requests to the six-owner engineering squad.
+version: "1.2.0"
+metadata:
+  author: DongJinNam <ehdwls6856@gmail.com>
+  version: "1.2.0"
+  tags: ["entry-point", "routing", "squad"]
 ---
 
 # Using dev-team-skills
 
-Entry point. Read this skill when a plain-language engineering request
-arrives and no skill was named. It routes the request to the squad
-contract instead of letting the agent improvise a workflow.
+## Purpose
+
+Entry point for plain-language engineering requests. Routes ambiguous user requests directly to the six-owner engineering squad contract instead of letting the agent improvise a workflow.
+[한국어 안내: SKILL_ko.md](SKILL_ko.md)
+
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: None. Standard dev-team-skills environment.
 
 ## Trigger phrases
 
@@ -49,12 +61,26 @@ user already aimed at a specific skill.
    or an explicit slash command. If neither fired, say the entry was
    manual. A hook that never ran is NOT_RUN, not a success.
 
-## What this skill is not
+## Examples
 
-- It is not a seventh owner. The six owners in
-  [engineering-squad](../engineering-squad/SKILL.md) still do the work.
-- It is not a shortcut past Step 0. Skipping the kickoff questions to
-  save a turn is a contract violation, not efficiency.
-- It does not replace the Stop gate. The hook in
-  [hooks/hooks.json](../../hooks/hooks.json) still blocks a stop when
-  `verify-harness` fails.
+```bash
+# Plain language requests routed by this skill:
+"이 버그 고쳐줘" -> Routes to engineering-squad kickoff (/dev-team-skills:squad)
+"review this PR" -> Routes to code-review (/dev-team-skills:review)
+"verify package intact" -> Runs verify-harness.py (/dev-team-skills:verify)
+```
+
+## Limitations
+
+- It is not a seventh owner. The six owners in [engineering-squad](../engineering-squad/SKILL.md) still do the work.
+- It is not a shortcut past Step 0. Skipping the kickoff questions to save a turn is a contract violation.
+- It does not replace the Stop gate. The hook in [hooks/hooks.json](../../hooks/hooks.json) still blocks a stop when `verify-harness` fails.
+
+## Troubleshooting
+
+- **Error**: `RoutingAmbiguityError`
+  - **Cause**: User request does not match standard trigger phrases or overlaps multiple scopes.
+  - **Solution**: Fallback to Step 0 kickoff questions to clarify user intent before delegating to owners.
+- **Error**: `HookExecutionSkipped`
+  - **Cause**: SessionStart hook did not trigger automatically.
+  - **Solution**: Explicitly invoke `/dev-team-skills:squad` command or enter manually without claiming unexecuted hooks.

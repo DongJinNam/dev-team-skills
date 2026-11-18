@@ -46,4 +46,4 @@ recheck_trigger | next_owner
 
 Example: a CLI absent from installed tools with only its README read is INSPECTED, result NOT_RUN. Suggesting a command is not APPLIED. Writing and validating an acceptance test using a documented method supports that artifact's use claim; it does not establish execution of the external CLI.
 
-Recheck relevant evidence before adoption and after version, permission, data-boundary, advisory or AC changes. Reuse current same-scope evidence; never copy a previous project's PASS into a new environment. For tokens use the [usage evaluation](../../../evals/token-efficiency.md), matching conditions and capturing all calls/retries/reviews plus quality gates. Without logs, report UNMEASURED.
+Recheck relevant evidence before adoption and after version, permission, data-boundary, advisory or AC changes. Reuse current same-scope evidence; never copy a previous project's PASS into a new environment. For tokens use the usage evaluation guide, matching conditions and capturing all calls/retries/reviews plus quality gates. Without logs, report UNMEASURED.

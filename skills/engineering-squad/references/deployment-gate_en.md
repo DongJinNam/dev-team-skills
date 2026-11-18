@@ -11,7 +11,7 @@ Before declaring any deployment complete, you must pass all 8 verification gates
 | **Gate 1** | **Frontend / Backend** | **Build & Compile** | `npm run build` / `cargo build` / `go build` | Exit Code 0, 0 compile/type errors |
 | **Gate 2** | **Backend / Data** | **Unit & Integration Tests** | `npm test` / `pytest` / `go test ./...` | 0 failing tests |
 | **Gate 3** | **QA Engineer** | **E2E & Quality Gate** | `npx playwright test` / `cypress run` | 100% pass on core scenarios |
-| **Gate 3a** | **Security Review Engineer (independent)** | **Security/privacy review** | Review under [security-review_en.md](./security-review_en.md) | Revision-bound security PASS and report; no release blockers |
+| **Gate 3a** | **Security Review Engineer (independent)** | **Security/privacy review** | Review under security-review contract | Revision-bound security PASS and report; no release blockers |
 | **Gate 4** | **DevOps Engineer** | **Environment Variables Match** | Check missing keys: `.env.example` vs `.env` | 0 missing required environment variables |
 | **Gate 5** | **DevOps Engineer** | **Container Startup** | `docker compose up -d --build` | Container state stays `Up (healthy)` |
 | **Gate 6** | **DevOps Engineer** | **Runtime Health Check** | `powershell -File ./scripts/verify-health.ps1` | HTTP status code `200 OK` |

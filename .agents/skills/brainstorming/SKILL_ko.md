@@ -3,14 +3,24 @@ name: brainstorming
 description: >-
   Use this skill for product planning, ideation, requirement refinement, problem discovery, and market/technical research using structured brainstorming frameworks and research subagents.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
   author: DongJinNam
-  version: "1.1.0"
+  version: "1.2.0"
+  tags: ["ideation", "planning", "brainstorming"]
 ---
 
 # Product Planning & Structured Brainstorming
 
-이 스킬은 **기획자(Product Planner / PM)**와 엔지니어링 리드가 새로운 제품이나 기능을 기획할 때, 사용자의 진짜 문제를 발굴하고, 구조화된 브레인스토밍과 리서치를 통해 검증 가능한 최소 기능 제품(MVP) 및 PRD(Product Requirement Document)로 구체화하는 표준 실행 지침입니다.
+## 목적 (Purpose)
+
+기획자(PM)와 엔지니어링 리드가 새로운 제품이나 기능을 기획할 때, 사용자의 진짜 문제를 발굴하고 구조화된 브레인스토밍을 통해 검증 가능한 최소 기능 제품(MVP) 및 PRD를 수립하도록 돕는 실행 지침입니다.
+[English specification: SKILL.md](SKILL.md)
+
+## 사전 요구사항 (Prerequisites)
+
+- 운영체제: Windows, macOS, Linux
+- 필수 환경: 표준 기획 및 마크다운 작성 환경
 
 ## Superpowers와 함께 사용할 때
 
@@ -115,3 +125,27 @@ $$\text{RICE Score} = \frac{\text{Reach (영향받는 사용자 수)} \times \te
 1. **AI Agent Engineer & Squad Lead 리뷰**: 기획 스코프의 실현 가능성 및 하네스/테스트 가능 여부 검토.
 2. **인터페이스 계약 확정**: PRD의 사용자 여정을 바탕으로 API 엔드포인트 및 DB 엔티티 정의.
 3. **Stage 1~5 파이프라인 가동**: 프론트엔드, 백엔드, 데이터 엔지니어가 구현 착수.
+
+## 예시 (Examples)
+
+```markdown
+# 가설 기반 기능 명세 (Hypothesis Statement):
+"만약 자동 카탈로그 동기화 기능(기능)을 도입하면, 개발자가 수동 드리프트 실수를 방지(결과)하여 CAT-002 CI 실패가 0건으로 감소(지표)할 것이다."
+
+# HMW (How Might We) 질문 예시:
+"번거로운 수동 체크리스트 없이도 개발자가 100% 테스트 무결성을 검증할 수 있도록 도우려면 어떻게 해야 할까?"
+```
+
+## 한계 및 제약 (Limitations)
+
+- 프로덕션 애플리케이션 코드를 직접 작성하지 않으며 기획, 요구사항 명세, 탐색에 집중합니다.
+- 린 PRD가 팀의 기존 아키텍처 규칙이나 보안 계약을 임의로 무력화할 수 없습니다.
+
+## 문제 해결 (Troubleshooting)
+
+- **Error**: `IdeationParalysisError`
+  - **Cause**: 명확한 사용자 문제 정의 없이 발산적 아이디어만 무제한으로 나열된 경우.
+  - **Solution**: 핵심 고통 지점 하나로 범위를 좁히고 SCAMPER의 Eliminate(제거) 원칙을 적용하여 단순화.
+- **Error**: `ScopeCreepWarning`
+  - **Cause**: MVP 단계의 필수 항목(Must-Have)에 비필수 미래 기능이 포함된 경우.
+  - **Solution**: RICE 우선순위 점수화를 적용하여 신뢰도/영향도가 낮은 항목을 Non-Goals 섹션으로 강등(fallback).

@@ -3,14 +3,24 @@ name: code-review
 description: >-
   Use when reviewing code or engineering artifacts for high-impact correctness, risk, maintainability, and relevant specialist checks under the squad's accountable owners.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
   author: DongJinNam
-  version: "1.1.0"
+  version: "1.2.0"
+  tags: ["code-review", "quality", "security"]
 ---
 
 # High-ROI Code Review Workflow
 
-이 스킬은 **"Input 대비 Output(ROI)이 가장 큰 핵심 문제"**에 집중하여, 불필요한 사소한 트집(Nitpicking)을 배제하고 소프트웨어의 견고함과 유지보수성을 극대화하는 코드 리뷰를 수행합니다.
+## 목적 (Purpose)
+
+사소한 트집을 배제하고 정확성, 심각한 보안 결함, 예외 처리 누락, 유지보수성 등 투자 시간 대비 영향도가 가장 큰 핵심 문제에 집중하는 고효율 코드 리뷰 표준 가이드입니다.
+[English specification: SKILL.md](SKILL.md)
+
+## 사전 요구사항 (Prerequisites)
+
+- 운영체제: Windows, macOS, Linux
+- 필수 환경: 표준 코드 리뷰 및 git 협업 환경
 
 ## Superpowers와 함께 사용할 때
 
@@ -74,3 +84,26 @@ QA Stage 3에서 독립 Security Review Engineer를 활성화하고 [security-re
 문서·설정 변경을 포함한 모든 PR의 머지 전에 최신 PR head에 대한 독립 Security Review Engineer PASS와 보고서를 필수로 확인합니다. [PR 머지 필수 게이트](../engineering-squad/references/security-review.md#pr-머지-필수-게이트)를 적용합니다. 미검수·BLOCKED·이전 리비전에 대한 검수로는 머지하지 않습니다. 새 commit 또는 머지 입력 변경 시 재검수하며 QA·일반 승인·CI 통과로 대체하지 않습니다.
 
 Security가 조정하는 Compliance Reviewer 역량은 관련 변경의 국내·미국 IT 법령 및 보안 준수 여부를 [컴플라이언스 책임](../engineering-squad/references/roles.md)에 따라 검토합니다. 출처·적용 여부·조치를 기록하고 적용되는 위반 사항이 미해결이면 머지를 차단합니다.
+
+## 예시 (Examples)
+
+```markdown
+# 3단계 심각도 코멘트 예시:
+🔴 [필수 / Must Fix]: 출금 로직에 데이터베이스 트랜잭션이 누락되었습니다. 2단계 실패 시 데이터 불일치가 발생합니다.
+🟡 [확인 요청 / Inquire & Verify]: 외부 결제 게이트웨이가 타임아웃될 때 fallback 로직이 어떻게 동작하는지 확인이 필요합니다.
+🟢 [권장 / Suggestion]: 상태 코드를 문자열 대신 Enum으로 정의하면 타입 안전성이 향상됩니다.
+```
+
+## 한계 및 제약 (Limitations)
+
+- 단순 들여쓰기, 세미콜론, 코드 포맷팅 등은 자동화된 린터 도구에 위임하며 수동 리뷰로 트집잡지 않습니다.
+- 동료 리뷰어의 일반 승인이 있더라도 보안 검토 엔지니어의 최신 헤드 PASS를 면제할 수 없습니다.
+
+## 문제 해결 (Troubleshooting)
+
+- **Error**: `ReviewBlockerDeadlock`
+  - **Cause**: 아키텍처 패턴이나 추상화 수준을 두고 작성자와 리뷰어 간 의견 대립.
+  - **Solution**: 테크 리드(Tech Lead)에게 에스컬레이션하여 구속력 있는 결정을 받거나 표준 라이브러리 기반 단순성(Ponytail 원칙)으로 회귀.
+- **Error**: `StaleReviewApproval`
+  - **Cause**: 리뷰 승인 이후 대상 브랜치에 새 커밋이 추가됨.
+  - **Solution**: 기존 승인을 즉시 무효화하고 최신 헤드 커밋 기준 테스트 재실행 및 보안 재승인 획득.

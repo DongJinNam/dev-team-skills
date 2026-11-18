@@ -1,20 +1,28 @@
 ---
 name: humanizer-kr
 description: >-
-  Use this skill to refine Korean documentation, commit messages, PR descriptions, and code comments into clear, concise, natural Korean, removing robotic AI tone and translation artifacts while preserving 100% technical facts.
+  Use this skill to refine Korean documentation, commit messages, and PR descriptions into natural, professional Korean, eliminating robotic translation tone.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
-  author: hjongc
-  version: "1.1.0"
+  author: DongJinNam <ehdwls6856@gmail.com>
+  version: "1.2.0"
+  tags: ["korean", "humanizer", "documentation"]
 ---
 
 # Humanizer-KR: Natural Korean Technical Writing
 
-This skill is based on the `humanizer-kr` principles. It removes stiff AI translation phrases, awkward passive voice, and exaggerated chatbot greetings to produce clean, natural Korean that professional engineers write.
+## Purpose
 
----
+Refine Korean documentation, commit messages, and PR descriptions into clear, concise, professional Korean. Eliminates stiff AI translation artifacts and awkward passive voice while preserving 100% technical accuracy.
+[한국어 안내: SKILL_ko.md](SKILL_ko.md)
 
-## 1. 5 Core Writing Principles
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: None. Standard markdown environment.
+
+## 5 Core Writing Principles
 
 1. **Remove Robotic AI Translation Patterns**:
    - Change awkward phrases like "There is a need to consider..." to direct actions: "Review...".
@@ -28,3 +36,27 @@ This skill is based on the `humanizer-kr` principles. It removes stiff AI transl
 5. **Optimized for Engineering Docs**:
    - Commit messages: Use concise, imperative forms (e.g., "Add...", "Fix...", "Refactor...").
    - PR descriptions: Clearly lay out context, root cause, changes, and impact.
+
+## Examples
+
+```markdown
+# Robotic AI Translation (Before):
+"이 설정은 관리자에 의해 구성되어질 수 있도록 요구되어집니다."
+
+# Natural Professional Korean (After):
+"관리자가 이 설정을 구성해야 합니다."
+```
+
+## Limitations
+
+- Does not rewrite non-technical literature or creative prose.
+- Never translates or mutates code symbols, CLI flags, configuration keys, or RFC technical terms.
+
+## Troubleshooting
+
+- **Error**: `TerminologyAmbiguityError`
+  - **Cause**: Domain-specific term lacks a standardized Korean translation.
+  - **Solution**: Fallback to writing the original English term bare in backticks with a short parenthetical explanation.
+- **Error**: `OverCorrectionRisk`
+  - **Cause**: Rewriting altered the technical meaning or precision of a constraint.
+  - **Solution**: Compare with the source text and revert any changes that affect factual conditions or numbers.

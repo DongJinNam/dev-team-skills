@@ -3,12 +3,24 @@ name: engineering-squad
 description: >-
   Use when a software change, service delivery, or decision report needs coordinated ownership, task-sized specialist work, independent verification, or evidence-based selection of external skills.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
   author: DongJinNam
-  version: "1.1.0"
+  version: "1.2.0"
+  tags: ["engineering", "coordination", "review"]
 ---
 
 # Engineering Squad
+
+## 목적 (Purpose)
+
+6인 책임 역할 체계(테크 리드, 프로덕트 리드, 엔지니어링 리드, 퀄리티 리드, 딜리버리 리드, 독립 보안 검토 엔지니어)를 통해 소프트웨어 변경, 서비스 딜리버리, 결정 보고를 엄격한 엔지니어링 표준과 계약으로 완수합니다.
+[English specification: SKILL.md](SKILL.md)
+
+## 사전 요구사항 (Prerequisites)
+
+- 운영체제: Windows, macOS, Linux
+- 필수 환경: Python 3.10+, PyYAML, git
 
 6개 책임 역할로 일하고 전문 역량은 필요한 작업에만 배정한다. 역할 수는 호출 수가 아니다. 작업 분해 전에 [역할·시작/중단 계약](./references/roles.md)과 [Tier별 결정 계약](./references/decision-governance.md)을 적용한다.
 
@@ -60,3 +72,44 @@ Superpowers가 실제 사용 가능하면 [협업 계약](./references/superpowe
 작업 종류별 모델 등급 배정은 [모델 라우팅 계약](./references/model-routing.md)을 따른다. 판정·설계·분석과 그 요약은 DEEP, 확정된 구현·테스트는 STANDARD가 기본이다. Lead는 추가 호출의 산출물·기대 가치와 비용의 실측/추정/미확인을 기록한다. 반복 작업은 동일 범위·모델·품질 조건의 사용량으로 비교한다. 본문 길이·역할 수 감소는 실제 토큰 절감률이 아니다. 전체 대화 대신 결정·근거·미해결 사항·필요 파일만 인계한다. 이 인계는 [작업 회의록](./references/work-minutes.md)으로 남긴다.
 
 Humanizer Editor는 Lead의 최종 편집 책임이다. 한국어는 `humanizer-kr`, 영어는 `humanizer`를 적용하고 사실·위험·미검증 상태를 대조한다. 보고서는 [무엇을·어떻게·왜 3문장 요약 계약](./references/report-summary.md)을 유지한다. 일반 답변을 위해 별도 편집 에이전트를 만들 필요는 없다.
+
+## 사용 가능한 스크립트 (Available Scripts)
+
+| Script | Purpose | Arguments |
+| :--- | :--- | :--- |
+| `scripts/verify-harness.py` | 패키지 계약, 카탈로그 드리프트, 헌장 동기화 검증 | `[--root <path>]` |
+| `scripts/build-catalog.py` | 스킬 마크다운 파일로부터 skills/catalog.json 재빌드 | `[--root <path>]` |
+| `scripts/capture_plan.py` | 정책 변경 시 회귀 캡처 갱신 실행 계획 수립 | `--base <sha> --head <sha> --date <date> --slug <slug>` |
+
+검증 스크립트 실행 시 `run_script` 패턴으로 Python을 호출합니다:
+`run_script: python scripts/verify-harness.py`
+
+## 예시 (Examples)
+
+```bash
+# 엔지니어링 스쿼드 킥오프 실행:
+/dev-team-skills:squad
+
+# 패키지 계약 검증 실행:
+python scripts/verify-harness.py
+
+# 19개 시나리오 회귀 리플레이 검증:
+python evals/run_evals.py --replay evals/runs/2026-11-18-tier1-quality-upgrade.json
+```
+
+## 한계 및 제약 (Limitations)
+
+- 어떠한 상황에서도 독립 보안 검토 엔지니어의 최신 헤드 PASS 게이트를 면제할 수 없습니다.
+- 단위 테스트 통과가 사용자의 인수 기준이나 미실행 프로덕션 부하 검증을 대체하지 않습니다.
+
+## 문제 해결 (Troubleshooting)
+
+- **Error**: `KickoffAmbiguityBlocked` (PENDING)
+  - **Cause**: 사용자 요청에 측정 가능한 수치 목표나 중단 조건이 명시되지 않음.
+  - **Solution**: 구현 착수를 중단하고 0단계 킥오프 질문을 사용자에게 질의 후 답변 확정.
+- **Error**: `SecurityReviewGateBlocked`
+  - **Cause**: 보안 취약점 발견 또는 독립 보안 검토 미실행으로 머지가 차단됨.
+  - **Solution**: 보안 검토 엔지니어에게 에스컬레이션하여 결함을 수정하고 최신 헤드에서 재검수 수행.
+- **Error**: `ScriptExecutionFailure`
+  - **Cause**: `run_script` 실행 중 Python 필수 의존성 누락으로 스크립트 실패.
+  - **Solution**: Python 3.10+ 환경 및 필수 패키지(PyYAML)를 확인 후 재실행.

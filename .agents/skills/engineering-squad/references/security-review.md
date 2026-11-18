@@ -68,4 +68,4 @@
 | 인증이 필요한 API | 사용자 간 소유권·테넌트·역할 경계를 확인한다. |
 | 패치 뒤 예전 PASS 재사용 | 새 리비전에 영향 검사와 독립 판정을 발행한다. |
 
-출처 선정과 사고 근거: [security-research.md](./security-research.md).
+출처 선정과 사고 근거: security-research 문서 참조.

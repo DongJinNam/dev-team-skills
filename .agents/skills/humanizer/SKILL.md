@@ -1,20 +1,26 @@
 ---
 name: humanizer
-description: |
-  Rewrite AI-sounding text so it reads like the writer without changing what it says.
-  Use when editing or reviewing prose for AI tells: not-X-but-Y contrasts, one-line
-  closers, staged openers, forced triads, dashes everywhere, inflated claims, sales
-  language, stock AI words, bold labels, or filler. Based on Wikipedia's "Signs of AI writing."
+description: >-
+  Use this skill to rewrite AI-generated prose so it reads like human writing without changing meaning, removing robotic patterns based on Wikipedia guidance.
 license: MIT
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
   author: blader
-  version: "3.1.0"
+  version: "1.2.0"
+  tags: ["prose", "humanizer", "editing"]
 ---
 
-# Humanizer: remove AI writing patterns
+# Humanizer: Remove AI Writing Patterns
 
-Rewrite AI-sounding text so it reads like the writer, not a chatbot. Keep what it says. Do not make anything up.
+## Purpose
+
+Rewrite AI-generated prose so it reads like human writing without changing meaning. Eliminates common AI writing patterns based on Wikipedia guidance while preserving all supported facts.
+
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: None. Standard markdown environment.
 
 ## Why AI text sounds the way it does
 
@@ -43,11 +49,29 @@ Without a sample, take the voice from the kind of text. Blog posts, essays, opin
 
 **Embedded mode.** When another task uses this skill for a pull request, commit message, or document, return only the final text.
 
-## When not to act
+## Examples
 
-Each pattern describes a default choice, and a person can make any one of them on purpose. Leave a watched phrase alone inside a quotation, a title, a proper name, or a passage that discusses the phrase rather than uses it. Salutations and sign-offs on a letter or comment predate chatbots. Text written before November 30, 2022 is not AI-written. People who judge by feel do little better than chance, and human writing keeps absorbing AI habits, so several tells together are the safeguard.
+```markdown
+# Robotic AI Prose (Before):
+"It is not merely a tool, but an essential breakthrough—helping teams collaborate and succeed."
 
-Keep the details that carry the writer's voice unless they hurt the meaning: a specific, unusual detail; mixed feelings and unresolved tension; dated, era-bound references; a first-person choice the writer can explain; a genuine aside, parenthetical, or self-correction.
+# Natural Human Prose (After):
+"This tool helps engineering teams collaborate and ship code faster."
+```
+
+## Limitations
+
+- Does not rewrite verified code blocks, CLI flags, technical formulas, or YAML configuration.
+- Never invents missing data, quotes, numbers, or citations not present in the source text.
+
+## Troubleshooting
+
+- **Error**: `FactualDriftError`
+  - **Cause**: Rewriting omitted a condition or altered numerical precision.
+  - **Solution**: Cross-check sentence against source facts and restore exact conditions.
+- **Error**: `RoboticTonePersists`
+  - **Cause**: Superficial synonym swapping instead of structural sentence restructuring.
+  - **Solution**: Fallback to re-reading the text aloud and breaking up artificial triad constructions (§6).
 
 ## Pattern list
 

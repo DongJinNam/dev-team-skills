@@ -12,7 +12,7 @@
 
 설치수는 카탈로그가 표시한 누적 지표이며 고유 사용자 수·효과·안전성 측정값이 아니다. 저장소 stars는 개별 스킬의 인기가 아니다. 카탈로그 감사 배지는 판정이 상충할 수 있어 승인 근거로 사용하지 않는다. Sentry에는 Socket Fail, insecure-defaults에는 Snyk Fail 표시가 관측됐다. 이는 악성 확정도 아니며, 인기만 보고 자동 설치하지 않는 이유다.
 
-[OWASP ASVS 5.0.0](https://asvs.owasp.org/)을 검증 범위의 기준으로 참고한다(발행 2025-05-30). 세 스킬의 검토 관점을 자체 계약인 [security-review.md](./security-review.md)에 조합한다. 외부 파일·스크립트를 복제하거나 자동 설치하지 않으며 실행 의존성도 추가하지 않는다. 향후 코드/본문을 가져오면 revision과 파일별 라이선스·고지 요건을 별도 확인한다. 관측된 저장소 라이선스: [Sentry Apache-2.0](https://github.com/getsentry/skills/blob/main/LICENSE), [Trail of Bits CC-BY-SA-4.0](https://github.com/trailofbits/skills/blob/main/LICENSE).
+[OWASP ASVS 5.0.0](https://asvs.owasp.org/)을 검증 범위의 기준으로 참고한다(발행 2025-05-30). 세 스킬의 검토 관점을 자체 계약인 security-review 원칙에 조합한다. 외부 파일·스크립트를 복제하거나 자동 설치하지 않으며 실행 의존성도 추가하지 않는다. 향후 코드/본문을 가져오면 revision과 파일별 라이선스·고지 요건을 별도 확인한다. 관측된 저장소 라이선스: [Sentry Apache-2.0](https://github.com/getsentry/skills/blob/main/LICENSE), [Trail of Bits CC-BY-SA-4.0](https://github.com/trailofbits/skills/blob/main/LICENSE).
 
 ## 일반적인 검수 필요성
 

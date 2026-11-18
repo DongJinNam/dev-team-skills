@@ -3,16 +3,24 @@ name: harness-engineering
 description: >-
   Use this skill to design AI agent test harnesses, deterministic evaluation loops, MCP tool schemas, and package customizations for the 3rd-party Agent Marketplace.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
   author: DongJinNam
-  version: "1.1.0"
+  version: "1.2.0"
+  tags: ["harness", "testing", "evals"]
 ---
 
 # AI Agent Harness Engineering & Marketplace Packaging
 
-이 스킬은 **AI Agent Engineer**가 대규모 언어 모델(LLM)과 자율 코딩 에이전트가 신뢰할 수 있는 방식으로 코드를 생성·검증할 수 있도록 **평가 하네스(Evaluation Harness)**를 구축하고, 에이전트 스킬/플러그인을 **3rd-Party Marketplace 규격**으로 패키징할 때 사용하는 표준 실행 지침입니다.
+## 목적 (Purpose)
 
----
+AI 에이전트 엔지니어가 결정론적 평가 하네스를 구축하고, 도구 및 MCP 스키마를 검증하며, 에이전트 스킬을 마켓플레이스 표준 규격으로 패키징하기 위한 실행 지침입니다.
+[English specification: SKILL.md](SKILL.md)
+
+## 사전 요구사항 (Prerequisites)
+
+- 운영체제: Windows, macOS, Linux
+- 필수 환경: Python 3.10+, PyYAML, pytest 또는 unittest 환경
 
 ## 1. What is Agent Harness Engineering? (하네스 엔지니어링이란?)
 
@@ -140,3 +148,33 @@ evals/
 규칙·스킬을 수정할 때는 [행동 판단 회귀시험](../../evals/README.md)의 19개 압박 상황을 확인합니다. `python evals/run_evals.py`는 입력 없이 `NOT_RUN`이며, 실제 에이전트 응답 또는 명시적으로 선택한 실행 어댑터가 필요합니다. 후보에게는 정책·상황·응답 형식만 제공하고 기대 답안은 분리합니다. 구조화된 결정·행동·사실은 자동 검사하고, 요약의 의미·조건·미확인 상태는 응답자와 별도 검토자가 확인합니다.
 
 기록 재검사(`REPLAY`), 예제 기반 하네스 자체 시험, 새 에이전트 실행을 구분합니다. 정책·상황·채점기 해시 불일치, 필수 사례 누락, 독립 의미 검토 부재는 행동 검증 PASS가 아닙니다. 판단 응답의 PASS는 실제 도구 실행·운영 안전성·독립 보안 승인을 증명하지 않습니다. Tier별 책임 결정·자문 표결 및 보안 게이트를 유지합니다.
+
+## 예시 (Examples)
+
+```bash
+# 로컬 패키지 계약 및 하네스 무결성 검증:
+python scripts/verify-harness.py
+
+# 단위 테스트 실행:
+python -m unittest discover -s tests -v
+
+# 19개 시나리오 정책 회귀 리플레이 검증:
+python evals/run_evals.py --replay evals/runs/2026-11-18-tier1-quality-upgrade.json
+```
+
+## 한계 및 제약 (Limitations)
+
+- 정적 하네스 통과가 운영 배포 전 독립 보안 리뷰를 대체하지 않습니다.
+- 리플레이 검증은 정책 결정의 일관성을 증명할 뿐, 라이브 도구의 네트워크 실행을 보장하지 않습니다.
+
+## 문제 해결 (Troubleshooting)
+
+- **Error**: `CatalogDriftError` (CAT-002 FAIL)
+  - **Cause**: 스킬 설명문이나 메타데이터 수정 후 `skills/catalog.json`이 갱신되지 않은 경우.
+  - **Solution**: `python scripts/build-catalog.py`를 실행하여 카탈로그를 재빌드.
+- **Error**: `MirrorDriftError` (MIR-001 FAIL)
+  - **Cause**: `skills/`와 `.agents/skills/` 파일 내용이 일치하지 않는 경우.
+  - **Solution**: 수정된 파일을 `.agents/skills/`로 복사하여 듀얼 트리 동기화 유지.
+- **Error**: `DecisionRegressionFailed`
+  - **Cause**: 정책 본문 수정으로 정책 다이제스트가 바뀌어 기존 캡처와 불일치 발생.
+  - **Solution**: `evals/capture-runbook.md` 절차에 따라 새 캡처를 생성하고 리플레이 타겟 갱신.

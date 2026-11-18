@@ -12,7 +12,7 @@ Access date: 2026-10-31. Planner investigates technical fit and incident lessons
 
 Catalog installs are cumulative display metrics, not unique users, effectiveness or safety measurements. Repository stars do not measure an individual skill. Audit badges may conflict and are not approval evidence: Sentry showed Socket Fail and insecure-defaults showed Snyk Fail. These are not proof of malice; they support reviewing rather than automatically installing popular skills.
 
-Use [OWASP ASVS 5.0.0](https://asvs.owasp.org/) (published 2025-05-30) as a coverage reference. Combine review perspectives in our own [security-review_en.md](./security-review_en.md) contract. Do not copy or automatically install external files/scripts; no runtime dependency is added. Before future copying, verify revision, per-file license and notice requirements. Observed repository licenses: [Sentry Apache-2.0](https://github.com/getsentry/skills/blob/main/LICENSE), [Trail of Bits CC-BY-SA-4.0](https://github.com/trailofbits/skills/blob/main/LICENSE).
+Use [OWASP ASVS 5.0.0](https://asvs.owasp.org/) (published 2025-05-30) as a coverage reference. Combine review perspectives in our own security-review contract. Do not copy or automatically install external files/scripts; no runtime dependency is added. Before future copying, verify revision, per-file license and notice requirements. Observed repository licenses: [Sentry Apache-2.0](https://github.com/getsentry/skills/blob/main/LICENSE), [Trail of Bits CC-BY-SA-4.0](https://github.com/trailofbits/skills/blob/main/LICENSE).
 
 ## General review rationale
 

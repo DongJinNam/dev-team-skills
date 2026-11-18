@@ -11,7 +11,7 @@
 | **Gate 1** | **Frontend / Backend** | **빌드 및 컴파일** | `npm run build` / `cargo build` / `go build` | Exit Code 0, 컴파일/타입 에러 0건 |
 | **Gate 2** | **Backend / Data** | **단위/통합 테스트** | `npm test` / `pytest` / `go test ./...` | 실패한 테스트 0건 |
 | **Gate 3** | **QA Engineer** | **E2E & 품질 게이트** | `npx playwright test` / `cypress run` | 핵심 시나리오 100% 통과 |
-| **Gate 3a** | **Security Review Engineer (독립)** | **보안·개인정보 검수** | [security-review.md](./security-review.md) 적용 | 대상 리비전 보안 PASS 및 보고서, 출시 차단 사유 없음 |
+| **Gate 3a** | **Security Review Engineer (독립)** | **보안·개인정보 검수** | security-review 원칙 적용 | 대상 리비전 보안 PASS 및 보고서, 출시 차단 사유 없음 |
 | **Gate 4** | **DevOps Engineer** | **환경 변수 일치** | `.env.example` vs `.env` 누락 키 검사 | 누락된 필수 환경변수 0개 |
 | **Gate 5** | **DevOps Engineer** | **컨테이너 기동** | `docker compose up -d --build` | 컨테이너 상태 `Up (healthy)` 유지 |
 | **Gate 6** | **DevOps Engineer** | **런타임 헬스체크** | `powershell -File ./scripts/verify-health.ps1` | HTTP 상태 코드 `200 OK` |

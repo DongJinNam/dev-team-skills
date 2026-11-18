@@ -68,4 +68,4 @@ Gaps: unavailable/unverified checks, next steps and re-review conditions
 | API requires authentication | Test ownership, tenant and role boundaries between users. |
 | Reusing PASS after a patch | Run affected checks and issue independent disposition for the new revision. |
 
-Source selection and incident rationale: [security-research_en.md](./security-research_en.md).
+Source selection and incident rationale: security-research document.

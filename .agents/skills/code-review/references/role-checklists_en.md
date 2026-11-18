@@ -1,6 +1,6 @@
 # Role-Tailored Review Checklists
 
-These are specialist checklists, not independent standing roles. Select only affected checks through the [six-owner mapping](../../engineering-squad/references/roles_en.md).
+These are specialist checklists, not independent standing roles. Select only affected checks through the squad six-owner mapping.
 
 Use these focused checklists during code reviews based on the engineering roles involved.
 
@@ -78,7 +78,7 @@ Use these focused checklists during code reviews based on the engineering roles 
 - [ ] Authorization/tenant boundaries, personal data, secrets, input, supply chain and AI/tool risks have evidence or justified per-check N/A.
 - [ ] Missing checks, exposure suspicions and Critical/High issues block release; QA green is insufficient.
 - [ ] Fixes are retested; accepted residual risks have owner, deadline and service-owner/user approval.
-- [ ] Report follows [security-review_en.md](../../engineering-squad/references/security-review_en.md), with redacted public evidence.
+- [ ] Report follows the security-review contract, with redacted public evidence.
 
 
 ## 12. Compliance Reviewer Checklist

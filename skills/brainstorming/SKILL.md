@@ -3,14 +3,24 @@ name: brainstorming
 description: >-
   Use this skill for product planning, ideation, requirement refinement, problem discovery, and market/technical research using structured brainstorming frameworks and research subagents.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
-  author: DongJinNam
-  version: "1.1.0"
+  author: DongJinNam <ehdwls6856@gmail.com>
+  version: "1.2.0"
+  tags: ["ideation", "planning", "brainstorming"]
 ---
 
 # Product Planning & Structured Brainstorming
 
-This skill is the standard guide for **Product Planners (PMs)** and Engineering Leads when designing new features or products. It helps you discover real user problems, run structured brainstorming, and turn ideas into a testable Minimum Viable Product (MVP) and Lean PRD (Product Requirement Document).
+## Purpose
+
+Guide product ideation, requirement refinement, problem discovery, and structured brainstorming for Product Planners and Engineering Leads to produce testable MVPs and Lean PRDs.
+[한국어 안내: SKILL_ko.md](SKILL_ko.md)
+
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: None. Standard planning and markdown environment.
 
 ## Superpowers workflow ownership
 
@@ -115,3 +125,27 @@ Once the PRD is complete:
 1. **Lead & AI Agent Engineer Review**: Check feasibility, testability, and eval harness needs.
 2. **Interface Contracts**: Define API endpoints and DB entities based on the PRD user flow.
 3. **Run Stages 1–5**: Data, Backend, and Frontend engineers build and verify the feature.
+
+## Examples
+
+```markdown
+# Hypothesis-Driven Feature Statement:
+"If we introduce automated catalog synchronization (Feature), developers will avoid manual drift errors (Outcome), measured by zero CAT-002 CI failures (Metric)."
+
+# How Might We (HMW) Question:
+"How might we help developers ensure 100% test passing without adding tedious manual checklist steps?"
+```
+
+## Limitations
+
+- Does not author production application code directly; focuses on specifications, requirements, and discovery.
+- A Lean PRD cannot override established team architecture rules or security contracts.
+
+## Troubleshooting
+
+- **Error**: `IdeationParalysisError`
+  - **Cause**: Unfocused divergent brainstorming without clear user problem boundaries.
+  - **Solution**: Restrict focus to a single user friction point and apply SCAMPER's Eliminate step (Ponytail mindset).
+- **Error**: `ScopeCreepWarning`
+  - **Cause**: Must-Have list contains non-critical future features.
+  - **Solution**: Fallback to RICE scoring to rank items and demote low-confidence items to Non-Goals.

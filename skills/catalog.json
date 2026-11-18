@@ -24,12 +24,12 @@
       "path": "skills/harness-engineering/SKILL.md"
     },
     {
-      "description": "Rewrite AI-sounding text so it reads like the writer without changing what it says.\nUse when editing or reviewing prose for AI tells: not-X-but-Y contrasts, one-line\nclosers, staged openers, forced triads, dashes everywhere, inflated claims, sales\nlanguage, stock AI words, bold labels, or filler. Based on Wikipedia's \"Signs of AI writing.\"\n",
+      "description": "Use this skill to rewrite AI-generated prose so it reads like human writing without changing meaning, removing robotic patterns based on Wikipedia guidance.",
       "name": "humanizer",
       "path": "skills/humanizer/SKILL.md"
     },
     {
-      "description": "Use this skill to refine Korean documentation, commit messages, PR descriptions, and code comments into clear, concise, natural Korean, removing robotic AI tone and translation artifacts while preserving 100% technical facts.",
+      "description": "Use this skill to refine Korean documentation, commit messages, and PR descriptions into natural, professional Korean, eliminating robotic translation tone.",
       "name": "humanizer-kr",
       "path": "skills/humanizer-kr/SKILL.md"
     },
@@ -39,12 +39,12 @@
       "path": "skills/i-have-adhd/SKILL.md"
     },
     {
-      "description": "Use this skill to adopt the mindset of the laziest, pragmatically brilliant senior dev: \"The best code is the code you never wrote.\" Also use when compressing report conclusions or executive summaries without losing verdicts, actions, evidence, or uncertainty.",
+      "description": "Use this skill to adopt a pragmatic senior developer mindset: write minimal code, prioritize standard libraries, and compress reports without losing core verdicts.",
       "name": "ponytail",
       "path": "skills/ponytail/SKILL.md"
     },
     {
-      "description": "Use when the user asks in plain language to build, fix, review, verify, or ship something (\"fix this bug\", \"build this feature\", \"이 버그 고쳐줘\", \"이 기능 만들어줘\") without naming a skill. Entry point for the six-owner engineering squad.",
+      "description": "Use when the user requests building, fixing, reviewing, verifying, or shipping code without naming a skill. Routes plain requests to the six-owner engineering squad.",
       "name": "using-dev-team-skills",
       "path": "skills/using-dev-team-skills/SKILL.md"
     }

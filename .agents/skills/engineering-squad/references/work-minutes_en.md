@@ -1,6 +1,6 @@
 # Work Minutes Contract
 
-This record exists so the person who delegated the work does not have to ask later how it proceeded or why it was done that way. Write one file per task at `docs/worklogs/YYYY-MM-DD-<task-slug>.md` in the target repo. The minutes invent no new record format. They bind records that already exist separately — the kickoff agreement, [decision records](./decision-governance_en.md), verification records and cost records — into one index per task.
+This record exists so the person who delegated the work does not have to ask later how it proceeded or why it was done that way. Write one file per task at `docs/worklogs/YYYY-MM-DD-<task-slug>.md` in the target repo. The minutes invent no new record format. They bind records that already exist separately — the kickoff agreement, decision records, verification records and cost records — into one index per task.
 
 ## 1. Timing and ownership
 
@@ -10,7 +10,7 @@ This record exists so the person who delegated the work does not have to ask lat
 
 ## 2. Format
 
-The summary at the top follows the [three-sentence summary contract](./report-summary_en.md) unchanged. The body uses fixed fields only, so a human reader and an agent parser read the same table.
+The summary at the top follows the three-sentence summary contract unchanged. The body uses fixed fields only, so a human reader and an agent parser read the same table.
 
 ```markdown
 # Work minutes: <task name>

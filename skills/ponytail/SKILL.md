@@ -1,20 +1,28 @@
 ---
 name: ponytail
 description: >-
-  Use this skill to adopt the mindset of the laziest, pragmatically brilliant senior dev: "The best code is the code you never wrote." Also use when compressing report conclusions or executive summaries without losing verdicts, actions, evidence, or uncertainty.
+  Use this skill to adopt a pragmatic senior developer mindset: write minimal code, prioritize standard libraries, and compress reports without losing core verdicts.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
-  author: DongJinNam
-  version: "1.1.0"
+  author: DongJinNam <ehdwls6856@gmail.com>
+  version: "1.2.0"
+  tags: ["code-review", "simplicity", "pragmatism"]
 ---
 
 # Ponytail: The Lazy Senior Dev Protocol
 
+## Purpose
+
+Enforce pragmatic senior engineering principles: eliminate bloat, prioritize standard libraries over heavy dependencies, reject speculative abstractions, and compress reports into three essential sentences.
+[한국어 안내: SKILL_ko.md](SKILL_ko.md)
+
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: None. Standard programming languages and built-in libraries.
+
 > "The best code is the code you never wrote. The second best is the smallest amount of plain code that completely solves the problem."
-
-This skill adopts the `ponytail` mindset. It blocks common bad habits in AI agents: **adding heavy third-party packages, making useless wrapper functions, and creating premature abstractions**.
-
----
 
 ## 1. Core Rules
 
@@ -31,8 +39,6 @@ This skill adopts the `ponytail` mindset. It blocks common bad habits in AI agen
 4. **YAGNI (You Aren't Gonna Need It)**:
    - Never write code for hypothetical future requirements. Solve today's problem cleanly.
 
----
-
 ## 2. Dependency Checklist
 
 Before adding any new dependency (`npm install`, `pip install`), pass this checklist:
@@ -40,7 +46,33 @@ Before adding any new dependency (`npm install`, `pip install`), pass this check
 - [ ] Is this feature complex enough to justify the maintenance and security risk of adding a new dependency?
 - [ ] Did the user explicitly ask for this library?
 
-
 ## 3. Report compression
 
 Before writing or shortening a report summary, read and apply the [report conclusion and three-sentence contract](../engineering-squad/references/report-summary_en.md). Preserve exactly three sentences: What was decided → How to act or verify → Why the evidence supports it. Remove repetition while retaining the verdict's scope, conditions, evidence, risks and unknowns. Check the same contract after Humanizer Editor's final rewrite.
+
+## Examples
+
+```python
+# Bloated Speculative Wrapper (Before):
+class DateUtilityProviderInterface:
+    def format_iso(self, dt): raise NotImplementedError
+class DateUtilityProvider(DateUtilityProviderInterface):
+    def format_iso(self, dt): return dt.isoformat()
+
+# Clean Standard Library Minimal Code (After):
+iso_string = dt.isoformat()
+```
+
+## Limitations
+
+- Does not forbid external libraries when standard library alternatives are genuinely missing, insecure, or excessively complex to implement safely.
+- Does not compromise security review gates or verification criteria for the sake of code shortness.
+
+## Troubleshooting
+
+- **Error**: `DependencyBloatRisk`
+  - **Cause**: An external library was proposed for a task solvable by standard library built-ins.
+  - **Solution**: Reject package installation, write the 5-line standard library equivalent, and verify tests pass.
+- **Error**: `OverAbstractionError`
+  - **Cause**: Generic interface created for a single concrete implementation without known variants.
+  - **Solution**: Fallback to direct concrete implementation and remove unused interface abstractions.

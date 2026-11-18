@@ -3,14 +3,24 @@ name: code-review
 description: >-
   Use when reviewing code or engineering artifacts for high-impact correctness, risk, maintainability, and relevant specialist checks under the squad's accountable owners.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
-  author: DongJinNam
-  version: "1.1.0"
+  author: DongJinNam <ehdwls6856@gmail.com>
+  version: "1.2.0"
+  tags: ["code-review", "quality", "security"]
 ---
 
 # High-ROI Code Review Workflow
 
-This skill focuses on **"the highest-impact problems for the time spent (high ROI)"**. It cuts out unnecessary nitpicking and focuses on making software reliable, simple, and easy to maintain.
+## Purpose
+
+Guide high-ROI code reviews focusing on correctness, critical security flaws, edge-case risks, and maintainability under the squad's accountable owners.
+[한국어 안내: SKILL_ko.md](SKILL_ko.md)
+
+## Prerequisites
+
+- Operating System: Windows, macOS, Linux
+- Dependencies: None. Standard code review environment.
 
 ## Superpowers workflow ownership
 
@@ -74,3 +84,26 @@ At QA Stage 3, activate an independent Security Review Engineer and apply [secur
 Require an independent Security Review Engineer PASS and report for the latest PR head before every merge, including documentation/configuration changes. Apply the [required PR merge gate](../engineering-squad/references/security-review_en.md#required-pr-merge-gate). Missing/BLOCKED/stale review prevents merge. New commits or changed merge inputs require re-review; QA, general approval and green CI cannot substitute for security PASS.
 
 Security coordinates the Compliance Reviewer capability and checks relevant Korean/U.S. IT legal and security-related compliance; see [compliance responsibility](../engineering-squad/references/roles_en.md). Record sources, applicability and actions; unresolved applicable violations block merge.
+
+## Examples
+
+```markdown
+# 3-Tier Severity Review Comments:
+🔴 [Must Fix]: Missing database transaction on debit operation. If the subsequent call fails, account state becomes inconsistent.
+🟡 [Inquire & Verify]: What is the fallback behavior if Redis is temporarily unreachable?
+🟢 [Suggestion]: Consider using `Enum` instead of raw string literals for status codes.
+```
+
+## Limitations
+
+- Does not nitpick spacing, semicolons, or formatting; delegate purely stylistic concerns to automated linters.
+- General peer approval cannot substitute for an independent Security Review Engineer PASS on the current head.
+
+## Troubleshooting
+
+- **Error**: `ReviewBlockerDeadlock`
+  - **Cause**: Reviewer and author disagree on architectural abstraction or pattern choice.
+  - **Solution**: Escalate to the Tech Lead for binding resolution or fallback to standard library minimalism.
+- **Error**: `StaleReviewApproval`
+  - **Cause**: PR branch received new commits after review was recorded.
+  - **Solution**: Automatically revoke approval; re-verify test suite and request updated security sign-off.
