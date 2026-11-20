@@ -3,7 +3,7 @@ name: using-dev-team-skills
 description: Use when the user asks in plain language to build, fix, review, verify, or ship something ("fix this bug", "build this feature", "이 버그 고쳐줘", "이 기능 만들어줘") without naming a skill. Entry point for the six-owner engineering squad.
 version: "1.2.0"
 metadata:
-  author: DongJinNam <ehdwls6856@gmail.com>
+  author: DongJinNam
   version: "1.2.0"
   tags: ["entry-point", "routing"]
 ---

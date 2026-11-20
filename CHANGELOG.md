@@ -15,7 +15,7 @@ titles are the PR titles verbatim. The current packaged version is
 - `scripts/capture_plan.py` and `scripts/security_packet.py` reject `--base`/`--head` values that are not hex commit SHAs (4-40 chars).
 - The capture runbook now states who records per-model call counts (the renewal Lead), in what format (one table row per model), and when (per batch, totalled at the end).
 - Skill frontmatter now carries the SkillEvaluator schema author, version, and tags for `engineering-squad`, `ponytail`, and `using-dev-team-skills`.
-- Author email is omitted from the Korean skill mirrors (`SKILL_ko.md`) to avoid duplicate contact exposure; the English `SKILL.md` files keep the required author attribution.
+- Author email is omitted from both English (`SKILL.md`) and Korean (`SKILL_ko.md`) skill frontmatter (author name only) to avoid personal email (PII) exposure in public files.
 
 ## [1.2.0] - 2026-11-15
 
