@@ -3,9 +3,11 @@ name: engineering-squad
 description: >-
   Use when a software change, service delivery, or decision report needs coordinated ownership, task-sized specialist work, independent verification, or evidence-based selection of external skills.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
   author: DongJinNam
-  version: "1.1.0"
+  version: "1.2.0"
+  tags: ["engineering", "coordination", "review"]
 ---
 
 # Engineering Squad

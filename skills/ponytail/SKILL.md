@@ -3,9 +3,11 @@ name: ponytail
 description: >-
   Use this skill to adopt the mindset of the laziest, pragmatically brilliant senior dev: "The best code is the code you never wrote." Also use when compressing report conclusions or executive summaries without losing verdicts, actions, evidence, or uncertainty.
 compatibility: Claude Code, Codex, Antigravity, Cursor
+version: "1.2.0"
 metadata:
   author: DongJinNam
-  version: "1.1.0"
+  version: "1.2.0"
+  tags: ["code-review", "simplicity"]
 ---
 
 # Ponytail: The Lazy Senior Dev Protocol
