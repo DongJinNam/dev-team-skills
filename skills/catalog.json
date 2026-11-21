@@ -29,7 +29,7 @@
       "path": "skills/humanizer/SKILL.md"
     },
     {
-      "description": "Use this skill to refine Korean documentation, commit messages, PR descriptions, and code comments into clear, concise, natural Korean, removing robotic AI tone and translation artifacts while preserving 100% technical facts.",
+      "description": "Refine Korean docs, commit messages, PR descriptions, and code comments into natural Korean while preserving technical facts.",
       "name": "humanizer-kr",
       "path": "skills/humanizer-kr/SKILL.md"
     },
@@ -39,12 +39,12 @@
       "path": "skills/i-have-adhd/SKILL.md"
     },
     {
-      "description": "Use this skill to adopt the mindset of the laziest, pragmatically brilliant senior dev: \"The best code is the code you never wrote.\" Also use when compressing report conclusions or executive summaries without losing verdicts, actions, evidence, or uncertainty.",
+      "description": "Apply minimum-code, standard-library-first engineering and compress report conclusions without losing verdicts, evidence, or risks.",
       "name": "ponytail",
       "path": "skills/ponytail/SKILL.md"
     },
     {
-      "description": "Use when the user asks in plain language to build, fix, review, verify, or ship something (\"fix this bug\", \"build this feature\", \"이 버그 고쳐줘\", \"이 기능 만들어줘\") without naming a skill. Entry point for the six-owner engineering squad.",
+      "description": "Route plain-language build, fix, review, verify, or ship requests (EN/KR) to the six-owner engineering squad contract.",
       "name": "using-dev-team-skills",
       "path": "skills/using-dev-team-skills/SKILL.md"
     }

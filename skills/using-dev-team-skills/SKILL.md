@@ -1,6 +1,6 @@
 ---
 name: using-dev-team-skills
-description: Use when the user asks in plain language to build, fix, review, verify, or ship something ("fix this bug", "build this feature", "이 버그 고쳐줘", "이 기능 만들어줘") without naming a skill. Entry point for the six-owner engineering squad.
+description: Route plain-language build, fix, review, verify, or ship requests (EN/KR) to the six-owner engineering squad contract.
 metadata:
   author: DongJinNam
   version: "1.2.0"
@@ -8,6 +8,15 @@ metadata:
 ---
 
 # Using dev-team-skills
+
+## Purpose
+
+Route plain-language engineering requests to the six-owner squad contract when no explicit skill or slash command was named, preventing ad-hoc workflows.
+
+## Prerequisites
+
+- Sibling `engineering-squad` and `code-review` skills installed under `skills/`
+- Optional host `SessionStart` / `Stop` hooks configured via [hooks/hooks.json](../../hooks/hooks.json)
 
 Entry point. Read this skill when a plain-language engineering request
 arrives and no skill was named. It routes the request to the squad
@@ -62,3 +71,22 @@ user already aimed at a specific skill.
 - It does not replace the Stop gate. The hook in
   [hooks/hooks.json](../../hooks/hooks.json) still blocks a stop when
   `verify-harness` fails.
+
+## Examples
+
+```text
+User: "이 버그 고쳐줘"
+Route: engineering-squad -> Step 0 kickoff -> scoped fix -> verify -> independent security PASS
+```
+
+## Limitations
+
+- Requires host hook support for automatic invocation; without hooks, entry is manual and must be reported as `NOT_RUN` for hook execution.
+- Does not grant merge or deployment authority by itself.
+
+## Troubleshooting
+
+| Error / Symptom | Cause | Solution |
+| --- | --- | --- |
+| Entry skill did not auto-trigger | Host does not execute `SessionStart` hooks | Invoke `/dev-team-skills:squad` manually and report hook status as `NOT_RUN` |
+| Stop hook blocks completion | `verify-harness` failed on package or link checks | Fix the reported harness error and re-run `scripts/verify-harness.py` |

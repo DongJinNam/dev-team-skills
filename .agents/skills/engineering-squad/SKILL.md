@@ -11,6 +11,15 @@ metadata:
 
 # Engineering Squad
 
+## Purpose
+
+Coordinate software changes, reviews, releases, and decision reports across six accountable owners with explicit verification gates and independent security review.
+
+## Prerequisites
+
+- UTF-8 readable repository files (`Get-Content -LiteralPath <path> -Encoding UTF8` on Windows PowerShell or `read_text(encoding='utf-8')` in Python)
+- Bash or PowerShell for bundled health-check scripts when operational checks are in scope
+
 Work through six accountable owners; assign specialist capabilities only to relevant tasks. Role count is not agent count. Apply [roles and kickoff/stop rules](./references/roles.md) and [tiered decisions](./references/decision-governance.md) before decomposition.
 
 Read skills and references as UTF-8. Specify encoding, for example `Get-Content -LiteralPath <path> -Encoding UTF8` in Windows PowerShell or `read_text(encoding='utf-8')` in Python. If text is corrupted, reread it before interpreting the instructions; if it remains unreadable, record the limitation for the dependent step. Confirm installation listing, skill discovery and actual use separately; success at one does not establish the others.
@@ -61,3 +70,29 @@ When Superpowers is actually available, keep one design/plan owner through the [
 Assign model tiers by task type under the [model routing contract](./references/model-routing.md): DEEP for judgments, design, analysis and their summaries; STANDARD for settled implementation and tests. Lead records each added call's distinct output/value and measured/estimated/unknown cost. Compare repeated tasks using matching scope, model and quality gates. Document length and owner-count reductions are not actual token savings. Handoff decisions, evidence, open issues and necessary file paths instead of complete conversations. Keep that handoff as the [work minutes](./references/work-minutes.md).
 
 Humanizer Editor is Lead's final editing duty. Apply `humanizer-kr` for Korean or `humanizer` for English and compare facts, risks and unverified status. Preserve the [three-sentence What/How/Why report contract](./references/report-summary.md). Ordinary explanations need no separate editor agent.
+
+## Available Scripts
+
+| Script | Purpose | Arguments |
+| --- | --- | --- |
+| `scripts/verify-health.sh` | Check HTTP health endpoint readiness on macOS/Linux | `[URL]` (default `http://localhost:8080/health`) |
+| `scripts/verify-health.ps1` | Check HTTP health endpoint readiness on Windows PowerShell | `-Url <URL>` (default `http://localhost:8080/health`) |
+
+## Examples
+
+```bash
+# Run bundled health check via host tool or shell (equivalent to run_script("verify-health.sh"))
+bash skills/engineering-squad/scripts/verify-health.sh http://localhost:8080/health
+```
+
+## Limitations
+
+- Passing static structure or decision checks does not prove runtime execution, host loader behavior, or production safety.
+- Independent security PASS is bound to one base/head diff and becomes `STALE` on any new commit or rebase.
+
+## Troubleshooting
+
+| Error / Symptom | Cause | Solution |
+| --- | --- | --- |
+| Corrupted Korean/UTF-8 text on Windows | Default console code page read without UTF-8 | Reread with `-Encoding UTF8` (`Get-Content`) or `encoding='utf-8'` (Python); record limitation if still unreadable |
+| Merge blocked after late commit | Prior security PASS became `STALE` | Re-run affected verification and obtain a fresh independent Security Review Engineer PASS on the new head |
