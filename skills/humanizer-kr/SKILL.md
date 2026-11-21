@@ -6,6 +6,7 @@ compatibility: Claude Code, Codex, Antigravity, Cursor
 metadata:
   author: hjongc
   version: "1.1.0"
+  tags: ["korean", "writing", "humanizer"]
 ---
 
 # Humanizer-KR: Natural Korean Technical Writing

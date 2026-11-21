@@ -67,13 +67,16 @@ def build_catalog(root):
         if not folder.is_dir() or not skill_file.exists():
             continue
         data = parse_frontmatter(skill_file)
-        ko_file = folder / "SKILL_ko.md"
-        if ko_file.exists():
-            ko_data = parse_frontmatter(ko_file)
-            if ko_data["name"] != data["name"]:
-                raise ValueError(
-                    f"{ko_file}: frontmatter name {ko_data['name']!r} does not match "
-                    f"{skill_file} name {data['name']!r}")
+        for ko_file in (
+            folder / "SKILL_ko.md",
+            root / "docs" / "i18n" / "ko" / "skills" / folder.name / "SKILL_ko.md",
+        ):
+            if ko_file.exists():
+                ko_data = parse_frontmatter(ko_file)
+                if ko_data["name"] != data["name"]:
+                    raise ValueError(
+                        f"{ko_file}: frontmatter name {ko_data['name']!r} does not match "
+                        f"{skill_file} name {data['name']!r}")
         entries.append({
             "name": data["name"],
             "description": data["description"],

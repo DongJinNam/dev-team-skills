@@ -10,6 +10,7 @@ compatibility: Claude Code, Codex, Antigravity, Cursor
 metadata:
   author: blader
   version: "3.1.0"
+  tags: ["writing", "editing", "humanizer"]
 ---
 
 # Humanizer: remove AI writing patterns

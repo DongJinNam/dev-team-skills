@@ -97,6 +97,19 @@ def main():
                  ".claude-plugin/marketplace.json", ".codex-plugin/plugin.json"):
         check(path, lambda path=path: manifest(path))
 
+    # Linear-time email detector (no overlapping \S+ quantifiers) to avoid ReDoS
+    # when validating untrusted packages via --root.
+    author_email_re = re.compile(
+        r"(?:^|[\s<(\"',;])[^\s@<>()\"',;]+@[^\s@.<>()\"',;]+\.[^\s@<>()\"',;]+"
+    )
+
+    def has_email(value):
+        if isinstance(value, str):
+            return bool(author_email_re.search(value))
+        if isinstance(value, list):
+            return any(isinstance(item, str) and author_email_re.search(item) for item in value)
+        return False
+
     def skill(path):
         # Codex requires --- at byte zero; stripping a BOM masks a load failure.
         lines = path.read_text(encoding="utf-8").splitlines()
@@ -108,6 +121,18 @@ def main():
             raise ValueError("YAML frontmatter is missing its closing ---") from error
         data = yaml.load("\n".join(lines[1:closing]), Loader=UniqueSafeLoader)
         require_text_fields(data, ("name", "description"))
+        if "version" in data:
+            raise ValueError(
+                "top-level 'version' is outside the agentskills.io spec; "
+                "use metadata.version instead")
+        if has_email(data.get("author")):
+            raise ValueError(
+                "author must not contain an email address (PII policy)")
+        metadata = data.get("metadata")
+        if isinstance(metadata, dict):
+            if has_email(metadata.get("author")) or has_email(metadata.get("email")):
+                raise ValueError(
+                    "metadata.author/email must not contain an email address (PII policy)")
         return data
 
     skills = sorted((root / "skills").rglob("SKILL.md"))
@@ -121,10 +146,14 @@ def main():
         check(path.relative_to(root).as_posix(), capture)
 
     # SKILL_ko.md is the Korean translation of the same skill, not a
-    # separate skill: same folder, same frontmatter name, same link and
-    # anchor rules. SKILL_en.md no longer exists (English is the
-    # canonical SKILL.md), so there is no English-variant check.
+    # separate skill. Canonical Korean translations live under
+    # docs/i18n/ko/skills/<folder>/SKILL_ko.md so skills/<folder>/ stays
+    # monolingual for SkillEvaluator Tier 2 deduplication; any legacy
+    # skills/<folder>/SKILL_ko.md is still validated if present.
+    ko_root = root / "docs" / "i18n" / "ko" / "skills"
     skills_ko = sorted((root / "skills").rglob("SKILL_ko.md"))
+    if ko_root.is_dir():
+        skills_ko += sorted(ko_root.rglob("SKILL_ko.md"))
     for path in skills_ko:
         def capture_ko(path=path):
             parsed[path] = skill(path)
@@ -177,15 +206,20 @@ def main():
             anchors.add(slug)
         return anchors
 
+    def skill_base(path):
+        if ko_root.is_dir() and path.is_relative_to(ko_root):
+            return ko_root
+        return skills_root
+
     def skl001():
         for path in skill_files:
-            if len(path.relative_to(skills_root).parts) > 2:
+            if len(path.relative_to(skill_base(path)).parts) > 2:
                 raise ValueError(
                     f"{path.relative_to(root).as_posix()} is nested below a skill folder")
 
     def skl002():
         for path in skill_files:
-            parts = path.relative_to(skills_root).parts
+            parts = path.relative_to(skill_base(path)).parts
             data = parsed.get(path)
             if data is not None and data.get("name") != parts[0]:
                 raise ValueError(

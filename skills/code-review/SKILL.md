@@ -6,6 +6,7 @@ compatibility: Claude Code, Codex, Antigravity, Cursor
 metadata:
   author: DongJinNam
   version: "1.1.0"
+  tags: ["code-review", "security", "quality"]
 ---
 
 # High-ROI Code Review Workflow
@@ -14,7 +15,7 @@ This skill focuses on **"the highest-impact problems for the time spent (high RO
 
 ## Superpowers workflow ownership
 
-If both packages participate, first read the [ownership contract](../engineering-squad/references/superpowers-compatibility_en.md). Use verified qualified identities and a single planning/evidence record; reuse valid approvals and supplement only missing scope. Keep mandatory kickoff confirmation, distinct review purposes and current-head independent security gates.
+If both packages participate, first read the [ownership contract](../engineering-squad/references/superpowers-compatibility.md). Use verified qualified identities and a single planning/evidence record; reuse valid approvals and supplement only missing scope. Keep mandatory kickoff confirmation, distinct review purposes and current-head independent security gates.
 
 ---
 
@@ -28,7 +29,7 @@ Every review comment should use a clear severity tag so the author knows what bl
 | 🟡 | **[Inquire & Verify]** | Unclear design choices, potential side effects, missing edge cases, or trade-offs | **Author must clarify or answer** |
 | 🟢 | **[Suggestion]** | Readability improvements, minor cleanup, optional patterns, or small optimizations | **Author's choice (does not block merging)** |
 
-*For full guidelines and design pattern rules, see [review-rubric_en.md](./references/review-rubric_en.md).*
+*For full guidelines and design pattern rules, see [review-rubric.md](./references/review-rubric.md).*
 
 ---
 
@@ -39,7 +40,7 @@ Every review comment should use a clear severity tag so the author knows what bl
 2. **Grounded in SOLID & Design Patterns**:
    - Avoid subjective feedback like "I just prefer this way." Back up your advice with solid principles: **Single Responsibility (SRP), Open-Closed (OCP), loose coupling, or Strategy/Factory patterns**.
 3. **Tailored by Role**:
-   - Review code through the lens of specific roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE). (See [role-checklists_en.md](./references/role-checklists_en.md))
+   - Review code through the lens of specific roles (Product Planner, Product Marketing, Finance / FinOps, AI Agent Engineer, Frontend, Backend, Data, QA, Test Engineer, Security Review Engineer, Compliance Reviewer, DevOps, SRE). (See [role-checklists.md](./references/role-checklists.md))
 
 ---
 
@@ -66,11 +67,11 @@ flowchart TD
 
 ## Mandatory security disposition
 
-At QA Stage 3, activate an independent Security Review Engineer and apply [security-review_en.md](../engineering-squad/references/security-review_en.md). QA green and ROI/cost priorities cannot waive the security gate. Map release blockers to Must Fix; Medium/Low residual-risk acceptance follows that contract and any stricter organizational policy.
+At QA Stage 3, activate an independent Security Review Engineer and apply [security-review.md](../engineering-squad/references/security-review.md). QA green and ROI/cost priorities cannot waive the security gate. Map release blockers to Must Fix; Medium/Low residual-risk acceptance follows that contract and any stricter organizational policy.
 
 
 ## Required PR merge criteria
 
-Require an independent Security Review Engineer PASS and report for the latest PR head before every merge, including documentation/configuration changes. Apply the [required PR merge gate](../engineering-squad/references/security-review_en.md#required-pr-merge-gate). Missing/BLOCKED/stale review prevents merge. New commits or changed merge inputs require re-review; QA, general approval and green CI cannot substitute for security PASS.
+Require an independent Security Review Engineer PASS and report for the latest PR head before every merge, including documentation/configuration changes. Apply the [required PR merge gate](../engineering-squad/references/security-review.md#required-pr-merge-gate). Missing/BLOCKED/stale review prevents merge. New commits or changed merge inputs require re-review; QA, general approval and green CI cannot substitute for security PASS.
 
-Security coordinates the Compliance Reviewer capability and checks relevant Korean/U.S. IT legal and security-related compliance; see [compliance responsibility](../engineering-squad/references/roles_en.md). Record sources, applicability and actions; unresolved applicable violations block merge.
+Security coordinates the Compliance Reviewer capability and checks relevant Korean/U.S. IT legal and security-related compliance; see [compliance responsibility](../engineering-squad/references/roles.md). Record sources, applicability and actions; unresolved applicable violations block merge.

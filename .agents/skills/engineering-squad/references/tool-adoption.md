@@ -1,40 +1,40 @@
-# 외부 스킬·오픈소스 활용 증거 계약
+# Evidence for external skills and open source
 
-새 도구 선택·도입 평가·활용 점검 때 필요한 후보만 읽는다. Product는 문제/시장 근거, Engineering은 호환·실행, Quality는 검증, Security는 권한/권리를 확인하고 Lead가 비용과 선택을 기록한다. 별도 상설 도구 평가 역할은 만들지 않는다.
+Read only relevant candidates when selecting, evaluating or auditing tool use. Product owns the problem/evidence, Engineering compatibility/execution, Quality verification, Security authority/rights, and Lead cost/selection. Add no permanent tool-evaluation role.
 
-## 선택 순서
+## Selection
 
-1. 해결할 문제와 AC를 적고 현재 제공된 도구·프로젝트 의존성·표준 라이브러리로 해결되는지 확인한다.
-2. 외부 비교가 필요하면 적합한 후보 최대 3개를 같은 기준으로 비교한다. 추가 후보는 기존 후보가 AC를 충족하지 못하는 이유가 있을 때 조사한다. 관련 없는 작업은 조사 N/A 사유만 기록한다.
-3. 공식 원출처의 유지보수 상태·확인일·revision/version·라이선스/파일별 조건·호스트/OS 호환·권한/데이터 전송·의존성·예상 비용을 확인한다. SNS·stars·다운로드 수는 발견 지표일 뿐 실사용률·품질·안전성 증거가 아니다. 단일 시점으로 최근 성장률을 만들지 않는다.
-4. 선택한 후보의 정확한 패키지 ID/경로를 읽고 작은 실제 작업에 적용한다. 사용한 부분·산출물·실행 결과·품질을 기록한다. 문서 방법의 적용과 스크립트/CLI 실행을 구분한다. 설치/권한/외부 전송은 기존 사용자 권한·호스트 규칙 안에서만 한다.
-5. 같은 AC에서 기존 방법과 비교해 채택·보류·기각한다. 기능·독립 보안·적용 컴플라이언스 실패를 비용 절감으로 상쇄하지 않는다. 선택형 도구가 없거나 읽히지 않으면 기존 방법으로 진행하고 공백을 남긴다. 사용자가 필수 지정한 도구는 해당 의존 단계 BLOCKED다.
+1. State the problem and AC; check available tools, project dependencies and standard libraries first.
+2. When external comparison is needed, compare at most three relevant candidates on the same criteria. Research more only if existing candidates fail the AC. Record research N/A for unrelated work.
+3. Check official sources for maintenance, date, revision/version, license/file-specific terms, host/OS compatibility, permissions/data transfer, dependencies and expected cost. SNS, stars and downloads are discovery signals, not active-use, quality or safety evidence. A single snapshot cannot establish growth.
+4. Read the exact selected package ID/path and apply it to a small actual task. Record the part used, artifact, execution result and quality. Distinguish applying a documented method from executing a script/CLI. Installation, permission and external transfer remain within user authority and host rules.
+5. Compare with the existing method against identical AC, then adopt/defer/reject. Savings cannot offset functional, independent-security or applicable-compliance failure. Fall back to existing methods if an optional tool is unavailable/unreadable, recording gaps; a user-required unavailable tool blocks its dependent step.
 
-## 증거 상태
+## Evidence states
 
-상태는 주장 종류이며 자동 승격 단계가 아니다. 아래 증거가 충족된 가장 높은 범위를 기록하고 누락을 별도로 남긴다. 문서만으로 방법을 채택한 경우 설치 가능(AVAILABLE)을 주장할 필요가 없다.
+States describe claims, not automatic promotions. Record the highest supported scope and missing evidence separately. Applying a documented method does not require claiming installable availability.
 
-| 상태 | 필요한 증거 | 뜻하지 않는 것 |
+| State | Evidence required | Does not establish |
 | --- | --- | --- |
-| DISCOVERED | 원출처 URL·확인일·관련 문제 | 검토·설치·활용 |
-| INSPECTED | 실제 읽은 파일/문서·revision 또는 확인일·권리/제약·적용 판단 | 실행 완료 |
-| AVAILABLE | 현재 환경의 정확한 패키지/경로/버전·읽기 또는 실행 가능 확인 | AC 통과 |
-| APPLIED | 사용한 방법/명령·대상·실제 산출물/로그 | 효과 검증 |
-| VERIFIED | APPLIED 증거 + 해당 revision/환경에서 AC 결과·품질 검토·비교 범위 | 모든 작업의 효율·보안 보증 |
+| DISCOVERED | Original URL, check date, relevant problem | Inspection, installation, use |
+| INSPECTED | Actually read file/document, revision or check date, rights/constraints, applicability | Execution |
+| AVAILABLE | Exact current package/path/version and confirmed readability or executability | Passing AC |
+| APPLIED | Actual method/command, target, resulting artifact/log | Validated effect |
+| VERIFIED | APPLIED evidence plus AC results, quality review and comparison scope for this revision/environment | Universal efficiency or security |
 
-`result: PASS / FAIL / NOT_RUN`은 상태와 별도다. 실패한 적용은 APPLIED + FAIL, 미실행은 NOT_RUN이며 VERIFIED + PASS로 바꾸지 않는다. 필수 증거가 없으면 마지막으로 입증된 상태에 머문다. VERIFIED에는 실제 통과한 AC와 한계를 적고, 보안 승인 여부는 별도 보안 계약으로 판단한다.
+`result: PASS / FAIL / NOT_RUN` is separate. Failed use stays APPLIED + FAIL; unrun stays NOT_RUN, never VERIFIED + PASS. Missing evidence retains the last supported state. VERIFIED identifies passed AC and limits; security approval remains governed separately.
 
-## 성과 비교를 수행할 때
+## When comparing task outcomes
 
-- 실행 전에 모델·추론 설정·호스트/OS·패키지 버전/해시·공통 과제·숨은 수용 검사·실패 기준·반복 수·시간/사용량 한도를 정한다. 실제 모델 기록을 확인하고 모든 조건에 같은 도구 권한과 초기 안내를 준다. 지침 계층만 비교했다면 hooks/MCP/하위 에이전트를 포함한 전체 제품의 성과로 확대하지 않는다. 각 조건의 스킬 읽기 인코딩과 로딩 오류도 확인한다.
-- 시작한 실패·시간초과·중단을 분모에서 빼지 않는다. 재시도·추가 힌트·순서·캐시 차이를 기록한다. 파일 준비, 설치 명령 성공, 고유 스킬 발견 수, 실제 사용, 과제 완료를 별도 항목으로 정의한다. 미실행 호스트는 NOT_RUN이며 다른 호스트의 성공으로 대체하지 않는다.
-- 독립 검토자는 가능하면 조건명을 가린 산출물을 확인한다. 검토에서 발견한 새 경계값은 모든 조건에 같은 사후 탐색 검사로 적용하고 원래 고정 점수와 분리한다. 과거 산출물·점수·정책 해시를 새 버전 결과로 덮어쓰지 않는다.
-- 입력·캐시 입력·출력을 구분하고 캐시나 reasoning 부분집합을 중복 합산하지 않는다. 수행 에이전트만의 토큰과 준비·재시도·하위 호출·독립 검토를 포함한 전체 사용량을 구분한다. 누락은 UNMEASURED다. 캐시 포함 토큰 감소만으로 금전 절감을 주장하지 않는다.
-- 작은 표본의 관측 차이는 일반적 우수성·동등성·비열등성(미리 정한 허용 차이보다 뒤처지지 않음)의 입증이 아니다. 그런 주장은 실행 전 효과 목표·허용 차이·표본 수·분석 방법을 정한 별도 근거가 필요하다. “우수성 미입증”을 “부족하지 않음”으로 바꾸지 않는다. 추가 실험은 기존 실행 권한과 예산 범위를 확인한 뒤 수행한다.
+- Before execution, fix model/effort, host/OS, package versions/hashes, common tasks, hidden acceptance checks, failure criteria, repeats and time/usage limits. Verify actual model records and provide the same tool authority and initial guidance. A skill-layer comparison does not measure a full product with hooks, MCP or child agents. Check policy-read encoding and loading errors in every arm.
+- Retain started failures, timeouts and aborts in the denominator. Record retries, extra hints, order and cache differences. Define file preparation, successful installation commands, unique skill discovery, actual use and task completion separately. An untested host stays NOT_RUN; another host's success is not a substitute.
+- Where practical, blind independent artifact reviewers to conditions. Apply newly discovered edge cases uniformly as posthoc exploratory checks, separate from frozen scores. Never overwrite earlier artifacts, scores or policy hashes as results for a new version.
+- Separate input, cached input and output; do not add cached or reasoning subsets twice. Distinguish actor-only tokens from the full workflow including preparation, retries, children and independent review. Missing usage is UNMEASURED. Fewer cache-inclusive tokens alone do not establish monetary savings.
+- Differences observed in a small sample do not establish general superiority, equivalence or noninferiority (not worse than a predefined margin). Such claims require effect targets, margins, sample sizes and analysis fixed before execution. Unproven superiority does not mean not inferior. Check existing execution authority and budget before additional experiments.
 
-## 하나의 작업 기록
+## One task record
 
-기존 PR/작업 기록에 아래 한 행/블록을 추가한다. 새 평가 문서를 중복 생성하지 않는다.
+Add one row/block to the existing PR/task record instead of another evaluation document.
 
 ```text
 problem/AC | owner | candidate/source/file/revision-or-checked-at
@@ -44,6 +44,6 @@ baseline_or_existing_option | decision(adopt/defer/reject)/reason | scope/limits
 recheck_trigger | next_owner
 ```
 
-예: 설치 목록에 없고 README만 읽은 CLI는 INSPECTED, result NOT_RUN이다. 명령을 제시했다는 이유로 APPLIED가 되지 않는다. 외부 방법으로 새 인수 테스트를 만들고 검증했다면 해당 테스트 산출물 범위의 활용이며 외부 CLI를 실행한 것은 아니다.
+Example: a CLI absent from installed tools with only its README read is INSPECTED, result NOT_RUN. Suggesting a command is not APPLIED. Writing and validating an acceptance test using a documented method supports that artifact's use claim; it does not establish execution of the external CLI.
 
-도입 전과 버전·권한·데이터 경계·보안 공지·AC 변경 시 관련 근거를 다시 확인한다. 같은 범위의 최신 검증은 재사용한다. 지난 프로젝트 PASS를 새 환경 PASS로 복사하지 않는다. 토큰 비교는 [사용량 평가](../../../evals/token-efficiency.md)의 동일 조건·전체 호출/재시도/리뷰·품질 게이트를 사용한다. 로그가 없으면 UNMEASURED다.
+Recheck relevant evidence before adoption and after version, permission, data-boundary, advisory or AC changes. Reuse current same-scope evidence; never copy a previous project's PASS into a new environment. For tokens use the [usage evaluation](../../../evals/token-efficiency.md), matching conditions and capturing all calls/retries/reviews plus quality gates. Without logs, report UNMEASURED.

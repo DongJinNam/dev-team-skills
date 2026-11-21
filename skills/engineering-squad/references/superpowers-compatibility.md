@@ -1,56 +1,56 @@
-# Superpowers와 함께 쓰는 실행 계약
+# Workflow ownership with Superpowers
 
-두 패키지를 함께 사용할 때 적용하는 역할·산출물 분담 기준이다. 호스트의 상위 지침과 사용자의 명시적 범위·권한을 따른다. 이 문서는 다른 패키지의 필수 승인·검증 규칙을 무효화하거나 도구 권한을 부여하지 않는다.
+Use this contract when both packages participate. Follow higher-priority host instructions and explicit user scope/authorization. This reference cannot override another package's mandatory approvals or verification, or grant tool permissions.
 
-## 1. 모드와 출처를 먼저 기록
+## 1. Record mode and verified source
 
-Lead는 작업 시작 시 설치 목록·스킬 메타데이터·실제로 읽은 파일로 사용 가능 여부를 확인하고, 현재 작업 기록에 모드와 출처를 남긴다.
+At kickoff, Lead checks the actual skill inventory, metadata and readable files, then records availability and source in the current work record.
 
-- `COMBINED`: Superpowers가 실제로 발견되고 필요한 지침을 읽을 수 있으면, 아래 표의 담당으로 협업한다.
-- `STANDALONE`: 선택 사항인 Superpowers가 없거나 읽을 수 없으면 제한을 기록하고 dev-team-skills의 기존 절차를 따른다. 설치·활성화·외부 전송을 자동 수행하거나 Superpowers를 사용했다고 보고하지 않는다.
-- 상위 지침이나 사용자 요구가 특정 외부 스킬을 필수로 요구하는데 사용할 수 없으면, 해당 의존 단계를 `BLOCKED`로 보고한다. 선택형 fallback을 필수 선행조건 우회에 쓰지 않는다.
+- `COMBINED`: required Superpowers guidance is actually discoverable/readable; use the phase ownership below.
+- `STANDALONE`: optional Superpowers is unavailable/unreadable; record the limitation and use existing dev-team procedures. Do not auto-install/enable it or transmit data, or claim it was invoked.
+- If higher-priority instructions or the user make an unavailable external skill mandatory, mark its dependent phase `BLOCKED`. Optional fallback cannot bypass a mandatory prerequisite.
 
-동일한 `brainstorming` 같은 짧은 이름으로 출처를 추정하지 않는다. 환경이 제공하는 정확한 패키지 포함 ID(예: 실제로 확인된 `superpowers:brainstorming`) 또는 확인한 파일 경로로 선택한다. 이 저장소의 기획 지침은 `skills/brainstorming/SKILL.md`이다. `dev-team-skills/brainstorming` 같은 설명용 이름을 호스트가 지원하는 실행 명령으로 지어내지 않는다. 확인 버전·경로·호출 여부를 구분한다.
+Resolve colliding names such as `brainstorming` using a verified package-qualified ID (for example, actually discovered `superpowers:brainstorming`) or exact file path. Local planning guidance is `skills/brainstorming/SKILL.md`. A descriptive label such as `dev-team-skills/brainstorming` is not an invented executable command. Distinguish verified version/path from actual invocation.
 
-## 2. 겹치는 단계의 단일 담당
+## 2. One owner for each overlapping phase
 
-| 단계 | COMBINED 담당 | 공동 사용 산출물·경계 |
+| Phase | COMBINED owner | Shared artifact and boundary |
 | --- | --- | --- |
-| 프로젝트 시작·기대효과·중단 조건 | dev-team Quality Lead / Lead (`DEV_TEAM`) | roles.md 시작·중단 계약의 필수 두 질문, 기존 답변 재확인과 사용자 확인 근거 K |
-| 설계 탐색·설계 승인·구현 계획 | Superpowers (`SUPERPOWERS`) | 확인한 brainstorming / writing-plans 절차의 설계 S·계획 P; dev Planner는 사용자·시장 근거와 누락된 인수 조건만 보완 |
-| 구현·테스트 선행 개발·원인 분석 | 확인한 Superpowers 실행·TDD·디버깅 절차 | dev Lead가 역할 범위·인터페이스를 연결; 이미 선택한 실행 방식을 임의 변경하거나 도구에 없는 에이전트를 가정하지 않음 |
-| 완료 전 검증 | 한 개 증거 기록을 Lead가 관리 | 해당 리비전·범위의 실제 명령·결과·미실행 항목을 공유; 같은 검증을 패키지별로 중복 실행하지 않음 |
-| QA·독립 보안·컴플라이언스·머지/배포 | dev-team 게이트 | Superpowers 일반 코드 품질 승인만으로 최신 head/base에 대한 독립 보안 PASS를 대신하지 않음 |
-| 비용·투표·최종 설명 | dev-team Lead (FinOps / Humanizer duties) | Tier별 책임 결정·자문 표결, 사용자 근거 재검토, 비용의 실측/추정/미확인, 보고서 3문장 계약 유지 |
+| Kickoff, benefits and stop conditions | dev-team Quality Lead / Lead (`DEV_TEAM`) | Mandatory two questions, historical-answer reconfirmation and current user evidence K from the kickoff/stop section in roles.md |
+| Design exploration, design approval and implementation planning | Superpowers (`SUPERPOWERS`) | Verified brainstorming / writing-plans process produces design S and plan P; dev Planner supplies user/market evidence and missing acceptance criteria |
+| Implementation, TDD and root-cause diagnosis | Verified Superpowers execution / TDD / debugging process | dev Lead connects role scope/interfaces; preserve the selected execution method and do not invent unavailable agent tools |
+| Verification before completion | One evidence record maintained by Lead | Share actual commands/results/NOT_RUN for the applicable revision/scope; do not repeat identical checks per package |
+| QA, independent security, compliance, merge/deployment | dev-team gates | Generic Superpowers code-quality approval does not replace independent security PASS for the latest head/base |
+| Cost, voting and final explanation | dev-team Lead (FinOps / Humanizer duties) | Preserve tiered accountable decisions, advisory ballots, user-grounded reconsideration, measured/estimated/unknown costs and three-sentence report contract |
 
-`STANDALONE`에서는 기획·구현도 기존 dev-team 담당이다. 양 모드에서 같은 필수 게이트를 적용한다. 패키지 간 우선순위를 일괄 선언하지 말고, 각 단계의 담당과 실제 지침을 기록한다. 필수 규칙이 충돌해 동시에 만족할 수 없으면 영향받는 실행을 멈추고 충돌 근거와 선택지를 사용자에게 보고한다.
+In `STANDALONE`, existing dev-team owners handle planning and implementation too. Both modes preserve mandatory gates. Record owners and actual guidance per phase rather than declaring one entire package superior. If mandatory rules cannot be satisfied together, stop the affected work and report the conflict, evidence and alternatives to the user.
 
-## 3. 확인된 답과 승인된 문서를 재사용
+## 3. Reuse confirmed answers and approved artifacts
 
-1. 현재 kickoff에서 Test Engineer의 두 질문을 직접 묻고 합의한다. 과거 답변은 기존 계약대로 제시해 재확인한다. 같은 kickoff·범위에서 이미 재확인된 K가 있으면 다른 패키지는 K를 참조한다. 과거 대화에 답이 있다는 이유만으로 현재 확인을 생략하지 않는다.
-2. 같은 작업·범위에서 승인 근거가 확인되는 S/P가 있으면 그 경로·버전·사용자 확인을 참조한다. 새 문서 형식이나 패키지를 만났다는 이유로 전체 SCAMPER·PRD·설계·계획을 다시 시작하거나 같은 질문을 반복하지 않는다. 각 패키지의 필수 항목 충족 여부를 대조하고 빠진 항목만 보완한다.
-3. 범위·가정·데이터/신뢰 경계·인수 기준이 바뀌면 영향을 받은 답·승인·계획을 현재 승인으로 취급하지 않는다. 변경분과 이유를 기록하고 필요한 질문·설계/보안 검토를 다시 요청한다. 영향받지 않은 자료는 근거로 유지한다.
-4. 검증 증거에는 대상 head/base 또는 산출물, 명령·결과·범위를 남긴다. 변경으로 무효화된 증거나 과거 런타임 PASS를 새 실행 결과로 바꾸지 않는다. 문구만 바뀐 경우에도 필요한 diff/문서 검사를 하고, 보안 계약이 요구하는 새 head 독립 검수는 생략하지 않는다.
-5. 중단 조건 발생 시 영향받는 실행을 멈추고 보고한 뒤 기존 계약의 권한자에게 명시적 재개 지시를 받는다. Superpowers 계획·다수결·일정 압박은 재개 권한이 아니다. 일반 코드 리뷰·품질 통과·비용 절감은 보안/컴플라이언스 게이트의 면제 사유가 아니다.
+1. Directly ask and agree on the two Test Engineer questions for the current kickoff. Present historical answers for reconfirmation as already required. Other phases reference K when it was already reconfirmed for this same kickoff/scope. Merely finding an old answer does not waive current confirmation.
+2. Reuse S/P when approval evidence matches the same task and scope. Reference paths, revisions and user approval. Encountering another package or document format does not restart full SCAMPER/PRD/design/planning or repeat the same questions. Check required fields from each package and supplement only gaps.
+3. Scope, assumptions, data/trust boundaries or acceptance criteria changes invalidate affected answers/approvals/plans. Record the delta, request relevant confirmation/design/security review and retain unaffected materials as evidence.
+4. Verification records identify head/base or artifact, commands/results and scope. Do not relabel invalidated evidence or historical runtime PASS as a fresh execution. A wording-only change still needs relevant diff/documentation checks and new-head independent security review required by the existing contract.
+5. Stop conditions halt affected work, require reporting and explicit resumption by the agreed authority. A Superpowers plan, majority vote or deadline is not resume authorization. Generic review, quality PASS and cost savings cannot waive security/compliance gates.
 
-## 4. 하나의 인계 기록
+## 4. One handoff record
 
-기존 작업 기록·PRD·계획에 다음 필드를 넣는다. 별도 문서를 또 만들 필요는 없다.
+Add these fields to the existing work record, PRD or plan; do not create a duplicate document merely for this contract.
 
 ```text
-mode: COMBINED | STANDALONE | BLOCKED (필수 선행조건 부재)
-availability: 패키지별 확인 버전·정확한 ID/경로·읽기 성공/실패·실제 호출 여부
+mode: COMBINED | STANDALONE | BLOCKED (mandatory prerequisite absent)
+availability: verified version, exact ID/path, read success/failure, actual invocation per package
 owners: kickoff / planning / implementation / verification / security / final explanation
-scope: 현재 범위·버전·변경 사항
-artifacts: K(두 질문의 현재 확인), S(설계), P(계획), 사용자 승인 근거·적용 범위
-verification: 실제 대상·명령·결과·NOT_RUN/과거 증거
-open: 누락·충돌·차단 사유, 다음 담당·재판단 조건
+scope: current scope, revision and delta
+artifacts: K (current two-question confirmation), S (design), P (plan), approval evidence/scope
+verification: actual target, commands/results, NOT_RUN/historical evidence
+open: gaps/conflicts/blockers, next owner and reassessment trigger
 ```
 
-토큰 절약을 위해 위 필드를 단일 라인 지문 태그(Compact State Fingerprint)로 축약 표기할 수 있다:  
+To conserve tokens, these fields may be compressed into a single-line Compact State Fingerprint:  
 `[SQUAD:mode | owners | scope | artifacts | verification | open]`  
-예: `[SQUAD:COMBINED | K:DEV,P:SUPER | scope:v1 | K1,S1,P1 | DoD:PASS,Sec:NOT_RUN | open:none]`
+e.g.: `[SQUAD:COMBINED | K:DEV,P:SUPER | scope:v1 | K1,S1,P1 | DoD:PASS,Sec:NOT_RUN | open:none]`
 
-검토 기준: 하나의 단계 담당, 같은 범위의 중복 질문/계획 0회, 누락된 필수 확인 0건, 보안·중단 규칙 우회 0건을 사례별로 확인한다. 실제 토큰·소요 시간 절감은 따로 측정하기 전 수치화하지 않는다.
+Check one owner per phase, zero duplicate questions/plans within the same confirmed scope, zero missing mandatory confirmations and zero security/stop bypasses in scenario tests. Do not claim numeric token/time savings before measuring them.
 
-참고한 Superpowers는 이 환경에서 읽은 7.0.1의 using-superpowers, brainstorming, writing-plans, test-driven-development, systematic-debugging, verification-before-completion 및 실행/리뷰 지침이다. [원저장소](https://github.com/obra/superpowers)를 출처로 두되 버전별 필수 절차·호스트 지원은 실행 시 다시 확인한다. 자동 호환성·설치 보장은 아니다.
+Reference baseline: locally read Superpowers 7.0.1 using-superpowers, brainstorming, writing-plans, TDD, systematic-debugging, verification-before-completion and execution/review guidance. Keep the [upstream repository](https://github.com/obra/superpowers) as provenance and recheck version-specific mandatory steps and host capabilities at runtime. This is not automatic compatibility or installation assurance.

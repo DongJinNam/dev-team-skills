@@ -98,4 +98,4 @@ Do not merge until an independent Security Review Engineer has issued PASS for t
 - Problem/AC, candidate/source/revision or check date, owner:
 - State, actual method/command, artifact/log, result and limits:
 - Existing alternative, decision/reason, cost status, recheck trigger:
-- Otherwise: N/A with reason. See the [contract](../skills/engineering-squad/references/tool-adoption_en.md).
+- Otherwise: N/A with reason. See the [contract](../skills/engineering-squad/references/tool-adoption.md).

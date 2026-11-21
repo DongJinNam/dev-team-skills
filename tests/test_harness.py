@@ -188,6 +188,38 @@ class HarnessTests(unittest.TestCase):
                    VALID_SKILL + "\n[missing](./no-such-file.md)\n")
         self.run_harness(False)
 
+    def test_docs_i18n_korean_skill_is_validated(self):
+        self.write("docs/i18n/ko/skills/example/SKILL_ko.md", VALID_SKILL)
+        self.run_harness(True)
+        self.write("docs/i18n/ko/skills/example/SKILL_ko.md",
+                   VALID_SKILL.replace("name: example", "name: other"))
+        self.run_harness(False)
+
+    def test_top_level_version_is_rejected(self):
+        self.write("skills/example/SKILL.md",
+                   "---\nname: example\ndescription: A useful skill.\n"
+                   "version: \"1.2.0\"\nmetadata:\n  version: \"1.2.0\"\n---\n# Body\n")
+        self.regenerate_catalog()
+        self.sync_mirror()
+        self.run_harness(False)
+
+    def test_author_email_pii_is_rejected(self):
+        self.write("skills/example/SKILL.md",
+                   "---\nname: example\ndescription: A useful skill.\n"
+                   "metadata:\n  author: Name <user@example.com>\n---\n# Body\n")
+        self.regenerate_catalog()
+        self.sync_mirror()
+        self.run_harness(False)
+
+    def test_author_repeated_at_does_not_redos(self):
+        # Regression test for SEC-01: linear-time email guard on pathological input.
+        self.write("skills/example/SKILL.md",
+                   "---\nname: example\ndescription: A useful skill.\n"
+                   f"metadata:\n  author: \"{'a@' * 2000}\"\n---\n# Body\n")
+        self.regenerate_catalog()
+        self.sync_mirror()
+        self.run_harness(True)
+
     def test_broken_anchor_fails(self):
         self.write("skills/example/references/roles.md",
                    "# 책임 역할과 전문 역량\n\n"

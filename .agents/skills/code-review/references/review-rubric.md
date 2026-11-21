@@ -1,46 +1,46 @@
 # Code Review Severity Rubric & Design Pattern Principles
 
-코드 리뷰 시 코멘트의 근거가 되는 심각도 분류 및 디자인 패턴 적용 가이드라인입니다.
+This guide defines the severity rubric and design pattern principles used during code reviews.
 
 ---
 
-## 1. 3단계 심각도 판정 기준표
+## 1. 3-Tier Severity Criteria
 
-보안 분류는 [security-review.md](../../engineering-squad/references/security-review.md)를 따른다. Critical/High, 미해결 개인정보·시크릿 노출/의심, 적용 검증·증거 공백은 반드시 Must Fix 차단 사유다. 나머지 Medium/Low도 수정하거나 사용자/서비스 책임자가 근거·완화책·담당자·기한을 포함해 명시적으로 수용하기 전에는 차단한다. 더 엄격한 조직 정책을 우선한다. 수용 위험은 기록에 유지하며 임의로 권장사항으로 낮추지 않는다.
+Security classification follows [security-review.md](../../engineering-squad/references/security-review.md): Critical/High, unresolved personal-data/secret exposure or suspicion, and missing applicable verification/evidence are mandatory Must Fix blockers. Other Medium/Low findings remain blocking until fixed or explicitly accepted with the required rationale, mitigation, owner and deadline by the user/service owner. Apply stricter organizational policy. Accepted risks stay documented and do not silently become suggestions.
 
-### 🔴 [필수 / Must Fix] - 머지 차단 (Blocker)
-반드시 배포 전에 수정되어야 하는 치명적 결함입니다.
-- **출시 차단 보안 결함**: SQL Injection, XSS, CSRF, 인증/인가 우회, 시크릿 하드코딩.
-- **데이터 정합성 파괴**: 트랜잭션 누락으로 인한 부분 업데이트, 인덱스 누락으로 인한 풀 테이블 스캔, 롤백 불가능한 마이그레이션.
-- **시스템 장애/크래시**: 무한 루프, Deadlock, 처리되지 않은 비동기 Promise Rejection, OOM(Out of Memory) 유발 로직.
-- **비즈니스 로직 오류**: 결제/정산 계산식 오류, 상태 머신의 잘못된 전이.
+### 🔴 [Must Fix] - Blocks Merging
+Critical flaws that must be fixed before merging into the main codebase.
+- **Release-blocking Security Flaws**: SQL injection, XSS, CSRF, broken auth/permissions, hardcoded secrets.
+- **Data Integrity Issues**: Missing transactions causing partial updates, missing indexes causing full table scans, irreversible migrations.
+- **System Crashes**: Infinite loops, deadlocks, unhandled Promise rejections, memory leaks (OOM).
+- **Core Business Logic Bugs**: Wrong math in payments/pricing, invalid state machine transitions.
 
-### 🟡 [확인 요청 / Inquire & Verify] - 답변 필수
-버그 여부를 확정하기 어려우나 잠재적 부작용이 크거나 설계 의도 설명이 필요한 항목입니다.
-- **동시성 및 레이스 컨디션**: 락(Lock) 없이 동시 접근 가능한 공유 자원.
-- **트레이드오프 검토**: 메모리 사용량 증가 vs 처리 속도 향상 간의 선택 근거 확인.
-- **에러 핸들링 미흡**: 외부 써드파티 API 실패 시 재시도 또는 Fallback 전략 누락.
-- **도메인 결합도 증가**: 서로 다른 도메인 모듈 간의 부적절한 직접 참조.
+### 🟡 [Inquire & Verify] - Answer Required
+Items that might not be hard bugs, but carry high risk or need architectural explanation.
+- **Concurrency & Race Conditions**: Shared mutable state accessed without proper locks.
+- **Trade-off Checks**: Understanding why the author chose higher memory over CPU speed (or vice versa).
+- **Weak Error Handling**: Missing retries, timeouts, or fallbacks when calling 3rd-party APIs.
+- **Tight Coupling**: Direct dependencies between domain modules that should be separate.
 
-### 🟢 [권장 / Suggestion] - 선택 반영 (Non-Blocker)
-기능 동작에는 문제가 없으나 장기적인 코드 건강성과 확장성을 위해 권장하는 제안입니다.
-- **가독성 및 명명**: 도메인 용어(Ubiquitous Language)와 일치하는 더 명확한 변수/함수명.
-- **중복 코드 제거 (DRY)**: 3회 이상 반복되는 유사 로직의 유틸리티 추출.
-- **YAGNI 준수**: 아직 사용되지 않는 불필요한 매개변수나 메서드 제거.
-- **모던 문법 활용**: 표준 라이브러리 및 언어 내장 고차 함수 활용.
+### 🟢 [Suggestion] - Optional (Does Not Block Merge)
+Improvements for long-term health, readability, and maintenance.
+- **Naming & Readability**: Better variable/function names that match standard domain terms.
+- **DRY (Don't Repeat Yourself)**: Extracting helpers when logic is duplicated 3+ times.
+- **YAGNI (You Aren't Gonna Need It)**: Removing unused parameters, dead code, or premature abstractions.
+- **Modern Idioms**: Using standard library utilities and language built-ins.
 
 ---
 
-## 2. 디자인 패턴 & 아키텍처 근거 가이드
+## 2. Design Patterns & Architectural Principles
 
-리뷰 시 다음과 같은 표준 원칙을 인용하여 객관적인 개선안을 제시합니다:
+Reference these standard principles to give objective, constructive feedback:
 
-### 1) SOLID 원칙
-- **SRP (단일 책임)**: "이 클래스/함수는 비즈니스 계산과 DB 저장, 로깅을 모두 담당하고 있습니다. 책임을 분리하여 응집도를 높이는 것을 권장합니다."
-- **OCP (개방-폐쇄)**: "신규 결제 수단이 추가될 때마다 if-else 블록을 계속 늘려야 합니다. Strategy 패턴을 적용하여 확장에 열려있도록 개선할 수 있습니다."
-- **DIP (의존 역전)**: "고수준 모듈이 구체적인 외부 SDK 구현체에 직접 결합되어 있습니다. 인터페이스를 두고 의존성을 주입받도록 변경하여 테스트 용이성을 확보합시다."
+### 1) SOLID Principles
+- **SRP (Single Responsibility)**: "This function handles calculation, database writes, and email alerts all at once. Let's split these to keep each part focused."
+- **OCP (Open-Closed)**: "Adding a new payment provider currently requires editing a huge if-else block. Using a simple Strategy pattern makes it easy to add new providers without touching existing code."
+- **DIP (Dependency Inversion)**: "The service directly depends on a specific 3rd-party SDK. Introducing a small interface makes it easier to mock in unit tests."
 
-### 2) 핵심 디자인 패턴 (GoF)
-- **Strategy Pattern (전략 패턴)**: 동일한 목적을 가진 다양한 알고리즘(예: 할인 정책, 결제 수단)을 캡슐화하여 동적으로 교체 가능하도록 제안.
-- **Factory Method (팩토리 패턴)**: 객체 생성 로직이 복잡하거나 타입에 따라 다른 인스턴스를 반환해야 할 때 제안.
-- **Adapter / Facade Pattern**: 복잡한 레거시 시스템이나 외부 라이브러리를 애플리케이션 내부 도메인과 격리할 때 제안.
+### 2) Core Design Patterns (GoF)
+- **Strategy Pattern**: Encapsulate different algorithms (e.g. discount rules, payment methods) so they can be swapped cleanly.
+- **Factory Method**: Cleanly separate object creation when initializing instances involves complex conditional logic.
+- **Adapter / Facade Pattern**: Wrap messy external APIs or legacy code behind a clean, simple interface.

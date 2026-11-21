@@ -52,10 +52,11 @@ class EntrySkillTests(unittest.TestCase):
 
     def test_entry_skill_mirrored(self):
         mirror = ROOT / ".agents" / "skills" / "using-dev-team-skills"
-        for name in ("SKILL.md", "SKILL_ko.md"):
-            self.assertTrue((mirror / name).is_file(), f"mirror missing {name}")
-            self.assertEqual((ENTRY / name).read_bytes(),
-                             (mirror / name).read_bytes())
+        self.assertTrue((mirror / "SKILL.md").is_file(), "mirror missing SKILL.md")
+        self.assertEqual((ENTRY / "SKILL.md").read_bytes(),
+                         (mirror / "SKILL.md").read_bytes())
+        ko_doc = ROOT / "docs" / "i18n" / "ko" / "skills" / "using-dev-team-skills" / "SKILL_ko.md"
+        self.assertTrue(ko_doc.is_file(), "Korean translation missing under docs/i18n/ko/skills/")
 
     def test_catalog_lists_entry_skill(self):
         catalog = json.loads((ROOT / "skills" / "catalog.json")
