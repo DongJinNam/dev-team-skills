@@ -1,7 +1,6 @@
 ---
 name: humanizer-kr
-description: >-
-  Use this skill to refine Korean documentation, commit messages, PR descriptions, and code comments into clear, concise, natural Korean, removing robotic AI tone and translation artifacts while preserving 100% technical facts.
+description: Refine Korean docs, commit messages, PR descriptions, and code comments into natural Korean while preserving technical facts.
 compatibility: Claude Code, Codex, Antigravity, Cursor
 metadata:
   author: hjongc
@@ -10,6 +9,14 @@ metadata:
 ---
 
 # Humanizer-KR: Natural Korean Technical Writing
+
+## Purpose
+
+Remove stiff AI translation patterns, double-passive verbs, and chatbot filler from Korean technical writing while keeping 100% of technical facts, numbers, and code intact.
+
+## Prerequisites
+
+- Draft Korean engineering text (documentation, PR description, commit message, or code comment) encoded in UTF-8
 
 This skill is based on the `humanizer-kr` principles. It removes stiff AI translation phrases, awkward passive voice, and exaggerated chatbot greetings to produce clean, natural Korean that professional engineers write.
 
@@ -29,3 +36,22 @@ This skill is based on the `humanizer-kr` principles. It removes stiff AI transl
 5. **Optimized for Engineering Docs**:
    - Commit messages: Use concise, imperative forms (e.g., "Add...", "Fix...", "Refactor...").
    - PR descriptions: Clearly lay out context, root cause, changes, and impact.
+
+## Examples
+
+```text
+Before: "해당 변경사항은 성능 향상을 위해 검토되어질 필요가 있습니다."
+After:  "성능 개선을 위해 이 변경사항을 검토해야 합니다."
+```
+
+## Limitations
+
+- Editing must never alter verdicts (`PASS`/`BLOCKED`/`PENDING`), numbers, error messages, code identifiers, or file links.
+- Does not verify underlying technical accuracy; validate facts against source outputs before editing.
+
+## Troubleshooting
+
+| Error / Symptom | Cause | Solution |
+| --- | --- | --- |
+| Technical term mistranslated into awkward Korean | Over-localized API/RFC term | Keep exact identifier or RFC term in code spans and add a short plain-Korean gloss on first use |
+| Verification caveat disappeared after rewrite | Condensed warning sentence | Diff the rewritten text against the source and restore every risk, condition, and `NOT_RUN` status |
