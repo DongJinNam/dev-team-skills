@@ -161,7 +161,7 @@ python -m pip install -r scripts/requirements-harness.txt
 ./scripts/verify-harness.sh
 ```
 
-`--root <경로>`로 다른 패키지 디렉터리를 선택할 수 있습니다. 종료 코드는 패키지 PASS `0`, 잘못된 패키지 `1`, 필수 실행 환경 부재·잘못된 인자 `2`입니다. 스킬은 Codex가 읽을 수 있도록 BOM 없는 UTF-8을 요구하며 `SKILL.md`와 `SKILL_ko.md`를 검사합니다. LF/CRLF와 공백·한글 경로는 지원합니다. CI는 Linux·Windows·macOS에서 동일한 정상·오류 입력을 Bash·PowerShell로 각각 검사합니다. Windows의 Bash 시험은 Git Bash에서 실행해야 WSL의 `bash.exe` 대신 Git Bash를 선택합니다. PowerShell에서 실행할 때는 `HARNESS_LAUNCHER=pwsh`를 지정합니다:
+`--root <경로>`로 다른 패키지 디렉터리를 선택할 수 있습니다. 종료 코드는 패키지 PASS `0`, 잘못된 패키지 `1`, 필수 실행 환경 부재·잘못된 인자 `2`입니다. 스킬은 Codex가 읽을 수 있도록 BOM 없는 UTF-8을 요구하며 영문 정본 `skills/*/SKILL.md`와 `docs/i18n/ko/skills/*/SKILL_ko.md` 한국어 번역본을 함께 검사합니다. LF/CRLF와 공백·한글 경로는 지원합니다. CI는 Linux·Windows·macOS에서 동일한 정상·오류 입력을 Bash·PowerShell로 각각 검사합니다. Windows의 Bash 시험은 Git Bash에서 실행해야 WSL의 `bash.exe` 대신 Git Bash를 선택합니다. PowerShell에서 실행할 때는 `HARNESS_LAUNCHER=pwsh`를 지정합니다:
 
 ```bash
 python -m unittest discover -s tests -v

@@ -126,9 +126,9 @@ Fifteen former role names (fourteen specialists plus Lead) map to six owners. Th
 
 A documentation edit defaults to Lead combining duties plus independent Security; a feature activates Engineering/Quality; product or operational changes add the relevant owner. Assign narrow specialists only for distinct outputs or expertise. Required checks remain even when roles are combined.
 
-Read the [canonical workflow](skills/engineering-squad/SKILL.md), [capability and legacy-name mapping](skills/engineering-squad/references/roles_en.md), and [decision governance](skills/engineering-squad/references/decision-governance_en.md). Every PR still needs current-head/base independent security PASS before merge; unresolved applicable compliance violations remain blocking. Keep kickoff/stop rules and user appeals.
+Read the [canonical workflow](skills/engineering-squad/SKILL.md), [capability and legacy-name mapping](skills/engineering-squad/references/roles.md), and [decision governance](skills/engineering-squad/references/decision-governance.md). Every PR still needs current-head/base independent security PASS before merge; unresolved applicable compliance violations remain blocking. Keep kickoff/stop rules and user appeals.
 
-External references are candidates, not proof of use. The [adoption contract](skills/engineering-squad/references/tool-adoption_en.md) separates DISCOVERED / INSPECTED / AVAILABLE / APPLIED / VERIFIED and actual PASS/FAIL/NOT_RUN evidence. The [dated shortlist](skills/engineering-squad/references/external-skill-references_en.md) covers Superpowers, skill-creator, Playwright CLI and the Agent Skills specification. Read only what the task needs.
+External references are candidates, not proof of use. The [adoption contract](skills/engineering-squad/references/tool-adoption.md) separates DISCOVERED / INSPECTED / AVAILABLE / APPLIED / VERIFIED and actual PASS/FAIL/NOT_RUN evidence. The [dated shortlist](skills/engineering-squad/references/external-skill-references.md) covers Superpowers, skill-creator, Playwright CLI and the Agent Skills specification. Read only what the task needs.
 
 The [design and debate](docs/superpowers/specs/2026-11-06-lean-squad-design.md) explains alternatives, objections and validation limits. Document reduction is not a measured token-efficiency gain.
 
@@ -162,7 +162,7 @@ python -m pip install -r scripts/requirements-harness.txt
 ./scripts/verify-harness.sh
 ```
 
-`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. Skills require UTF-8 without BOM to match Codex discovery; both `SKILL.md` and `SKILL_ko.md` are checked. LF/CRLF and paths with spaces or Korean characters are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS. On Windows, run Bash tests from Git Bash so the subprocess uses Git Bash rather than WSL's `bash.exe`; from PowerShell select `HARNESS_LAUNCHER=pwsh`:
+`--root <path>` optionally selects another package directory. Exit codes: `0` package PASS, `1` invalid package, `2` missing prerequisites or invalid arguments. Skills require UTF-8 without BOM to match Codex discovery; both canonical `skills/*/SKILL.md` and Korean translations under `docs/i18n/ko/skills/*/SKILL_ko.md` are checked. LF/CRLF and paths with spaces or Korean characters are supported. CI runs the same isolated normal/error fixtures through Bash and PowerShell on Linux, Windows and macOS. On Windows, run Bash tests from Git Bash so the subprocess uses Git Bash rather than WSL's `bash.exe`; from PowerShell select `HARNESS_LAUNCHER=pwsh`:
 
 ```bash
 python -m unittest discover -s tests -v
@@ -183,7 +183,7 @@ python evals/run_evals.py --replay evals/runs/2026-11-08-main-merge.json
 
 ### Using Superpowers alongside dev-team-skills
 
-Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/references/superpowers-compatibility_en.md). In COMBINED mode, dev-team owns kickoff/gates/cost/final explanation and Superpowers owns verified design/planning/implementation procedures. Confirm package identity, share current approvals, supplement gaps and recheck changed scope. Optional unavailability uses explicit STANDALONE mode; mandatory missing prerequisites block the affected phase. No automatic installation or claim of measured savings.
+Read the [phase ownership and artifact-reuse contract](skills/engineering-squad/references/superpowers-compatibility.md). In COMBINED mode, dev-team owns kickoff/gates/cost/final explanation and Superpowers owns verified design/planning/implementation procedures. Confirm package identity, share current approvals, supplement gaps and recheck changed scope. Optional unavailability uses explicit STANDALONE mode; mandatory missing prerequisites block the affected phase. No automatic installation or claim of measured savings.
 
 ---
 
@@ -223,7 +223,7 @@ Included at [`.github/pull_request_template.md`](./.github/pull_request_template
 
 ### Tiered decision ownership & Creative Rookie
 
-Organize the six owners and delegated capabilities as **Tier 1 Tech Lead → Tier 2 domain owners → Tier 3 specialists**. Domain owners decide local alternatives; Tech Lead resolves cross-domain conflict from evidence and dissent. Preserve Rookie ideas and user appeals; fifteen ballots/eight votes are advisory on request. Seniority cannot waive security, compliance, budget or authorization. See [decision governance](skills/engineering-squad/references/decision-governance_en.md).
+Organize the six owners and delegated capabilities as **Tier 1 Tech Lead → Tier 2 domain owners → Tier 3 specialists**. Domain owners decide local alternatives; Tech Lead resolves cross-domain conflict from evidence and dissent. Preserve Rookie ideas and user appeals; fifteen ballots/eight votes are advisory on request. Seniority cannot waive security, compliance, budget or authorization. See [decision governance](skills/engineering-squad/references/decision-governance.md).
 
 ## 📜 License
 MIT License

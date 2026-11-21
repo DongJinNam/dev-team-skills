@@ -6,6 +6,7 @@ compatibility: Claude Code, Codex, Antigravity, Cursor
 metadata:
   author: DongJinNam
   version: "1.1.0"
+  tags: ["brainstorming", "planning", "research"]
 ---
 
 # Product Planning & Structured Brainstorming
@@ -14,7 +15,7 @@ This skill is the standard guide for **Product Planners (PMs)** and Engineering 
 
 ## Superpowers workflow ownership
 
-If both packages participate, first read the [ownership contract](../engineering-squad/references/superpowers-compatibility_en.md). Use verified qualified identities and a single planning/evidence record; reuse valid approvals and supplement only missing scope. Keep mandatory kickoff confirmation, distinct review purposes and current-head independent security gates.
+If both packages participate, first read the [ownership contract](../engineering-squad/references/superpowers-compatibility.md). Use verified qualified identities and a single planning/evidence record; reuse valid approvals and supplement only missing scope. Keep mandatory kickoff confirmation, distinct review purposes and current-head independent security gates.
 
 ---
 

@@ -22,8 +22,10 @@ npx skills add DongJinNam/dev-team-skills
 ## What a single install contains
 
 In the repository layout, `engineering-squad` is self-contained:
-`skills/engineering-squad/SKILL.md` (and `SKILL_ko.md`) link only to files under
-`skills/engineering-squad/references/`. The one exception is a single link in
+`skills/engineering-squad/SKILL.md` links only to files under
+`skills/engineering-squad/references/` (Korean translations live outside
+`skills/` under `docs/i18n/ko/skills/` so SkillEvaluator Tier 2 stays
+monolingual). The one exception is a single link in
 `references/tool-adoption.md` to `evals/token-efficiency.md`, which lives outside
 the skill folder and is not copied. Token comparisons that cite that file are
 UNMEASURED without it; everything else in the skill still applies.

@@ -6,6 +6,7 @@ compatibility: Claude Code, Codex, Antigravity, Cursor
 metadata:
   author: DongJinNam
   version: "1.1.0"
+  tags: ["harness", "evaluation", "testing"]
 ---
 
 # AI Agent Harness Engineering & Marketplace Packaging
@@ -128,7 +129,7 @@ After checking the installation listing, inspect native skill discovery. Separat
 
 ### Comparisons and generated-code execution
 
-Compare task outcomes using the [use-evidence contract](../engineering-squad/references/tool-adoption_en.md#when-comparing-task-outcomes) for fixed conditions, failure denominators, posthoc checks and usage boundaries. Self-reports or frozen test passes alone do not establish all requirements; record defects found by independent review.
+Compare task outcomes using the [use-evidence contract](../engineering-squad/references/tool-adoption.md#when-comparing-task-outcomes) for fixed conditions, failure denominators, posthoc checks and usage boundaries. Self-reports or frozen test passes alone do not establish all requirements; record defects found by independent review.
 
 Separate generated-code collection from execution. Before execution, remove temporary authentication copies and unnecessary secret-bearing environment variables; have a separate reviewer inspect artifacts and hashes. A subprocess or fresh directory is not a security sandbox. Verify actual filesystem/network controls; where absent, restrict execution to reviewed local code and document remaining exposure. Do not execute unreviewed code without the required controls.
 

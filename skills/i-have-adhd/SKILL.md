@@ -6,6 +6,7 @@ compatibility: Claude Code, Codex, Antigravity, Cursor
 metadata:
   author: ayghri
   version: "1.1.0"
+  tags: ["adhd", "communication", "workflow"]
 ---
 
 # I-Have-ADHD Protocol: Hyper-Focus Workflow

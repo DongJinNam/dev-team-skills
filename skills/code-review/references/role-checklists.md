@@ -1,103 +1,103 @@
 # Role-Tailored Review Checklists
 
-아래는 독립 상설 역할이 아닌 전문 역량 체크리스트다. [6개 책임 역할 매핑](../../engineering-squad/references/roles.md)에 따라 영향받은 항목만 선택한다.
+These are specialist checklists, not independent standing roles. Select only affected checks through the [six-owner mapping](../../engineering-squad/references/roles.md).
 
-각 직무별 전문성을 반영하여 코드 리뷰 및 변경 사항 검토 시 집중 점검해야 하는 체크리스트입니다.
+Use these focused checklists during code reviews based on the engineering roles involved.
 
 ---
 
-## 1. Product Planner (기획자) Review Checklist
-- [ ] **문제-해결 일치성**: PR에 포함된 구현이 기획서(PRD)에서 정의한 사용자의 실제 문제와 가설에 정확히 부합하는가?
-- [ ] **인수 조건(AC) 충족**: 정의된 유저 스토리의 Given-When-Then 인수 조건이 빠짐없이 충족되었는가?
-- [ ] **가설 검증 지표(KPI)**: 기능 출시에 따른 효과를 측정할 이벤트 로깅 및 분석 메트릭이 누락되지 않았는가?
-- [ ] **스코프 크립(Scope Creep) 방지**: MVP 정의 범위를 벗어난 불필요한 기능(YAGNI 위반)이 임의로 포함되지 않았는가?
+## 1. Product Planner Review Checklist
+- [ ] **Problem-Solution Fit**: Does this PR directly solve the user problem and test the hypothesis outlined in the PRD?
+- [ ] **Acceptance Criteria (AC)**: Are all Given-When-Then acceptance criteria in the user story fully satisfied?
+- [ ] **KPI & Event Tracking**: Are product analytics metrics or event logs in place to measure the impact after release?
+- [ ] **No Scope Creep**: Did the PR stay strictly within the MVP scope without unrequested extra features (YAGNI)?
 
 ---
 
 ## 2. AI Agent Engineer Review Checklist
-- [ ] **하네스 커버리지**: 새로운 기능, 도구, 룰 변경 시 에이전트 자가 검증이 가능한 Eval 테스트/스크립트가 마련되어 있는가?
-- [ ] **결정론적 가드레일**: LLM의 주관적 판단에만 기대지 않고 린터, 스키마 검증기, 테스트 러너 등 결정론적 도구가 결합되어 있는가?
-- [ ] **Marketplace & 스키마 무결성**: 3rd-party 플러그인 규격(`plugin.json`, `SKILL.md` frontmatter)과 MCP 입출력 JSON 스키마를 엄격히 준수하는가?
-- [ ] **토큰 효율성 & 인젝션 방어**: 프롬프트 및 도구 설명에 불필요한 토큰 낭비가 없고, 사용자 입력으로 인한 프롬프트 탈취 위험을 방어했는가?
+- [ ] **Harness Coverage**: Are there repeatable eval tests or scripts to automatically test new features, tools, or rules?
+- [ ] **Deterministic Guardrails**: Does the workflow use deterministic checkers (linters, schema validators, test runners) rather than relying only on LLM judgment?
+- [ ] **Marketplace & Schema Integrity**: Do plugin manifests (`plugin.json`, `SKILL.md` frontmatter) and tool JSON schemas follow official specs?
+- [ ] **Token Efficiency & Prompt Safety**: Are prompts concise without token waste, and is prompt injection guarded against?
 
 ---
 
 ## 3. Frontend Review Checklist
-- [ ] **렌더링 성능**: 불필요한 리렌더링(Re-render)이 발생하는가? (메모이제이션, 무거운 연산 위치 점검)
-- [ ] **상태 관리**: 컴포넌트 로컬 상태로 해결 가능한 것을 전역 상태에 무분별하게 올리지 않았는가?
-- [ ] **사용자 경험 (UX)**: 비동기 데이터 로딩 중 스켈레톤/스피너 처리가 되어 있는가? 네트워크 오류 시 사용자 피드백이 표시되는가?
-- [ ] **접근성 & 반응형**: 모바일/데스크톱 뷰포트에서 깨짐이 없는가?
+- [ ] **Rendering Performance**: Are there unnecessary re-renders? Are heavy calculations properly placed?
+- [ ] **State Management**: Is state kept local whenever possible instead of polluting global state?
+- [ ] **User Experience (UX)**: Are loading spinners/skeletons shown during async calls? Are network errors clearly shown to the user?
+- [ ] **Responsive & Accessible**: Does the layout look good and work properly on both mobile and desktop screens?
 
 ---
 
 ## 4. Backend Review Checklist
-- [ ] **트랜잭션 격리**: 다중 쓰기 작업 시 `@Transactional` 또는 원자적 처리가 보장되는가?
-- [ ] **N+1 쿼리 방지**: ORM 조회 시 지연 로딩으로 인한 N+1 쿼리가 발생하지 않는가? (Fetch Join / Batch Size 점검)
-- [ ] **인증 & 인가**: 엔드포인트에 적절한 권한 검증(Role/Permission)이 적용되었는가? 타인의 자원에 접근(IDOR)할 수 없는가?
-- [ ] **멱등성(Idempotency)**: 네트워크 재전송 시 중복 결제/생성이 방지되는가?
+- [ ] **Atomic Transactions**: Are multiple database writes wrapped in a transaction (`@Transactional`) to prevent partial failures?
+- [ ] **No N+1 Queries**: Are database relations loaded efficiently using batching or joins instead of query-per-row?
+- [ ] **Auth & Permissions**: Are endpoints guarded with proper role checks? Is direct object reference (IDOR) prevented?
+- [ ] **Idempotency**: Does re-sending a network request avoid creating duplicate records or charges?
 
 ---
 
 ## 5. Data Engineer Review Checklist
-- [ ] **마이그레이션 양방향성**: `Down` (롤백) 스크립트가 온전히 작성되어 있는가?
-- [ ] **락(Lock) 영향도**: 대용량 테이블에 DDL을 수행할 때 테이블 전체 락(Table Lock)으로 서비스 중단 위험이 없는가?
-- [ ] **인덱스 설계**: WHERE, JOIN, ORDER BY에 사용된 컬럼에 적절한 복합 인덱스가 걸려 있는가?
-- [ ] **데이터 타입 적합성**: 금액, 수량, 날짜 등에 적절한 타입(DECIMAL, TIMESTAMP with TZ 등)이 사용되었는가?
+- [ ] **Two-Way Migrations**: Is a rollback (`Down`) migration script included and verified?
+- [ ] **Lock Safety**: Does applying DDL on large tables avoid locking the whole table and blocking live traffic?
+- [ ] **Index Design**: Do WHERE, JOIN, and ORDER BY queries use effective compound indexes?
+- [ ] **Proper Data Types**: Are money, quantities, and dates using appropriate types (e.g., DECIMAL, TIMESTAMP with timezone)?
 
 ---
 
 ## 6. QA Engineer Review Checklist
-- [ ] **경계값 검증 (Boundary Conditions)**: 0, 음수, null, 빈 문자열, 최대 허용치 등 경계 조건이 검증되었는가?
-- [ ] **실패 시나리오 (Negative Path)**: 성공 케이스뿐만 아니라 고의적 실패 상황에 대한 테스트 코드가 작성되었는가?
-- [ ] **테스트 독립성**: 테스트 간에 DB 상태가 공유되어 실행 순서에 따라 실패하는 플레이키(Flaky) 테스트가 없는가?
+- [ ] **Boundary Conditions**: Are edge cases (0, negative numbers, null, empty strings, max length) tested?
+- [ ] **Negative Paths**: Are failure scenarios and invalid inputs covered by automated tests, not just the happy path?
+- [ ] **Test Independence**: Are tests completely isolated without shared DB state to prevent flaky runs?
 
 ---
 
 ## 7. DevOps & SRE Review Checklist
-- [ ] **시크릿 누출**: API Key, DB 비밀번호, JWT Secret이 하드코딩되지 않고 환경 변수로 분리되었는가?
-- [ ] **리소스 제한 (Resource Limits)**: 컨테이너의 CPU/메모리 Limit & Request가 설정되어 있는가?
-- [ ] **그레이스풀 셧다운 (Graceful Shutdown)**: 프로세스 종료 시그널(SIGTERM) 수신 시 처리 중인 요청을 안전하게 마무리하는가?
-- [ ] **관측성 (Observability)**: 문제 추적을 위한 구조화된 로그(traceId, userId 등)가 남겨져 있는가?
+- [ ] **No Hardcoded Secrets**: Are API keys, DB passwords, and secrets strictly loaded from environment variables?
+- [ ] **Resource Limits**: Are CPU and memory limits set on containers?
+- [ ] **Graceful Shutdown**: Does the service handle `SIGTERM` cleanly by completing in-flight requests before exiting?
+- [ ] **Observability**: Are structured JSON logs (with trace IDs and request IDs) generated for debugging?
 
 ## 9. Product Marketing Review Checklist
-- [ ] 대상 독자가 가치와 다음 행동을 한눈에 파악할 수 있는가?
-- [ ] 데모·주장이 실제 검증 결과와 연결되고 미구현·예상 효과를 구분하는가?
-- [ ] 이해도 검토가 실제 사용자 테스트인지 내부 검토인지 표시했는가?
-- [ ] 외부 게시·광고 집행은 명시된 권한 범위 안인가?
+- [ ] Can the intended reader quickly identify value and next action?
+- [ ] Are demo claims linked to verification, with unimplemented features and projections labeled?
+- [ ] Is comprehension review labeled as real-user testing or internal review?
+- [ ] Is external publishing or ad spending explicitly authorized?
 
 ## 10. Finance / FinOps Review Checklist
-- [ ] 실측·추정·미확인, 단가 출처·기준일·통화·기간을 구분했는가?
-- [ ] 입력·출력·캐시 비용과 커뮤니케이션 부분집합을 중복 계산하지 않았는가?
-- [ ] 계측이 없을 때 대리지표를 정확한 토큰·청구액으로 표현하지 않았는가?
-- [ ] 추가 토론·위임의 가치와 최소 역할 구성을 점검했는가?
-- [ ] 예산 초과를 보고하고 필수 품질·보안 검증을 유지했는가?
+- [ ] Are measured/estimated/unknown data, rate sources, dates, currencies, and periods distinguished?
+- [ ] Are input/output/cache charges and communication subsets counted without duplication?
+- [ ] Are telemetry proxies kept distinct from exact tokens or billed costs?
+- [ ] Are extra discussion/delegation justified and staffing minimized?
+- [ ] Are overruns reported while required quality and security checks remain intact?
 
 
-## 11. Security Review Engineer Checklist (필수)
-- [ ] 구현자와 별도 검토자 및 보고서가 검토 리비전·배포 대상을 식별하는가?
-- [ ] 인가/테넌트 경계, 개인정보, 시크릿, 입력, 공급망, AI/도구 위험에 증거 또는 검사별 N/A 근거가 있는가?
-- [ ] 미실행·노출 의심·Critical/High 미해결은 출시를 차단하고 QA 통과로 대체하지 않는가?
-- [ ] 수정 후 재검수하고 잔여 위험에 담당자·기한·책임자/사용자 수용 기록이 있는가?
-- [ ] [security-review.md](../../engineering-squad/references/security-review.md) 보고서 계약을 따르고 공개 증거를 마스킹했는가?
+## 11. Security Review Engineer Checklist (mandatory)
+- [ ] Independent reviewer and report identify the exact reviewed revision and deployment target.
+- [ ] Authorization/tenant boundaries, personal data, secrets, input, supply chain and AI/tool risks have evidence or justified per-check N/A.
+- [ ] Missing checks, exposure suspicions and Critical/High issues block release; QA green is insufficient.
+- [ ] Fixes are retested; accepted residual risks have owner, deadline and service-owner/user approval.
+- [ ] Report follows [security-review.md](../../engineering-squad/references/security-review.md), with redacted public evidence.
 
 
 ## 12. Compliance Reviewer Checklist
-- [ ] 국내·미국 IT 관련 법령·보안 요구사항의 최신 공식 출처와 적용 근거가 있는가?
-- [ ] 개인정보·저작권/라이선스·공개 사례를 검토하고 발견사항·조치 또는 해당 없음 근거를 남겼는가?
-- [ ] 적용되는 위반 사항은 머지를 차단하고 불명확한 해석은 전문 검토로 인계했는가?
+- [ ] Applicable Korean/U.S. IT legal and security requirements have dated official sources and applicability rationale.
+- [ ] Privacy, copyright/licenses and public examples are checked; findings/actions or reasoned N/A are recorded.
+- [ ] Unresolved applicable violations block merge; uncertain interpretation is escalated.
 
 
-## 13. Creative Rookie & 의사결정 검토
-- [ ] 기획·주간 회고·출시 메시지 검토의 SNS 출처·확인일·아이디어·최소 실험·지표가 있는가?
-- [ ] 근거 있는 반론과 소수 의견을 보존하고 관측·가설·미확인을 구분했는가?
-- [ ] Tier 1/2/3 책임자·보고 경로·위임 범위와 근거·반론·판정·실행 준비 상태가 기록되고 무관한 표를 기다리지 않는가?
-- [ ] 다수결이 사용자 권한과 필수 보안·컴플라이언스 게이트를 우회하지 않는가?
+## 13. Creative Rookie & Decision Review
+- [ ] Are dated SNS evidence, ideas, small experiments and metrics recorded at kickoff, weekly retrospectives and launch review?
+- [ ] Are reasoned dissent and minority views preserved, with facts, hypotheses and unknowns distinguished?
+- [ ] Are Tier 1/2/3 owners, escalation, delegation, evidence, dissent, verdict and execution readiness recorded without waiting for unrelated ballots?
+- [ ] Does majority voting preserve user authorization and mandatory security/compliance gates?
 
-- [ ] 사용자 재검토/재투표 요구를 즉시 접수하고 미실행 후속 행동을 보류하며 이전 근거를 보존하고 위임 만료를 지키는가?
+- [ ] Does user dissatisfaction with supplied grounds trigger a fresh round without team permission, preserving history and clearing prior votes?
 
 ## 14. Test Engineer Review Checklist
-- [ ] 기능 완료 기준이 관찰 가능하고 수치 지표의 단위·임계값·측정 조건 및 미합의 사항이 명확한가?
-- [ ] 기능/AC마다 테스트 케이스·실행 증거·누락을 연결하고 통과율/커버리지만으로 완료를 판단하지 않는가?
-- [ ] 누락 테스트 의견에 시나리오·위험·입력·기대 assertion·기법/계층·우선순위·담당자·수용 기준이 있는가?
-- [ ] 공식 오픈소스 자료의 기법을 스택·위험·비용에 맞게 선택하고 QA/개발자의 반영/미반영 근거와 재검토를 기록했는가?
-- [ ] 미실행·미검증·해당 없음 근거가 드러나고 QA·보안·컴플라이언스 게이트를 유지하는가?
+- [ ] Are functional criteria observable and numeric targets defined with units, thresholds and measurement conditions, with unresolved targets explicit?
+- [ ] Does every feature/AC link to test cases, actual evidence and gaps rather than pass-rate/coverage alone?
+- [ ] Do missing-test recommendations include scenario/risk, inputs, expected assertion, technique/layer, priority, owner and acceptance evidence?
+- [ ] Are techniques grounded in official open-source docs and selected for stack/risk/cost, with QA/developer dispositions and follow-up recorded?
+- [ ] Are not-run/unverified items and reasoned N/A visible, with QA/security/compliance gates preserved?

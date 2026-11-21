@@ -16,6 +16,9 @@ titles are the PR titles verbatim. The current packaged version is
 - The capture runbook now states who records per-model call counts (the renewal Lead), in what format (one table row per model), and when (per batch, totalled at the end).
 - Skill frontmatter now carries the SkillEvaluator schema author, version, and tags for `engineering-squad`, `ponytail`, and `using-dev-team-skills`.
 - Author email is omitted from both English (`SKILL.md`) and Korean (`SKILL_ko.md`) skill frontmatter (author name only) to avoid personal email (PII) exposure in public files.
+- Removed legacy top-level `version` fields (retaining `metadata.version` as the single version source per the agentskills.io spec) and added `metadata.tags` to the remaining six skills (`brainstorming`, `code-review`, `harness-engineering`, `humanizer`, `humanizer-kr`, `i-have-adhd`).
+- Separated Korean skill and reference translations into `docs/i18n/ko/skills/` and promoted canonical English references inside `skills/`, passing NVIDIA SkillEvaluator v1.0.1 Tier 2 deduplication (`similarity-check` and `context-optimization-check`) across all nine skills with 0 duplicates.
+- Extended `scripts/verify-harness.py` to validate `docs/i18n/ko/skills/*/SKILL_ko.md` and reject top-level `version` fields or email addresses in `metadata.author`.
 
 ## [1.2.0] - 2026-11-15
 
